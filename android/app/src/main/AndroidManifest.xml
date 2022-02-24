@@ -8,7 +8,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+<<<<<<< HEAD
         android:theme="@style/Theme.AppTheme">
+=======
+        android:theme="@style/Theme.JuggernautMethodBasic">
+>>>>>>> de976ef17f0a44a7d378ea9e24165654ddfa2c00
         <activity
             android:name=".MainActivity"
             android:exported="true">
