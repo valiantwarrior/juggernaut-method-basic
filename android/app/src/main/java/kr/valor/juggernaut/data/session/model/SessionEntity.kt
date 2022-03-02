@@ -3,6 +3,9 @@ package kr.valor.juggernaut.data.session.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kr.valor.juggernaut.common.MicroCycle
+import kr.valor.juggernaut.common.Phase
+import kr.valor.juggernaut.domain.session.model.Session.Progressions as Progressions
 
 @Entity(tableName = "session_table")
 data class SessionEntity(
@@ -27,3 +30,9 @@ data class SessionEntity(
     @ColumnInfo(name = "date")
     val date: Long
 )
+
+fun SessionEntity.extractProgressionsInformation(): Progressions =
+    Progressions(
+        phase = Phase.valueOf(phaseName),
+        microCycle = MicroCycle.valueOf(microCycleName)
+    )

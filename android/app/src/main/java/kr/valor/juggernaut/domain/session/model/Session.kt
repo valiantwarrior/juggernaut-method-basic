@@ -10,31 +10,19 @@ data class Session(
     val progressions: Progressions,
     val tmWeights: Double,
     val routines: SessionRoutine
-)
+) {
+    data class Progressions(
+        val phase: Phase,
+        val microCycle: MicroCycle
+    )
 
-data class Progressions(
-    val phase: Phase,
-    val microCycle: MicroCycle
-)
-
-data class Routine(
-    val weights: Double,
-    val reps: Int
-)
-
-data class SessionRoutine(
-    val warmupRoutines: List<Routine>,
-    val amrapRoutine: Routine
-)
-
-interface RoutinesProviderDelegate {
-    fun provideRoutines(phase: Phase, tmWeights: Double): SessionRoutine
-}
-
-interface RoutinesPropertyDelegate {
-    fun ceiling(input: Double): Double
-}
-
-interface RoutinesProviderDelegateFactory {
-    fun provide(progressions: Progressions, ceilUserPreferences: Double?): RoutinesProviderDelegate
+    data class SessionRoutine(
+        val warmupRoutines: List<Routine>,
+        val amrapRoutine: Routine
+    ) {
+        data class Routine(
+            val weights: Double,
+            val reps: Int
+        )
+    }
 }
