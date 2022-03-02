@@ -1,7 +1,5 @@
-package kr.valor.juggernaut.data.session.mapper.delegate.provider
+package kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider
 
-import kr.valor.juggernaut.common.MicroCycle.*
-import kr.valor.juggernaut.data.session.mapper.delegate.property.DefaultPropertyMediateDelegate
 import kr.valor.juggernaut.domain.session.model.Session.Progressions
 
 class DefaultRoutinesProviderDelegateFactory: RoutinesProviderDelegateFactory {

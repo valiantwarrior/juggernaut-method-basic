@@ -1,6 +1,7 @@
-package kr.valor.juggernaut.data.session.mapper.delegate.provider
+package kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.amrap
 
 import kr.valor.juggernaut.common.Phase
+import kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.RoutinesProviderDelegate
 import kr.valor.juggernaut.domain.session.model.Session.SessionRoutine as SessionRoutine
 import kr.valor.juggernaut.domain.session.model.Session.SessionRoutine.Routine as Routine
 
