@@ -1,8 +1,7 @@
-package kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider
+package kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.amrap
 
 import kr.valor.juggernaut.common.*
 import kr.valor.juggernaut.data.session.mapper.delegate.property.DefaultPropertyMediateDelegate
-import kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.amrap.BasicAccumulationRoutinesProviderDelegate
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
