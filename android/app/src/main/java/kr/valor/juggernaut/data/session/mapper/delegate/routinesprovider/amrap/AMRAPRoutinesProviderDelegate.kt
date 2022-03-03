@@ -17,7 +17,7 @@ abstract class AMRAPRoutinesProviderDelegate: RoutinesProviderDelegate {
 
     protected abstract val routinesPropertyMediateAction: (Double) -> Double
 
-    override fun provideRoutines(phase: Phase, tmWeights: Double): SessionRoutine {
+    final override fun provideRoutines(phase: Phase, tmWeights: Double): SessionRoutine {
         val warmupRoutineIntensitiesOfCurrentPhase = warmupRoutinesIntensities[phase]!!
         val prRoutineIntensityOfCurrentPhase = amrapRoutineIntensity[phase]!!
 
@@ -53,35 +53,41 @@ abstract class AMRAPRoutinesProviderDelegate: RoutinesProviderDelegate {
     }
 
     protected fun initWarmupRoutineIntensity(intensities: PhaseWarmupRoutineIntensityMap): Map<Phase, List<RoutineIntensity>> =
-        mutableMapOf<Phase, List<RoutineIntensity>>().apply {
-            Phase.values().forEach { phase ->
-                val warmupRoutineIntensities = mutableListOf<RoutineIntensity>()
-                    .apply {
-                        val routineIntensities = intensities[phase]!!
+        routineIntensityMapFactory { phase ->
+            val warmupRoutineIntensities = mutableListOf<RoutineIntensity>()
+                .apply {
+                    val routineIntensities = intensities[phase]!!
 
-                        routineIntensities.forEach { (repetitions, intensity) ->
-                            val routineIntensity = RoutineIntensity(
-                                intensityPercentages = intensity,
-                                repetitions = repetitions
-                            )
-                            add(routineIntensity)
-                        }
+                    routineIntensities.forEach { (repetitions, intensity) ->
+                        val routineIntensity = RoutineIntensity(
+                            intensityPercentages = intensity,
+                            repetitions = repetitions
+                        )
+                        add(routineIntensity)
                     }
-                put(phase, warmupRoutineIntensities)
-            }
-        }.toMap()
+                }.toList()
+
+            warmupRoutineIntensities
+        }
 
     protected fun initAmrapRoutineIntensity(intensities: PhaseAmrapRoutineIntensityMap): Map<Phase, RoutineIntensity> =
-        mutableMapOf<Phase, RoutineIntensity>().apply {
+        routineIntensityMapFactory { phase ->
+            val (amrapRoutineBaseRepetitions, amrapRoutineIntensityPercentages) =
+                intensities[phase]!!
+
+            RoutineIntensity(
+                intensityPercentages = amrapRoutineIntensityPercentages,
+                repetitions = amrapRoutineBaseRepetitions
+            )
+        }
+
+    private inline fun <T> routineIntensityMapFactory(create: (Phase) -> T): Map<Phase, T> {
+        return mutableMapOf<Phase, T>().apply {
             Phase.values().forEach { phase ->
-                val (amrapRoutineBaseRepetitions, amrapRoutineIntensityPercentages) =
-                    intensities[phase]!!
-                val amrapRoutineIntensity = RoutineIntensity(
-                    intensityPercentages = amrapRoutineIntensityPercentages,
-                    repetitions = amrapRoutineBaseRepetitions
-                )
-                put(phase, amrapRoutineIntensity)
+                val result = create(phase)
+                put(phase, result)
             }
         }.toMap()
+    }
 }
 
