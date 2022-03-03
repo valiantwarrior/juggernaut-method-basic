@@ -6,8 +6,9 @@ import kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.Routine
 import kr.valor.juggernaut.domain.session.model.Session.SessionRoutine as SessionRoutine
 import kr.valor.juggernaut.domain.session.model.Session.SessionRoutine.Routine as Routine
 
-typealias PhaseWarmupRoutineIntensityMap = Map<Phase, List<Pair<Int, Double>>>
-typealias PhaseAmrapRoutineIntensityMap = Map<Phase, Pair<Int, Double>>
+typealias PhaseWarmupRoutineIntensityTable = Map<Phase, List<Pair<Int, Double>>>
+typealias PhaseAmrapRoutineIntensityTable = Map<Phase, Pair<Int, Double>>
+typealias PhaseOverallRoutineIntensityTable = Map<Phase, List<Pair<Int, Double>>>
 
 abstract class AMRAPRoutinesProviderDelegate: RoutinesProviderDelegate {
 
@@ -52,7 +53,7 @@ abstract class AMRAPRoutinesProviderDelegate: RoutinesProviderDelegate {
         )
     }
 
-    protected fun initWarmupRoutineIntensity(intensities: PhaseWarmupRoutineIntensityMap): Map<Phase, List<RoutineIntensity>> =
+    protected fun initWarmupRoutineIntensity(intensities: PhaseWarmupRoutineIntensityTable): Map<Phase, List<RoutineIntensity>> =
         routineIntensityMapFactory { phase ->
             val warmupRoutineIntensities = mutableListOf<RoutineIntensity>()
                 .apply {
@@ -70,7 +71,7 @@ abstract class AMRAPRoutinesProviderDelegate: RoutinesProviderDelegate {
             warmupRoutineIntensities
         }
 
-    protected fun initAmrapRoutineIntensity(intensities: PhaseAmrapRoutineIntensityMap): Map<Phase, RoutineIntensity> =
+    protected fun initAmrapRoutineIntensity(intensities: PhaseAmrapRoutineIntensityTable): Map<Phase, RoutineIntensity> =
         routineIntensityMapFactory { phase ->
             val (amrapRoutineBaseRepetitions, amrapRoutineIntensityPercentages) =
                 intensities[phase]!!
@@ -90,4 +91,3 @@ abstract class AMRAPRoutinesProviderDelegate: RoutinesProviderDelegate {
         }.toMap()
     }
 }
-

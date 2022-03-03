@@ -11,6 +11,3 @@ enum class Phase {
 enum class LiftCategory {
     BENCH_PRESS, DEAD_LIFT, SQUAT, OVERHEAD_PRESS
 }
-
-fun main() {
-}
