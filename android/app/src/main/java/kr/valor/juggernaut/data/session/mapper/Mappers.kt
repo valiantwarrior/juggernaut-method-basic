@@ -6,18 +6,18 @@ import kr.valor.juggernaut.data.session.model.SessionEntity
 import kr.valor.juggernaut.data.session.model.extractProgressionsInformation
 import kr.valor.juggernaut.domain.session.model.*
 
-interface Mapper<I, O> {
-    fun map(input: I): O
+interface ModelMapper<E, D> {
+    fun map(entity: E): D
 }
 
-interface EntityModelMapper<I, O>: Mapper<I, O>
+interface EntityModelMapper<E, D>: ModelMapper<E, D>
 
 class DefaultEntityModelMapper(
     routinesProviderDelegate: RoutinesProviderDelegate
 ) : EntityModelMapper<SessionEntity, Session>, RoutinesProviderDelegate by routinesProviderDelegate {
 
-    override fun map(input: SessionEntity): Session {
-        return with(input) {
+    override fun map(entity: SessionEntity): Session {
+        return with(entity) {
             val progressions = extractProgressionsInformation()
             val liftCategory = LiftCategory.valueOf(liftCategoryName)
             val routines = provideRoutines(progressions.phase, tmWeights)

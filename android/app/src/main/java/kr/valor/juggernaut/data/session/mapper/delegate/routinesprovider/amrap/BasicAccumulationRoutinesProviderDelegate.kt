@@ -15,8 +15,7 @@ class BasicAccumulationRoutinesProviderDelegate(
     override val amrapRoutineIntensity: Map<Phase, RoutineIntensity> =
         initAmrapRoutineIntensity()
 
-    override val routinesPropertyMediateAction: (Double) -> Double =
-        routinesPropertyMediateDelegate::mediate
+    override val routinesPropertyMediateAction: (Double) -> Double = ::mediate
 
     private fun initWarmupRoutinesIntensities(): Map<Phase, List<RoutineIntensity>> {
         return mutableMapOf<Phase, List<RoutineIntensity>>().apply {
