@@ -4,93 +4,35 @@ import kr.valor.juggernaut.common.*
 import kr.valor.juggernaut.common.Phase.*
 
 import kr.valor.juggernaut.data.session.mapper.delegate.property.RoutinesPropertyMediateDelegate
+import kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.RoutineIntensity
+import kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.RoutineIntensityChartProvider
 
 class BasicAccumulationRoutinesProviderDelegate(
     routinesPropertyMediateDelegate: RoutinesPropertyMediateDelegate
 ): AMRAPRoutinesProviderDelegate(), RoutinesPropertyMediateDelegate by routinesPropertyMediateDelegate {
 
     override val warmupRoutinesIntensities: Map<Phase, List<RoutineIntensity>> =
-        initWarmupRoutinesIntensities()
+        initWarmupRoutineIntensity(ACCUMULATION_CYCLE_WARMUP_ROUTINE_INTENSITY_TABLE)
 
     override val amrapRoutineIntensity: Map<Phase, RoutineIntensity> =
-        initAmrapRoutineIntensity()
+        initAmrapRoutineIntensity(ACCUMULATION_CYCLE_AMRAP_ROUTINE_INTENSITY_TABLE)
 
     override val routinesPropertyMediateAction: (Double) -> Double = ::mediate
 
-    private fun initWarmupRoutinesIntensities(): Map<Phase, List<RoutineIntensity>> {
-        return mutableMapOf<Phase, List<RoutineIntensity>>().apply {
-            ACCUMULATION_CYCLE_ROUTINE_INTENSITY_TABLE.forEach {
-                val phase = it.phase
-                val warmupRoutinesIntensities = initRoutinesIntensities(
-                    intensity = it.intensityPercentage,
-                    repetitions = it.repetitions,
-                    sets = it.numberOfWarmupRoutines
-                )
-                put(phase, warmupRoutinesIntensities)
-            }
-        }.toMap()
-    }
-
-    private fun initAmrapRoutineIntensity(): Map<Phase, RoutineIntensity> {
-        return mutableMapOf<Phase, RoutineIntensity>().apply {
-            ACCUMULATION_CYCLE_ROUTINE_INTENSITY_TABLE.forEach {
-                val phase = it.phase
-                val amrapRoutineIntensity = RoutineIntensity(
-                    intensityPercentages = it.intensityPercentage,
-                    repetitions = it.repetitions
-                )
-                put(phase, amrapRoutineIntensity)
-            }
-        }.toMap()
-    }
-
-    private fun initRoutinesIntensities(intensity: Double, repetitions: Int, sets: Int): List<RoutineIntensity> =
-        mutableListOf<RoutineIntensity>().apply {
-            repeat(sets) {
-                val routineIntensity = RoutineIntensity(
-                    intensityPercentages = intensity,
-                    repetitions = repetitions
-                )
-                add(routineIntensity)
-            }
-        }.toList()
-
-    private data class AccumulationRoutineIntensity(
-        val phase: Phase,
-        val intensityPercentage: Double,
-        val repetitions: Int,
-        val numberOfWarmupRoutines: Int
-    )
 
     companion object {
-        private val ACCUMULATION_CYCLE_ROUTINE_INTENSITY_TABLE = listOf(
-            AccumulationRoutineIntensity(
-                phase = REP10,
-                intensityPercentage = ACCUMULATION_CYCLE_PHASE_REP10_INTENSITY,
-                repetitions = ACCUMULATION_CYCLE_PHASE_REP10_REPETITIONS,
-                numberOfWarmupRoutines = ACCUMULATION_CYCLE_PHASE_REP10_SETS
-            ),
+        private val ACCUMULATION_CYCLE_WARMUP_ROUTINE_INTENSITY_TABLE = mapOf(
+            REP10 to listOf(10 to 0.6, 10 to 0.6, 10 to 0.6, 10 to 0.6),
+            REP8 to listOf(8 to 0.65, 8 to 0.65, 8 to 0.65, 8 to 0.65),
+            REP5 to listOf(5 to 0.7, 5 to 0.7, 5 to 0.7, 5 to 0.7, 5 to 0.7),
+            REP3 to listOf(3 to 0.75, 3 to 0.75, 3 to 0.75, 3 to 0.75, 3 to 0.75, 3 to 0.75)
+        )
 
-            AccumulationRoutineIntensity(
-                phase = REP8,
-                intensityPercentage = ACCUMULATION_CYCLE_PHASE_REP8_INTENSITY,
-                repetitions = ACCUMULATION_CYCLE_PHASE_REP8_REPETITIONS,
-                numberOfWarmupRoutines = ACCUMULATION_CYCLE_PHASE_REP8_SETS
-            ),
-
-            AccumulationRoutineIntensity(
-                phase = REP5,
-                intensityPercentage = ACCUMULATION_CYCLE_PHASE_REP5_INTENSITY,
-                repetitions = ACCUMULATION_CYCLE_PHASE_REP5_REPETITIONS,
-                numberOfWarmupRoutines = ACCUMULATION_CYCLE_PHASE_REP5_SETS
-            ),
-
-            AccumulationRoutineIntensity(
-                phase = REP3,
-                intensityPercentage = ACCUMULATION_CYCLE_PHASE_REP3_INTENSITY,
-                repetitions = ACCUMULATION_CYCLE_PHASE_REP3_REPETITIONS,
-                numberOfWarmupRoutines = ACCUMULATION_CYCLE_PHASE_REP3_SETS
-            )
+        private val ACCUMULATION_CYCLE_AMRAP_ROUTINE_INTENSITY_TABLE = mapOf(
+            REP10 to (10 to 0.6),
+            REP8 to (8 to 0.65),
+            REP5 to (5 to 0.7),
+            REP3 to (3 to 0.75)
         )
     }
 }

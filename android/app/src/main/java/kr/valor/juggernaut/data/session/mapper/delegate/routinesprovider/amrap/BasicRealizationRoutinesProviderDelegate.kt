@@ -3,50 +3,20 @@ package kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.amrap
 import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.common.Phase.*
 import kr.valor.juggernaut.data.session.mapper.delegate.property.RoutinesPropertyMediateDelegate
+import kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.RoutineIntensity
 
 class BasicRealizationRoutinesProviderDelegate(
     routinesPropertyMediateDelegate: RoutinesPropertyMediateDelegate
 ): AMRAPRoutinesProviderDelegate(), RoutinesPropertyMediateDelegate by routinesPropertyMediateDelegate {
+
     override val warmupRoutinesIntensities: Map<Phase, List<RoutineIntensity>> =
-        initWarmupRoutinesIntensities()
+        initWarmupRoutineIntensity(REALIZATION_CYCLE_WARMUP_ROUTINE_INTENSITY_TABLE)
 
     override val amrapRoutineIntensity: Map<Phase, RoutineIntensity> =
-        initAmrapRoutineIntensity()
+        initAmrapRoutineIntensity(REALIZATION_CYCLE_AMRAP_ROUTINE_INTENSITY_TABLE)
 
     override val routinesPropertyMediateAction: (Double) -> Double = ::mediate
 
-    private fun initWarmupRoutinesIntensities(): Map<Phase, List<RoutineIntensity>> =
-        mutableMapOf<Phase, List<RoutineIntensity>>().apply {
-            Phase.values().forEach { phase ->
-                val warmupRoutineIntensities = mutableListOf<RoutineIntensity>()
-                    .apply {
-                        val routineIntensities =
-                            REALIZATION_CYCLE_WARMUP_ROUTINE_INTENSITY_TABLE[phase]!!
-
-                        routineIntensities.forEach { (repetitions, intensity) ->
-                             val routineIntensity = RoutineIntensity(
-                                 intensityPercentages = intensity,
-                                 repetitions = repetitions
-                             )
-                            add(routineIntensity)
-                        }
-                    }
-                put(phase, warmupRoutineIntensities)
-            }
-        }.toMap()
-
-    private fun initAmrapRoutineIntensity(): Map<Phase, RoutineIntensity> =
-        mutableMapOf<Phase, RoutineIntensity>().apply {
-            Phase.values().forEach { phase ->
-                val (amrapRoutineBaseRepetitions, amrapRoutineIntensityPercentage) =
-                    REALIZATION_CYCLE_AMRAP_ROUTINE_INTENSITY_TABLE[phase]!!
-                val amrapRoutineIntensity = RoutineIntensity(
-                    intensityPercentages = amrapRoutineIntensityPercentage,
-                    repetitions = amrapRoutineBaseRepetitions
-                )
-                put(phase, amrapRoutineIntensity)
-            }
-        }.toMap()
 
     companion object {
         val REALIZATION_CYCLE_WARMUP_ROUTINE_INTENSITY_TABLE = mapOf(
