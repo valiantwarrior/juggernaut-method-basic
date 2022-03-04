@@ -17,7 +17,7 @@ class BasicRealizationRoutinesProviderDelegateTest {
                 DefaultPropertyMediateDelegate
             )
         table = BasicRealizationRoutinesProviderDelegate
-            .REALIZATION_CYCLE_OVERALL_ROUTINE_INTENSITY_TABLE
+            .overallRoutineIntensityTable
     }
 
     @Test

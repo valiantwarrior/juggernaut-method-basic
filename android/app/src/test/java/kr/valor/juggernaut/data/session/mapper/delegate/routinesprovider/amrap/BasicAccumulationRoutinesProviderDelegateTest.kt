@@ -17,7 +17,7 @@ class BasicAccumulationRoutinesProviderDelegateTest {
                 DefaultPropertyMediateDelegate
             )
         table = BasicAccumulationRoutinesProviderDelegate
-            .ACCUMULATION_CYCLE_OVERALL_ROUTINE_INTENSITY_TABLE
+            .overallRoutineIntensityTable
     }
 
     @Test

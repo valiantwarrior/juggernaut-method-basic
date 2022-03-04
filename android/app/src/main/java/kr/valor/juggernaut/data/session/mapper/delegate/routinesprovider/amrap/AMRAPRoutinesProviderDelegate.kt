@@ -6,10 +6,6 @@ import kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.Routine
 import kr.valor.juggernaut.domain.session.model.Session.SessionRoutine as SessionRoutine
 import kr.valor.juggernaut.domain.session.model.Session.SessionRoutine.Routine as Routine
 
-typealias PhaseWarmupRoutineIntensityTable = Map<Phase, List<Pair<Int, Double>>>
-typealias PhaseAmrapRoutineIntensityTable = Map<Phase, Pair<Int, Double>>
-typealias PhaseOverallRoutineIntensityTable = Map<Phase, List<Pair<Int, Double>>>
-
 abstract class AMRAPRoutinesProviderDelegate: RoutinesProviderDelegate {
 
     protected abstract val warmupRoutinesIntensities: Map<Phase, List<RoutineIntensity>>
