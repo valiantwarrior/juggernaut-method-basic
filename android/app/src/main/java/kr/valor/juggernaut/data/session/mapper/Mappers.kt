@@ -14,21 +14,22 @@ interface EntityModelMapper<E, D>: ModelMapper<E, D>
 
 class DefaultEntityModelMapper(
     routinesProviderDelegate: RoutinesProviderDelegate
-) : EntityModelMapper<SessionEntity, Session>, RoutinesProviderDelegate by routinesProviderDelegate {
+) : EntityModelMapper<SessionEntity, AmrapSession>, RoutinesProviderDelegate by routinesProviderDelegate {
 
-    override fun map(entity: SessionEntity): Session {
+    override fun map(entity: SessionEntity): AmrapSession {
         return with(entity) {
             val progressions = extractProgressionsInformation()
             val liftCategory = LiftCategory.valueOf(liftCategoryName)
             val routines = provideRoutines(progressions.phase, tmWeights)
 
-            Session(
-               sessionId = id,
-               category = liftCategory,
-               progressions = progressions,
-               tmWeights = tmWeights,
-               routines = routines
-            )
+            TODO()
+//            AmrapSession(
+//               sessionId = id,
+//               category = liftCategory,
+//               progressions = progressions,
+//               tmWeights = tmWeights,
+//               routines = routines
+//            )
         }
     }
 }

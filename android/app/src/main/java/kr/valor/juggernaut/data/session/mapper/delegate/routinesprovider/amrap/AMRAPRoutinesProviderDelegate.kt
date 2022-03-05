@@ -1,10 +1,11 @@
 package kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.amrap
 
 import kr.valor.juggernaut.common.Phase
+import kr.valor.juggernaut.common.createPhaseBasedKeyMapAndReturn
 import kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.RoutineIntensity
 import kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.RoutinesProviderDelegate
-import kr.valor.juggernaut.domain.session.model.Session.SessionRoutine as SessionRoutine
-import kr.valor.juggernaut.domain.session.model.Session.SessionRoutine.Routine as Routine
+import kr.valor.juggernaut.domain.session.model.Routine
+import kr.valor.juggernaut.domain.session.model.AmrapSession.AmrapSessionRoutine as AmrapSessionRoutine
 
 abstract class AMRAPRoutinesProviderDelegate: RoutinesProviderDelegate {
 
@@ -14,17 +15,17 @@ abstract class AMRAPRoutinesProviderDelegate: RoutinesProviderDelegate {
 
     protected abstract val routinesPropertyMediateAction: (Double) -> Double
 
-    final override fun provideRoutines(phase: Phase, tmWeights: Double): SessionRoutine {
+    final override fun provideRoutines(phase: Phase, tmWeights: Double): AmrapSessionRoutine {
         val warmupRoutineIntensitiesOfCurrentPhase = warmupRoutinesIntensities[phase]!!
-        val prRoutineIntensityOfCurrentPhase = amrapRoutineIntensity[phase]!!
+        val amrapRoutineIntensityOfCurrentPhase = amrapRoutineIntensity[phase]!!
 
         val warmupRoutines = mutableListOf<Routine>()
             .apply {
                 val totalWarmupRoutinesNumber = warmupRoutineIntensitiesOfCurrentPhase.size
 
                 repeat(totalWarmupRoutinesNumber) { index ->
-                    val (intensityPercentages, repetitions) = warmupRoutineIntensitiesOfCurrentPhase[index]
-                    val routineWeightsByIntensity = routinesPropertyMediateAction(tmWeights * intensityPercentages)
+                    val (repetitions, intensityPercentage) = warmupRoutineIntensitiesOfCurrentPhase[index]
+                    val routineWeightsByIntensity = routinesPropertyMediateAction(tmWeights * intensityPercentage)
                     val warmupRoutine = Routine(
                         weights = routineWeightsByIntensity,
                         reps = repetitions
@@ -34,16 +35,16 @@ abstract class AMRAPRoutinesProviderDelegate: RoutinesProviderDelegate {
             }
             .toList()
 
-        val amrapRoutine = with(prRoutineIntensityOfCurrentPhase) {
-            val (intensityPercentages, repetitions) = this
+        val amrapRoutine = with(amrapRoutineIntensityOfCurrentPhase) {
+            val (repetitions, intensityPercentage) = this
 
             Routine(
-                weights = routinesPropertyMediateAction(tmWeights * intensityPercentages),
+                weights = routinesPropertyMediateAction(tmWeights * intensityPercentage),
                 reps = repetitions
             )
         }
 
-        return SessionRoutine(
+        return AmrapSessionRoutine(
             warmupRoutines = warmupRoutines,
             amrapRoutine = amrapRoutine
         )
@@ -57,8 +58,8 @@ abstract class AMRAPRoutinesProviderDelegate: RoutinesProviderDelegate {
 
                     routineIntensities.forEach { (repetitions, intensity) ->
                         val routineIntensity = RoutineIntensity(
-                            intensityPercentages = intensity,
-                            repetitions = repetitions
+                            repetitions = repetitions,
+                            intensityPercentage = intensity
                         )
                         add(routineIntensity)
                     }
@@ -73,17 +74,11 @@ abstract class AMRAPRoutinesProviderDelegate: RoutinesProviderDelegate {
                 intensities[phase]!!
 
             RoutineIntensity(
-                intensityPercentages = amrapRoutineIntensityPercentages,
-                repetitions = amrapRoutineBaseRepetitions
+                repetitions = amrapRoutineBaseRepetitions,
+                intensityPercentage = amrapRoutineIntensityPercentages
             )
         }
 
-    private inline fun <T> routineIntensityMapFactory(create: (Phase) -> T): Map<Phase, T> {
-        return mutableMapOf<Phase, T>().apply {
-            Phase.values().forEach { phase ->
-                val result = create(phase)
-                put(phase, result)
-            }
-        }.toMap()
-    }
+    private inline fun <T> routineIntensityMapFactory(create: (Phase) -> T): Map<Phase, T> =
+        createPhaseBasedKeyMapAndReturn(create)
 }

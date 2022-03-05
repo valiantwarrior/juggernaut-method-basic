@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kr.valor.juggernaut.common.MicroCycle
 import kr.valor.juggernaut.common.Phase
-import kr.valor.juggernaut.domain.session.model.Session.Progressions as Progressions
+import kr.valor.juggernaut.domain.session.model.AmrapSession.Progressions as Progressions
 
 @Entity(tableName = "session_table")
 data class SessionEntity(
