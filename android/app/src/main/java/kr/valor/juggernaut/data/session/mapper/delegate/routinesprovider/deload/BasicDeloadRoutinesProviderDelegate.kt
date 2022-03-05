@@ -3,32 +3,32 @@ package kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.deload
 import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.common.createPhaseBasedKeyMapAndReturn
 import kr.valor.juggernaut.data.session.mapper.delegate.property.RoutinesPropertyMediateDelegate
-import kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.PhaseEntireRoutineIntensityTable
-import kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.PhaseRoutineIntensityItem
-import kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.RoutineIntensityTableFactory
-import kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.RoutinesProviderDelegate
+import kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.*
 import kr.valor.juggernaut.domain.session.model.DeloadSession.DeloadSessionRoutine as DeloadSessionRoutine
-import kr.valor.juggernaut.domain.session.model.Routine
-import kr.valor.juggernaut.domain.session.model.SessionRoutine
 
 
 class BasicDeloadRoutinesProviderDelegate(
     routinesPropertyMediateDelegate: RoutinesPropertyMediateDelegate
-): RoutinesProviderDelegate, RoutinesPropertyMediateDelegate by routinesPropertyMediateDelegate {
+): BasicMethodRoutinesProviderDelegate(), RoutinesPropertyMediateDelegate by routinesPropertyMediateDelegate {
+
+    private val deloadRoutinesIntensities: Map<Phase, List<RoutineIntensity>> =
+        initDeloadRoutineIntensity()
+
+    override val routinesPropertyMediateAction: (Double) -> Double = ::mediate
 
     override fun provideRoutines(phase: Phase, tmWeights: Double): DeloadSessionRoutine {
-        val deloadRoutineIntensitiesOfCurrentPhase = entireRoutineIntensityTable[phase]!!
-        val routines = deloadRoutineIntensitiesOfCurrentPhase.map { (repetitions, intensityPercentage) ->
-            Routine(
-                weights = mediate(tmWeights * intensityPercentage),
-                reps = repetitions
-            )
-        }
+        val deloadRoutineIntensitiesOfCurrentPhase = deloadRoutinesIntensities[phase]!!
+        val transform = routinesPropertyMediateAction
 
         return DeloadSessionRoutine(
-            routines = routines
+            routines = deloadRoutineIntensitiesOfCurrentPhase.createRoutine(tmWeights, transform)
         )
     }
+
+    private fun initDeloadRoutineIntensity(): Map<Phase, List<RoutineIntensity>> =
+        createPhaseBasedKeyMapAndReturn { phase ->
+            entireRoutineIntensityTable[phase]!!.toRoutineIntensityModel()
+        }
 
 
     companion object: RoutineIntensityTableFactory {

@@ -3,7 +3,6 @@ package kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.amrap
 import kr.valor.juggernaut.common.*
 import kr.valor.juggernaut.common.Phase.*
 import kr.valor.juggernaut.data.session.mapper.delegate.property.RoutinesPropertyMediateDelegate
-import kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.RoutineIntensity
 
 class BasicIntensificationRoutinesProviderDelegate(
     routinesPropertyMediateDelegate: RoutinesPropertyMediateDelegate
