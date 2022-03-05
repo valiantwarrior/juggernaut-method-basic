@@ -1,8 +1,10 @@
-package kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider
+package kr.valor.juggernaut.data.session.mapper.delegate.routine
 
 import kr.valor.juggernaut.common.Phase
-import kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.amrap.AMRAPRoutinesProviderDelegate
-import kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.deload.BasicDeloadRoutinesProviderDelegate
+import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.BasicMethodRoutinesProviderDelegate
+import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.PhaseEntireRoutineIntensityTable
+import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.amrap.AMRAPRoutinesProviderDelegate
+import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.deload.BasicDeloadRoutinesProviderDelegate
 import kr.valor.juggernaut.domain.session.model.AmrapSession
 import kr.valor.juggernaut.domain.session.model.DeloadSession
 import org.hamcrest.CoreMatchers.`is`

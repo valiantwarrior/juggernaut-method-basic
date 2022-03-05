@@ -1,7 +1,7 @@
 package kr.valor.juggernaut.data.session.mapper
 
 import kr.valor.juggernaut.common.*
-import kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.RoutinesProviderDelegate
+import kr.valor.juggernaut.data.session.mapper.delegate.routine.RoutinesProviderDelegate
 import kr.valor.juggernaut.data.session.model.SessionEntity
 import kr.valor.juggernaut.data.session.model.extractProgressionsInformation
 import kr.valor.juggernaut.domain.session.model.*

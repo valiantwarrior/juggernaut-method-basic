@@ -1,9 +1,12 @@
-package kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.deload
+package kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.deload
 
 import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.common.createPhaseBasedKeyMapAndReturn
 import kr.valor.juggernaut.data.session.mapper.delegate.property.RoutinesPropertyMediateDelegate
-import kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.*
+import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.BasicMethodRoutinesProviderDelegate
+import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.PhaseEntireRoutineIntensityTable
+import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.PhaseRoutineIntensityItem
+import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.RoutineIntensityTableFactory
 import kr.valor.juggernaut.domain.session.model.DeloadSession.DeloadSessionRoutine as DeloadSessionRoutine
 
 

@@ -1,10 +1,14 @@
-package kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.amrap
+package kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.amrap.accumulation
 
 import kr.valor.juggernaut.common.*
 import kr.valor.juggernaut.common.Phase.*
 import kr.valor.juggernaut.data.session.mapper.delegate.property.RoutinesPropertyMediateDelegate
+import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.amrap.AMRAPRoutineIntensityTableFactory
+import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.amrap.AMRAPRoutinesProviderDelegate
+import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.amrap.PhaseAmrapRoutineIntensityTable
+import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.amrap.PhaseWarmupRoutineIntensityTable
 
-class BasicAccumulationRoutinesProviderDelegate(
+class AccumulationRoutinesProviderDelegate(
     routinesPropertyMediateDelegate: RoutinesPropertyMediateDelegate
 ): AMRAPRoutinesProviderDelegate(), RoutinesPropertyMediateDelegate by routinesPropertyMediateDelegate {
 

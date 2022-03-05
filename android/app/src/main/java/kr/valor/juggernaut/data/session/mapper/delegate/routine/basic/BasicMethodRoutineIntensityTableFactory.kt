@@ -1,4 +1,4 @@
-package kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider
+package kr.valor.juggernaut.data.session.mapper.delegate.routine.basic
 
 import kr.valor.juggernaut.common.Phase
 

@@ -1,5 +1,6 @@
-package kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider
+package kr.valor.juggernaut.data.session.mapper.delegate.routine
 
+import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.BasicMethodRoutinesProviderDelegate
 import kr.valor.juggernaut.domain.session.model.AmrapSession.Progressions
 
 class DefaultRoutinesProviderDelegateFactory: RoutinesProviderDelegateFactory {

@@ -1,10 +1,10 @@
-package kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.amrap
+package kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.amrap
 
 import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.common.Phase.*
-import kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.PhaseEntireRoutineIntensityTable
-import kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.PhaseRoutineIntensityItem
-import kr.valor.juggernaut.data.session.mapper.delegate.routinesprovider.RoutineIntensityTableFactory
+import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.PhaseEntireRoutineIntensityTable
+import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.PhaseRoutineIntensityItem
+import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.RoutineIntensityTableFactory
 
 typealias PhaseWarmupRoutineIntensityTable = Map<Phase, List<PhaseRoutineIntensityItem>>
 typealias PhaseAmrapRoutineIntensityTable = Map<Phase, PhaseRoutineIntensityItem>
