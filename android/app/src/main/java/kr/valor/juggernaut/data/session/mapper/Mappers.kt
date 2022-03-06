@@ -2,8 +2,8 @@ package kr.valor.juggernaut.data.session.mapper
 
 import kr.valor.juggernaut.common.*
 import kr.valor.juggernaut.data.session.mapper.delegate.routine.RoutinesProviderDelegate
-import kr.valor.juggernaut.data.session.model.SessionEntity
-import kr.valor.juggernaut.data.session.model.extractProgressionsInformation
+import kr.valor.juggernaut.data.session.entity.SessionEntity
+import kr.valor.juggernaut.data.session.entity.extractProgressionsInformation
 import kr.valor.juggernaut.domain.session.model.*
 
 interface ModelMapper<E, D> {

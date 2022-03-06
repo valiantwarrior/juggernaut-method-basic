@@ -4,7 +4,7 @@ import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.BasicMethodRoutinesProviderDelegate
 import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.PhaseEntireRoutineIntensityTable
 import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.amrap.AMRAPRoutinesProviderDelegate
-import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.deload.BasicDeloadRoutinesProviderDelegate
+import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.deload.DeloadRoutinesProviderDelegate
 import kr.valor.juggernaut.domain.session.model.AmrapSession
 import kr.valor.juggernaut.domain.session.model.DeloadSession
 import org.hamcrest.CoreMatchers.`is`
@@ -21,7 +21,7 @@ fun BasicMethodRoutinesProviderDelegate.`validate routines that were generated b
                 sessionRoutines as AmrapSession.AmrapSessionRoutine
                 with(sessionRoutines) { warmupRoutines + amrapRoutine }
             }
-            is BasicDeloadRoutinesProviderDelegate -> {
+            is DeloadRoutinesProviderDelegate -> {
                 (sessionRoutines as DeloadSession.DeloadSessionRoutine).routines
             }
             else -> null

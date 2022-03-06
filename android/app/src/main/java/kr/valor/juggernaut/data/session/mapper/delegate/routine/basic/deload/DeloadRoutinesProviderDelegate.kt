@@ -4,23 +4,23 @@ import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.common.createPhaseBasedKeyMapAndReturn
 import kr.valor.juggernaut.data.session.mapper.delegate.property.RoutinesPropertyMediateDelegate
 import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.BasicMethodRoutinesProviderDelegate
-import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.PhaseEntireRoutineIntensityTable
-import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.PhaseRoutineIntensityItem
-import kr.valor.juggernaut.data.session.mapper.delegate.routine.basic.RoutineIntensityTableFactory
+import kr.valor.juggernaut.data.session.mapper.delegate.routine.common.RoutineIntensityFactory
+import kr.valor.juggernaut.domain.session.model.RoutineIntensity
+import kr.valor.juggernaut.domain.session.model.SessionRoutine
 import kr.valor.juggernaut.domain.session.model.DeloadSession.DeloadSessionRoutine as DeloadSessionRoutine
 
 
-class BasicDeloadRoutinesProviderDelegate(
+class DeloadRoutinesProviderDelegate(
     routinesPropertyMediateDelegate: RoutinesPropertyMediateDelegate
 ): BasicMethodRoutinesProviderDelegate(), RoutinesPropertyMediateDelegate by routinesPropertyMediateDelegate {
 
-    private val deloadRoutinesIntensities: Map<Phase, List<RoutineIntensity>> =
-        initDeloadRoutineIntensity()
+    private val deloadRoutineIntensities: Map<Phase, List<RoutineIntensity>> =
+        routineIntensityMap
 
     override val routinesPropertyMediateAction: (Double) -> Double = ::mediate
 
-    override fun provideRoutines(phase: Phase, tmWeights: Double): DeloadSessionRoutine {
-        val deloadRoutineIntensitiesOfCurrentPhase = deloadRoutinesIntensities[phase]!!
+    override fun provideRoutines(phase: Phase, tmWeights: Double): SessionRoutine {
+        val deloadRoutineIntensitiesOfCurrentPhase = deloadRoutineIntensities[phase]!!
         val transform = routinesPropertyMediateAction
 
         return DeloadSessionRoutine(
@@ -28,21 +28,16 @@ class BasicDeloadRoutinesProviderDelegate(
         )
     }
 
-    private fun initDeloadRoutineIntensity(): Map<Phase, List<RoutineIntensity>> =
-        createPhaseBasedKeyMapAndReturn { phase ->
-            entireRoutineIntensityTable[phase]!!.toRoutineIntensityModel()
+
+    companion object: RoutineIntensityFactory() {
+        override val routineIntensityMap: Map<Phase, List<RoutineIntensity>> by lazy {
+            createPhaseBasedKeyMapAndReturn {
+                deloadRoutineIntensityTable.toRoutineIntensity()
+            }
         }
 
-
-    companion object: RoutineIntensityTableFactory {
-        override val entireRoutineIntensityTable: PhaseEntireRoutineIntensityTable by lazy {
-            createPhaseBasedKeyMapAndReturn { phaseRoutineIntensityItems }
-        }
-
-        private val phaseRoutineIntensityItems = listOf(
-            PhaseRoutineIntensityItem(5, 0.4),
-            PhaseRoutineIntensityItem(5, 0.5),
-            PhaseRoutineIntensityItem(5, 0.6)
+        private val deloadRoutineIntensityTable = listOf(
+            5 to 0.4, 5 to 0.5, 5 to 0.6
         )
     }
 }

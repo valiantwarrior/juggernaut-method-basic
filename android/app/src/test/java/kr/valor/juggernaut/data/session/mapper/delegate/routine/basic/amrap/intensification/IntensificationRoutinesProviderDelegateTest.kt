@@ -20,7 +20,7 @@ class IntensificationRoutinesProviderDelegateTest {
                 DefaultPropertyMediateDelegate
             )
         table = IntensificationRoutinesProviderDelegate
-            .entireRoutineIntensityTable
+            .routineIntensityMap
     }
 
     @Test

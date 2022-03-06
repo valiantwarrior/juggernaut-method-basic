@@ -1,4 +1,4 @@
-package kr.valor.juggernaut.data.session.model
+package kr.valor.juggernaut.data.session.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

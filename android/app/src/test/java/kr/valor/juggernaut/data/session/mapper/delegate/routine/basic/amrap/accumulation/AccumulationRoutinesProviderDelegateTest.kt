@@ -20,7 +20,7 @@ class AccumulationRoutinesProviderDelegateTest {
                 DefaultPropertyMediateDelegate
             )
         table = AccumulationRoutinesProviderDelegate
-            .entireRoutineIntensityTable
+            .routineIntensityMap
     }
 
     @Test

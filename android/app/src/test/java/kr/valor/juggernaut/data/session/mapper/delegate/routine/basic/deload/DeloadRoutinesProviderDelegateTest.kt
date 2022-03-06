@@ -7,20 +7,20 @@ import org.junit.Before
 import org.junit.Test
 
 
-class BasicDeloadRoutinesProviderDelegateTest {
+class DeloadRoutinesProviderDelegateTest {
 
-    private lateinit var targetProviderDelegate: BasicDeloadRoutinesProviderDelegate
+    private lateinit var targetProviderDelegate: DeloadRoutinesProviderDelegate
     private lateinit var table: PhaseEntireRoutineIntensityTable
     private val action = DefaultPropertyMediateDelegate::mediate
 
     @Before
     fun `init`() {
         targetProviderDelegate =
-            BasicDeloadRoutinesProviderDelegate(
+            DeloadRoutinesProviderDelegate(
                 DefaultPropertyMediateDelegate
             )
-        table = BasicDeloadRoutinesProviderDelegate
-            .entireRoutineIntensityTable
+        table = DeloadRoutinesProviderDelegate
+            .routineIntensityMap
     }
 
     @Test
