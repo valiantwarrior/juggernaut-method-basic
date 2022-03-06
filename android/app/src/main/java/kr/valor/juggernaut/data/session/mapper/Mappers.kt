@@ -23,13 +23,6 @@ class DefaultEntityModelMapper(
             val routines = provideRoutines(progressions.phase, tmWeights)
 
             TODO()
-//            AmrapSession(
-//               sessionId = id,
-//               category = liftCategory,
-//               progressions = progressions,
-//               tmWeights = tmWeights,
-//               routines = routines
-//            )
         }
     }
 }
