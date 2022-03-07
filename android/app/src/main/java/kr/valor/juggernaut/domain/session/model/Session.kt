@@ -4,44 +4,31 @@ import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.common.MicroCycle
 import kr.valor.juggernaut.common.Phase
 
-sealed class SessionRoutine
+data class Session(
+    val sessionId: Long,
+    val category: LiftCategory,
+    val tmWeights: Double,
+    val progression: Progression,
+    val routines: List<Routine>,
+) {
 
-sealed class Session {
-    abstract val sessionId: Long
+    private val isDeloadSession: Boolean
+        get() = progression.microCycle == MicroCycle.DELOAD
 
-    abstract val category: LiftCategory
+    val warmupRoutines: List<Routine>?
+        get() = getOrNull(!isDeloadSession) { routines.dropLast(1) }
 
-    abstract val tmWeights: Double
+    val amrapRoutine: Routine?
+        get() = getOrNull(!isDeloadSession) { routines.last() }
 
-    abstract val routines: SessionRoutine
-}
+    val deloadRoutines: List<Routine>?
+        get() = getOrNull(isDeloadSession) { routines }
 
-data class AmrapSession(
-    override val sessionId: Long,
-    override val category: LiftCategory,
-    override val tmWeights: Double,
-    override val routines: AmrapSessionRoutine,
-    val progressions: Progressions
-): Session() {
-    data class Progressions(
+    private inline fun <T> getOrNull(condition: Boolean, get: () -> T): T? =
+        if (condition) get() else null
+
+    data class Progression(
         val phase: Phase,
         val microCycle: MicroCycle
     )
-
-    data class AmrapSessionRoutine(
-        val warmupRoutines: List<Routine>,
-        val amrapRoutine: Routine
-    ): SessionRoutine()
-}
-
-data class DeloadSession(
-    override val sessionId: Long,
-    override val category: LiftCategory,
-    override val tmWeights: Double,
-    override val routines: DeloadSessionRoutine,
-    val phase: Phase
-): Session() {
-    data class DeloadSessionRoutine(
-        val routines: List<Routine>
-    ): SessionRoutine()
 }
