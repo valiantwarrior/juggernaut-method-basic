@@ -21,9 +21,12 @@ data class SessionEntity(
     @ColumnInfo(name = "current_tm_weights")
     val tmWeights: Double,
 
-    @ColumnInfo(name = "repetitions")
-    val repetitions: Int,
+    @ColumnInfo(name = "training_weights")
+    val trainingWeights: Double = 0.0,
 
-    @ColumnInfo(name = "date")
-    val date: Long
+    @ColumnInfo(name = "complete_repetitions")
+    val completeRepetitions: Int = 0,
+
+    @ColumnInfo(name = "complete_date")
+    val completeDate: Long? = null
 )

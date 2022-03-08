@@ -30,7 +30,7 @@ class DefaultEntityModelMapperTest {
             phaseName = Phase.REP10.name,
             microCycleName = MicroCycle.ACCUMULATION.name,
             tmWeights = 60.0,
-            repetitions = 10,
+            completeRepetitions = 10,
             date = System.currentTimeMillis()
         )
 
