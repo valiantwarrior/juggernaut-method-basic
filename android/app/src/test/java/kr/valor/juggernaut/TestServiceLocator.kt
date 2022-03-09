@@ -28,7 +28,7 @@ object TestServiceLocator {
             provideRoutineIntensitySource(), provideRoutinePropertyMediateDelegate()
         )
 
-    fun provideEntityModelMapper(): SessionMapper<SessionEntity, Session, SessionRecord> {
+    fun provideEntityModelMapper(): SessionMapper<SessionEntity, Session> {
         return DefaultSessionEntityMapper(provideRoutineProviderDelegate())
     }
 }
