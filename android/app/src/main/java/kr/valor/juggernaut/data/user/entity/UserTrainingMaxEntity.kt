@@ -13,7 +13,7 @@ data class UserTrainingMaxEntity(
     val liftCategoryName: String,
 
     @ColumnInfo(name = "training_max_weights")
-    val trainingMaxWeights: Double,
+    val trainingMaxWeights: Int,
 
     @ColumnInfo(name = "last_updated_at")
     val lastUpdatedAt: Long

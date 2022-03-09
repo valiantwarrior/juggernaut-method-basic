@@ -5,11 +5,13 @@ data class RoutineIntensity(
     val intensityPercentage: Double
 )
 
-inline fun RoutineIntensity.toRoutineModel(tmWeights: Double, transform: (Double) -> Double) =
-    Routine(
+inline fun RoutineIntensity.toRoutineModel(tmWeights: Int, actualRepetitions: Int? = null, transform: (Double) -> Int) =
+    actualRepetitions?.let { actualReps ->
+        Routine(
+            weights = transform(tmWeights * intensityPercentage),
+            reps = actualReps
+        )
+    } ?: Routine(
         weights = transform(tmWeights * intensityPercentage),
         reps = repetitions
     )
-
-inline fun List<RoutineIntensity>.toRoutineModels(tmWeights: Double, transform: (Double) -> Double) =
-    map { it.toRoutineModel(tmWeights, transform) }

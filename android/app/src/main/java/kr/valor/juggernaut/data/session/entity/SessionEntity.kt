@@ -9,8 +9,8 @@ data class SessionEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
 
-    @ColumnInfo(name = "category")
-    val liftCategoryName: String,
+    @ColumnInfo(name = "method_cycle")
+    val methodCycle: Int,
 
     @ColumnInfo(name = "phase")
     val phaseName: String,
@@ -18,15 +18,15 @@ data class SessionEntity(
     @ColumnInfo(name = "micro_cycle")
     val microCycleName: String,
 
+    @ColumnInfo(name = "category")
+    val liftCategoryName: String,
+
     @ColumnInfo(name = "current_tm_weights")
-    val tmWeights: Double,
+    val baseWeights: Int,
 
-    @ColumnInfo(name = "training_weights")
-    val trainingWeights: Double = 0.0,
-
-    @ColumnInfo(name = "complete_repetitions")
-    val completeRepetitions: Int = 0,
+    @ColumnInfo(name = "amrap_repetitions")
+    val amrapRepetitions: Int? = null,
 
     @ColumnInfo(name = "complete_date")
-    val completeDate: Long? = null
+    val completeDateMillis: Long? = null
 )

@@ -1,10 +1,7 @@
 package kr.valor.juggernaut.data.user.source
 
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.emptyPreferences
-import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -19,6 +16,7 @@ class PreferencesUserProgressionSource(
 ): UserProgressionDataSource {
 
     private object PreferencesKeys {
+        val METHOD_CYCLE = intPreferencesKey("method_cycle")
         val PHASE = stringPreferencesKey("phase")
         val CYCLE = stringPreferencesKey("micro_cycle")
         val CATEGORY = stringPreferencesKey("lift_category")
@@ -39,6 +37,12 @@ class PreferencesUserProgressionSource(
     override fun getUserProgressionData(): Flow<UserProgression> =
         userProgressionFlow
 
+    override suspend fun editUserProgressionMethodCycle(methodCycle: Int) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.METHOD_CYCLE] = methodCycle
+        }
+    }
+
     override suspend fun editUserProgressionMicroCycle(microCycle: MicroCycle) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.CYCLE] = microCycle.name
@@ -58,6 +62,8 @@ class PreferencesUserProgressionSource(
     }
 
     private fun mapUserProgression(preferences: Preferences): UserProgression {
+        val methodCycle = preferences[PreferencesKeys.METHOD_CYCLE] ?: 1
+
         val phase = Phase.valueOf(
             preferences[PreferencesKeys.PHASE] ?: Phase.REP10.name
         )
@@ -68,6 +74,6 @@ class PreferencesUserProgressionSource(
             preferences[PreferencesKeys.CATEGORY] ?: LiftCategory.BENCH_PRESS.name
         )
 
-        return UserProgression(phase, cycle, category)
+        return UserProgression(methodCycle, phase, cycle, category)
     }
 }

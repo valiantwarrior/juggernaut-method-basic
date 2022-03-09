@@ -8,7 +8,8 @@ import kr.valor.juggernaut.data.session.entity.SessionEntity
 data class Session(
     val sessionId: Long,
     val category: LiftCategory,
-    val tmWeights: Double,
+    val tmWeights: Int,
+    val methodCycle: Int,
     val progression: Progression,
     val routines: List<Routine>,
 ) {

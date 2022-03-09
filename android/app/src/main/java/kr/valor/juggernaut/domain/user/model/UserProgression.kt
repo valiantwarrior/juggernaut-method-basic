@@ -5,6 +5,7 @@ import kr.valor.juggernaut.common.MicroCycle
 import kr.valor.juggernaut.common.Phase
 
 data class UserProgression(
+    val methodCycle: Int,
     val currentPhase: Phase,
     val currentMicroCycle: MicroCycle,
     val currentLiftCategory: LiftCategory

@@ -13,10 +13,24 @@ class BasicMethodRoutineProviderDelegate(
     routinePropertyMediateDelegate: RoutinePropertyMediateDelegate // run time injection
 ): RoutineProviderDelegate<Progression>, RoutinePropertyMediateDelegate by routinePropertyMediateDelegate {
 
-    override fun provideSessionRoutine(progression: Progression, tmWeights: Double): List<Routine> =
-        with(progression) {
-            routineIntensitySource
-                .provideRoutineIntensityMap(microCycle)[phase]!!
-                .toRoutineModels(tmWeights, ::mediate)
+    override fun provideSessionRoutine(progression: Progression, tmWeights: Int, actualRepetitions: Int?): List<Routine> {
+        val (phase, microCycle) = progression
+        val routineIntensities = routineIntensitySource.provideRoutineIntensityMap(microCycle)[phase]!!
+
+        return if (microCycle == MicroCycle.DELOAD) {
+            routineIntensities.map { it.toRoutineModel(tmWeights = tmWeights, transform = ::mediate) }
+        } else {
+            val warmupRoutines = routineIntensities.dropLast(1).map {
+                it.toRoutineModel(tmWeights = tmWeights, transform = ::mediate)
+            }
+            val amrapRoutine = routineIntensities.last().toRoutineModel(
+                tmWeights = tmWeights,
+                actualRepetitions = actualRepetitions,
+                transform = ::mediate
+            )
+
+            warmupRoutines + amrapRoutine
         }
+    }
+
 }

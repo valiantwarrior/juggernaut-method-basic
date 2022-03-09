@@ -3,8 +3,9 @@ package kr.valor.juggernaut
 import kr.valor.juggernaut.common.MicroCycle
 import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.data.session.entity.SessionEntity
-import kr.valor.juggernaut.data.session.mapper.DefaultEntityModelMapper
-import kr.valor.juggernaut.data.session.mapper.EntityModelMapper
+import kr.valor.juggernaut.data.session.mapper.DefaultSessionEntityMapper
+import kr.valor.juggernaut.data.session.mapper.SessionMapper
+import kr.valor.juggernaut.data.session.mapper.SessionRecord
 import kr.valor.juggernaut.data.session.mapper.delegate.RoutineProviderDelegate
 import kr.valor.juggernaut.data.session.mapper.delegate.intensity.InMemoryRoutineIntensitySource
 import kr.valor.juggernaut.data.session.mapper.delegate.intensity.RoutineIntensitySource
@@ -27,7 +28,7 @@ object TestServiceLocator {
             provideRoutineIntensitySource(), provideRoutinePropertyMediateDelegate()
         )
 
-    fun provideEntityModelMapper(): EntityModelMapper<SessionEntity, Session> {
-        return DefaultEntityModelMapper(provideRoutineProviderDelegate())
+    fun provideEntityModelMapper(): SessionMapper<SessionEntity, Session, SessionRecord> {
+        return DefaultSessionEntityMapper(provideRoutineProviderDelegate())
     }
 }

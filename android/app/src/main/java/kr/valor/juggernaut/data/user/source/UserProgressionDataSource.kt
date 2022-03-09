@@ -8,6 +8,7 @@ import kr.valor.juggernaut.domain.user.model.UserProgression
 
 interface UserProgressionDataSource {
     fun getUserProgressionData(): Flow<UserProgression>
+    suspend fun editUserProgressionMethodCycle(methodCycle: Int)
     suspend fun editUserProgressionMicroCycle(microCycle: MicroCycle)
     suspend fun editUserProgressionPhase(phase: Phase)
     suspend fun editUserProgressionCategory(liftCategory: LiftCategory)
