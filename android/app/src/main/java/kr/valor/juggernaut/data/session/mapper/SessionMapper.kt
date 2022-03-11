@@ -7,8 +7,9 @@ import kr.valor.juggernaut.data.session.entity.SessionEntity
 import kr.valor.juggernaut.domain.session.model.*
 import kr.valor.juggernaut.domain.session.model.Session.Progression as Progression
 
-interface SessionMapper<E, D>: EntityMapper<E, D> {
-    fun map(model: D, params: SessionRecord?): E
+interface SessionMapper: EntityMapper<SessionEntity, Session> {
+    fun map(model: Session, params: SessionRecord?): SessionEntity
+    fun map(entities: List<SessionEntity>): List<Session>
 }
 
 data class SessionRecord(
@@ -18,7 +19,7 @@ data class SessionRecord(
 
 class DefaultSessionEntityMapper(
     routineProviderDelegate: RoutineProviderDelegate<Progression>
-) : SessionMapper<SessionEntity, Session>, RoutineProviderDelegate<Progression> by routineProviderDelegate {
+) : SessionMapper, RoutineProviderDelegate<Progression> by routineProviderDelegate {
 
     override fun map(entity: SessionEntity): Session {
         return with(entity) {
@@ -39,6 +40,9 @@ class DefaultSessionEntityMapper(
             )
         }
     }
+
+    override fun map(entities: List<SessionEntity>): List<Session> =
+        entities.map { map(it) }
 
     override fun map(model: Session, params: SessionRecord?): SessionEntity =
         with(model) {

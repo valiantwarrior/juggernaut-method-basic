@@ -37,25 +37,25 @@ class PreferencesUserProgressionSource(
     override fun getUserProgressionData(): Flow<UserProgression> =
         userProgressionFlow
 
-    override suspend fun editUserProgressionMethodCycle(methodCycle: Int) {
+    override suspend fun editUserProgression(methodCycle: Int) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.METHOD_CYCLE] = methodCycle
         }
     }
 
-    override suspend fun editUserProgressionMicroCycle(microCycle: MicroCycle) {
+    override suspend fun editUserProgression(microCycle: MicroCycle) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.CYCLE] = microCycle.name
         }
     }
 
-    override suspend fun editUserProgressionPhase(phase: Phase) {
+    override suspend fun editUserProgression(phase: Phase) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.PHASE] = phase.name
         }
     }
 
-    override suspend fun editUserProgressionCategory(liftCategory: LiftCategory) {
+    override suspend fun editUserProgression(liftCategory: LiftCategory) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.CATEGORY] = liftCategory.name
         }

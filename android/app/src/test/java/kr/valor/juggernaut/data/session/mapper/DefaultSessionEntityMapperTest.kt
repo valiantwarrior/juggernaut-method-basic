@@ -19,7 +19,7 @@ class DefaultSessionEntityMapperTest {
 
     @Before
     fun `init`() {
-        mapper = TestServiceLocator.provideEntityModelMapper()
+        mapper = TestServiceLocator.provideSessionMapper()
         routineProvider = TestServiceLocator.provideRoutineProviderDelegate()
         baseEntity = SessionEntity(
             methodCycle = 1,
