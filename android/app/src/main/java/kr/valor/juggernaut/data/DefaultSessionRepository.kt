@@ -13,7 +13,7 @@ import kr.valor.juggernaut.domain.user.model.UserProgression
 import kr.valor.juggernaut.domain.user.model.UserTrainingMax
 
 class DefaultSessionRepository(
-    private val sessionMapper: SessionMapper<SessionEntity, Session>,
+    private val sessionMapper: SessionMapper,
     private val sessionDataSource: SessionDataSource
 ): SessionRepository {
 

@@ -13,7 +13,7 @@ import org.junit.Before
 import org.junit.Test
 
 class DefaultSessionEntityMapperTest {
-    private lateinit var mapper: SessionMapper<SessionEntity, Session>
+    private lateinit var mapper: SessionMapper
     private lateinit var routineProvider: RoutineProviderDelegate<Session.Progression>
     private lateinit var baseEntity: SessionEntity
 

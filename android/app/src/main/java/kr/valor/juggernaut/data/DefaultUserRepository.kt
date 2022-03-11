@@ -2,6 +2,8 @@ package kr.valor.juggernaut.data
 
 import kotlinx.coroutines.flow.Flow
 import kr.valor.juggernaut.common.LiftCategory
+import kr.valor.juggernaut.common.MicroCycle
+import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.data.user.entity.UserTrainingMaxEntity
 import kr.valor.juggernaut.data.user.mapper.UserTrainingMaxMapper
 import kr.valor.juggernaut.data.user.source.UserProgressionDataSource
@@ -15,9 +17,6 @@ class DefaultUserRepository(
     private val userTrainingMaxDataSource: UserTrainingMaxDataSource,
     private val userProgressionDataSource: UserProgressionDataSource
 ): UserRepository {
-
-    private val userProgressionFlow: Flow<UserProgression> =
-        userProgressionDataSource.getUserProgressionData()
 
     override suspend fun getUserTrainingMax(liftCategory: LiftCategory): UserTrainingMax {
         val userTrainingMaxEntity =
@@ -37,6 +36,21 @@ class DefaultUserRepository(
         )
 
     override fun getUserProgression(): Flow<UserProgression> =
-        userProgressionFlow
+        userProgressionDataSource.getUserProgressionData()
 
+    override suspend fun updateUserProgression(microCycle: MicroCycle) {
+        userProgressionDataSource.editUserProgression(microCycle)
+    }
+
+    override suspend fun updateUserProgression(methodCycle: Int) {
+        userProgressionDataSource.editUserProgression(methodCycle)
+    }
+
+    override suspend fun updateUserProgression(phase: Phase) {
+        userProgressionDataSource.editUserProgression(phase)
+    }
+
+    override suspend fun updateUserProgression(liftCategory: LiftCategory) {
+        userProgressionDataSource.editUserProgression(liftCategory)
+    }
 }
