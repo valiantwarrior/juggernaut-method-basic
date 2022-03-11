@@ -1,6 +1,7 @@
 package kr.valor.juggernaut.data
 
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kr.valor.juggernaut.TestServiceLocator
 import kr.valor.juggernaut.common.LiftCategory
@@ -39,7 +40,7 @@ class DefaultSessionRepositoryTest {
         )
 
         repository.synchronizeSession(userProgression, userTrainingMax)
-        repository.getSession().collect {
+        repository.getSession().first().let {
             assertThat(it, `is`(notNullValue()))
             assertThat(it, instanceOf(Session::class.java))
             assertThat(it.progression.phase, `is`(Phase.REP10))
@@ -47,12 +48,12 @@ class DefaultSessionRepositoryTest {
             assertThat(it.category, `is`(LiftCategory.BENCH_PRESS))
             assertThat(it.tmWeights, `is`(60))
         }
-        repository.getAllSessions().collect {
+        repository.getAllSessions().first().let {
             assertThat(it.size, `is`(1))
         }
 
         repository.synchronizeSession(userProgression, userTrainingMax)
-        repository.getSession().collect {
+        repository.getSession().first().let {
             assertThat(it, `is`(notNullValue()))
             assertThat(it, instanceOf(Session::class.java))
             assertThat(it.progression.phase, `is`(Phase.REP10))
@@ -60,7 +61,7 @@ class DefaultSessionRepositoryTest {
             assertThat(it.category, `is`(LiftCategory.BENCH_PRESS))
             assertThat(it.tmWeights, `is`(60))
         }
-        repository.getAllSessions().collect {
+        repository.getAllSessions().first().let {
             assertThat(it.size, `is`(1))
         }
 
@@ -68,7 +69,7 @@ class DefaultSessionRepositoryTest {
         userTrainingMax = userTrainingMax.copy(liftCategory = LiftCategory.DEAD_LIFT, trainingMaxWeights = 100)
 
         repository.synchronizeSession(userProgression, userTrainingMax)
-        repository.getSession().collect {
+        repository.getSession().first().let {
             assertThat(it, `is`(notNullValue()))
             assertThat(it, instanceOf(Session::class.java))
             assertThat(it.progression.phase, `is`(Phase.REP10))
@@ -76,7 +77,7 @@ class DefaultSessionRepositoryTest {
             assertThat(it.category, `is`(LiftCategory.DEAD_LIFT))
             assertThat(it.tmWeights, `is`(100))
         }
-        repository.getAllSessions().collect {
+        repository.getAllSessions().first().let {
             assertThat(it.size, `is`(2))
         }
     }

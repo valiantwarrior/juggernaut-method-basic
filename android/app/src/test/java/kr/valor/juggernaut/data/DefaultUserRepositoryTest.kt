@@ -1,6 +1,7 @@
 package kr.valor.juggernaut.data
 
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -56,7 +57,7 @@ class DefaultUserRepositoryTest {
 
     @Test
     fun `getUserProgression works as expected`() = runTest {
-        repository.getUserProgression().collect() {
+        repository.getUserProgression().first().let {
             assertThat(it.liftCategory, `is`(LiftCategory.BENCH_PRESS))
             assertThat(it.microCycle, `is`(MicroCycle.ACCUMULATION))
             assertThat(it.methodCycle, `is`(1))
@@ -66,7 +67,7 @@ class DefaultUserRepositoryTest {
 
     @Test
     fun `editUserProgression works as expected`() = runTest {
-        repository.getUserProgression().collect {
+        repository.getUserProgression().first().let {
             assertThat(it.phase, `is`(Phase.REP10))
             assertThat(it.methodCycle, `is`(1))
             assertThat(it.microCycle, `is`(MicroCycle.ACCUMULATION))
@@ -74,7 +75,7 @@ class DefaultUserRepositoryTest {
         }
 
         repository.updateUserProgression(2)
-        repository.getUserProgression().collect {
+        repository.getUserProgression().first().let {
             assertThat(it.phase, `is`(Phase.REP10))
             assertThat(it.methodCycle, `is`(2))
             assertThat(it.microCycle, `is`(MicroCycle.ACCUMULATION))
@@ -82,7 +83,7 @@ class DefaultUserRepositoryTest {
         }
 
         repository.updateUserProgression(LiftCategory.DEAD_LIFT)
-        repository.getUserProgression().collect {
+        repository.getUserProgression().first().let {
             assertThat(it.phase, `is`(Phase.REP10))
             assertThat(it.methodCycle, `is`(2))
             assertThat(it.microCycle, `is`(MicroCycle.ACCUMULATION))
