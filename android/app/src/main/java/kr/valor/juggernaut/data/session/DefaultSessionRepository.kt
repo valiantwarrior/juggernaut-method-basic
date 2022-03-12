@@ -18,8 +18,8 @@ class DefaultSessionRepository(
     private val sessionDataSource: SessionDataSource
 ): SessionRepository {
 
-    override fun getSession(): Flow<Session> =
-        sessionDataSource.getSessionEntity().map { sessionEntity ->
+    override fun getLatestSession(): Flow<Session> =
+        sessionDataSource.getLatestSessionEntity().map { sessionEntity ->
             sessionMapper.map(sessionEntity)
         }
 
@@ -28,13 +28,13 @@ class DefaultSessionRepository(
             sessionMapper.map(sessionEntities)
         }
 
-    override suspend fun getSessionById(sessionId: Long): Session {
-        val sessionEntity = sessionDataSource.getSessionEntityById(sessionId)
+    override suspend fun findSessionById(sessionId: Long): Session {
+        val sessionEntity = sessionDataSource.findSessionEntityById(sessionId)
         return sessionMapper.map(sessionEntity)
     }
 
     override suspend fun synchronizeSession(userProgression: UserProgression, userTrainingMax: UserTrainingMax) {
-        sessionDataSource.getLatestSessionEntity()?.let { entity ->
+        sessionDataSource.getLatestSessionEntityOrNull()?.let { entity ->
             val userProgressionFromEntity = entity.getUserProgression()
             if (userProgressionFromEntity != userProgression) {
                 initSession(userProgression, userTrainingMax)

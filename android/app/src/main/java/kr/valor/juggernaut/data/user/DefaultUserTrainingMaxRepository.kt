@@ -20,9 +20,9 @@ class DefaultUserTrainingMaxRepository(
             userTrainingMaxMapper.map(entities)
         }
 
-    override suspend fun getUserTrainingMaxByLiftCategory(liftCategory: LiftCategory): UserTrainingMax =
+    override suspend fun findUserTrainingMaxByLiftCategory(liftCategory: LiftCategory): UserTrainingMax =
         userTrainingMaxDataSource
-            .getUserTrainingMaxEntityByLiftCategory(liftCategory.name)
+            .findUserTrainingMaxEntityByLiftCategory(liftCategory.name)
             .let { entity ->
                 userTrainingMaxMapper.map(entity)
             }

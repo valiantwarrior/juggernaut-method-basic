@@ -22,15 +22,15 @@ class FakeSessionDataSource: SessionDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getSessionEntityById(id: Long): SessionEntity {
+    override suspend fun findSessionEntityById(id: Long): SessionEntity {
         return inMemoryStorage.find { it.id == id }!!
     }
 
-    override suspend fun getLatestSessionEntity(): SessionEntity? {
+    override suspend fun getLatestSessionEntityOrNull(): SessionEntity? {
         return inMemoryStorage.lastOrNull()
     }
 
-    override fun getSessionEntity(): Flow<SessionEntity> {
+    override fun getLatestSessionEntity(): Flow<SessionEntity> {
         return flowOf(inMemoryStorage.last())
     }
 

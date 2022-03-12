@@ -6,7 +6,7 @@ import kr.valor.juggernaut.domain.user.model.UserTrainingMax
 
 interface UserTrainingMaxRepository {
     fun getAllUserTrainingMaxes(): Flow<List<UserTrainingMax>>
-    suspend fun getUserTrainingMaxByLiftCategory(liftCategory: LiftCategory): UserTrainingMax
+    suspend fun findUserTrainingMaxByLiftCategory(liftCategory: LiftCategory): UserTrainingMax
     suspend fun insertUserTrainingMax(trainingMax: UserTrainingMax): Long
     fun createUserTrainingMax(rawTmWeights: Double, liftCategory: LiftCategory): UserTrainingMax
     suspend fun clear()

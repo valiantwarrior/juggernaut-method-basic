@@ -36,7 +36,7 @@ class FakeUserTrainingMaxDataSource: UserTrainingMaxDataSource {
         )
     )
 
-    override suspend fun getUserTrainingMaxEntityByLiftCategory(liftCategoryName: String): UserTrainingMaxEntity {
+    override suspend fun findUserTrainingMaxEntityByLiftCategory(liftCategoryName: String): UserTrainingMaxEntity {
         return inMemoryStorage.findLast { it.liftCategoryName == liftCategoryName }!!
     }
 

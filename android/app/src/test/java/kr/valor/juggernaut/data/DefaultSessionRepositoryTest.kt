@@ -46,7 +46,7 @@ class DefaultSessionRepositoryTest {
         )
 
         repository.synchronizeSession(userProgression, userTrainingMax)
-        repository.getSession().first().let {
+        repository.getLatestSession().first().let {
             assertThat(it, `is`(notNullValue()))
             assertThat(it, instanceOf(Session::class.java))
             assertThat(it.progression.phase, `is`(Phase.REP10))
@@ -59,7 +59,7 @@ class DefaultSessionRepositoryTest {
         }
 
         repository.synchronizeSession(userProgression, userTrainingMax)
-        repository.getSession().first().let {
+        repository.getLatestSession().first().let {
             assertThat(it, `is`(notNullValue()))
             assertThat(it, instanceOf(Session::class.java))
             assertThat(it.progression.phase, `is`(Phase.REP10))
@@ -75,7 +75,7 @@ class DefaultSessionRepositoryTest {
         userTrainingMax = userTrainingMax.copy(liftCategory = LiftCategory.DEAD_LIFT, trainingMaxWeights = 100)
 
         repository.synchronizeSession(userProgression, userTrainingMax)
-        repository.getSession().first().let {
+        repository.getLatestSession().first().let {
             assertThat(it, `is`(notNullValue()))
             assertThat(it, instanceOf(Session::class.java))
             assertThat(it.progression.phase, `is`(Phase.REP10))

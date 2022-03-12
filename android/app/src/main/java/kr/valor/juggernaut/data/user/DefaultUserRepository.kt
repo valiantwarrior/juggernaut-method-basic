@@ -21,7 +21,7 @@ class DefaultUserRepository(
 
     override suspend fun getUserTrainingMax(liftCategory: LiftCategory): UserTrainingMax {
         val userTrainingMaxEntity =
-            userTrainingMaxDataSource.getUserTrainingMaxEntityByLiftCategory(liftCategory.name)
+            userTrainingMaxDataSource.findUserTrainingMaxEntityByLiftCategory(liftCategory.name)
 
         return userTrainingMaxMapper.map(userTrainingMaxEntity)
     }

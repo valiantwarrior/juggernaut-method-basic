@@ -44,7 +44,7 @@ class SynchronizeSessionUseCaseImplTest {
             assertThat(it.size, `is`(1))
         }
 
-        sessionRepository.getSession().first().let {
+        sessionRepository.getLatestSession().first().let {
             assertThat(it, instanceOf(Session::class.java))
         }
     }
