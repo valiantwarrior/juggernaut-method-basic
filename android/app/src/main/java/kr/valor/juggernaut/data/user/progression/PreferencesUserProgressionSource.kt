@@ -1,4 +1,4 @@
-package kr.valor.juggernaut.data.user.source
+package kr.valor.juggernaut.data.user.progression
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kr.valor.juggernaut.common.*
+import kr.valor.juggernaut.data.user.progression.source.UserProgressionDataSource
 import kr.valor.juggernaut.domain.user.model.UserProgression
 import java.io.IOException
 

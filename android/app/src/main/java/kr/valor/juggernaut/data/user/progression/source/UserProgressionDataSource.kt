@@ -1,4 +1,4 @@
-package kr.valor.juggernaut.data.user.source
+package kr.valor.juggernaut.data.user.progression.source
 
 import kotlinx.coroutines.flow.Flow
 import kr.valor.juggernaut.common.*

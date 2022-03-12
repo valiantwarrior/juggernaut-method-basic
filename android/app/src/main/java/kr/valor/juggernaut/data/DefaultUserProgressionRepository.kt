@@ -1,8 +1,8 @@
-package kr.valor.juggernaut.data.user
+package kr.valor.juggernaut.data
 
 import kotlinx.coroutines.flow.Flow
 import kr.valor.juggernaut.common.*
-import kr.valor.juggernaut.data.user.source.UserProgressionDataSource
+import kr.valor.juggernaut.data.user.progression.source.UserProgressionDataSource
 import kr.valor.juggernaut.domain.user.model.UserProgression
 import kr.valor.juggernaut.domain.user.repository.UserProgressionRepository
 

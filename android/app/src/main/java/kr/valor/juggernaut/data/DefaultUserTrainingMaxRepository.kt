@@ -1,11 +1,11 @@
-package kr.valor.juggernaut.data.user
+package kr.valor.juggernaut.data
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.data.common.converter.WeightUnitTransformer
 import kr.valor.juggernaut.data.user.mapper.UserTrainingMaxMapper
-import kr.valor.juggernaut.data.user.source.UserTrainingMaxDataSource
+import kr.valor.juggernaut.data.user.trainingmax.source.UserTrainingMaxDataSource
 import kr.valor.juggernaut.domain.user.model.UserTrainingMax
 import kr.valor.juggernaut.domain.user.repository.UserTrainingMaxRepository
 

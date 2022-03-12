@@ -2,7 +2,7 @@ package kr.valor.juggernaut.data.user.mapper
 
 import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.data.common.mapper.EntityMapper
-import kr.valor.juggernaut.data.user.entity.UserTrainingMaxEntity
+import kr.valor.juggernaut.data.user.trainingmax.entity.UserTrainingMaxEntity
 import kr.valor.juggernaut.domain.user.model.UserTrainingMax
 
 interface UserTrainingMaxMapper: EntityMapper<UserTrainingMaxEntity, UserTrainingMax> {

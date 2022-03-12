@@ -1,4 +1,4 @@
-package kr.valor.juggernaut.data.session
+package kr.valor.juggernaut.data
 
 import kotlinx.coroutines.flow.*
 import kr.valor.juggernaut.common.LiftCategory

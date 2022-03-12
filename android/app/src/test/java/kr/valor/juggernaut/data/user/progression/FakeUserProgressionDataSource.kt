@@ -1,7 +1,8 @@
-package kr.valor.juggernaut.data.user.source
+package kr.valor.juggernaut.data.user.progression
 
 import kotlinx.coroutines.flow.*
 import kr.valor.juggernaut.common.*
+import kr.valor.juggernaut.data.user.progression.source.UserProgressionDataSource
 import kr.valor.juggernaut.domain.user.model.UserProgression
 
 class FakeUserProgressionDataSource: UserProgressionDataSource {

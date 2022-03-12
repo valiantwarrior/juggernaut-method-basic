@@ -1,4 +1,4 @@
-package kr.valor.juggernaut.data.user.entity
+package kr.valor.juggernaut.data.user.trainingmax.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -1,8 +1,7 @@
-package kr.valor.juggernaut.data.user.source
+package kr.valor.juggernaut.data.user.trainingmax.source
 
 import kotlinx.coroutines.flow.Flow
-import kr.valor.juggernaut.common.LiftCategory
-import kr.valor.juggernaut.data.user.entity.UserTrainingMaxEntity
+import kr.valor.juggernaut.data.user.trainingmax.entity.UserTrainingMaxEntity
 
 interface UserTrainingMaxDataSource {
     suspend fun findUserTrainingMaxEntityByLiftCategory(liftCategoryName: String): UserTrainingMaxEntity

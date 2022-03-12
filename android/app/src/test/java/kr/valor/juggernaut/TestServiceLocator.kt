@@ -2,7 +2,7 @@ package kr.valor.juggernaut
 
 import kr.valor.juggernaut.common.MicroCycle
 import kr.valor.juggernaut.common.Phase
-import kr.valor.juggernaut.data.session.DefaultSessionRepository
+import kr.valor.juggernaut.data.DefaultSessionRepository
 import kr.valor.juggernaut.data.user.DefaultUserRepository
 import kr.valor.juggernaut.data.session.mapper.DefaultSessionEntityMapper
 import kr.valor.juggernaut.data.session.mapper.SessionMapper
@@ -12,11 +12,11 @@ import kr.valor.juggernaut.data.session.mapper.delegate.intensity.RoutineIntensi
 import kr.valor.juggernaut.data.common.converter.KgWeightUnitTransformer
 import kr.valor.juggernaut.data.common.converter.WeightUnitTransformer
 import kr.valor.juggernaut.data.session.mapper.delegate.routine.BasicMethodRoutineProviderDelegate
-import kr.valor.juggernaut.data.session.source.FakeSessionDataSource
+import kr.valor.juggernaut.data.session.FakeSessionDataSource
 import kr.valor.juggernaut.data.user.mapper.DefaultUserTrainingMaxMapper
 import kr.valor.juggernaut.data.user.mapper.UserTrainingMaxMapper
-import kr.valor.juggernaut.data.user.source.FakeUserProgressionDataSource
-import kr.valor.juggernaut.data.user.source.FakeUserTrainingMaxDataSource
+import kr.valor.juggernaut.data.user.progression.FakeUserProgressionDataSource
+import kr.valor.juggernaut.data.user.trainingmax.FakeUserTrainingMaxDataSource
 import kr.valor.juggernaut.domain.session.repository.SessionRepository
 import kr.valor.juggernaut.domain.session.usecases.SynchronizeSessionUseCase
 import kr.valor.juggernaut.domain.session.usecases.SynchronizeSessionUseCaseImpl
