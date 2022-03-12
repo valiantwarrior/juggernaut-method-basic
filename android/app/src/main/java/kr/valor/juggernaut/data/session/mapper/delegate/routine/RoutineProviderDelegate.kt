@@ -1,4 +1,4 @@
-package kr.valor.juggernaut.data.session.mapper.delegate
+package kr.valor.juggernaut.data.session.mapper.delegate.routine
 
 import kr.valor.juggernaut.domain.session.model.Routine
 

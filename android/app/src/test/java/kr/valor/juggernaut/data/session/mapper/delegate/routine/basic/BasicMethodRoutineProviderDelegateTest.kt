@@ -4,7 +4,7 @@ import kr.valor.juggernaut.TestServiceLocator
 import kr.valor.juggernaut.common.MicroCycle
 import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.data.session.mapper.delegate.intensity.RoutineIntensitySource
-import kr.valor.juggernaut.data.session.mapper.delegate.RoutineProviderDelegate
+import kr.valor.juggernaut.data.session.mapper.delegate.routine.RoutineProviderDelegate
 import kr.valor.juggernaut.domain.session.model.*
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
@@ -25,7 +25,7 @@ class BasicMethodRoutineProviderDelegateTest {
     fun `init`() {
         routineIntensitySource = TestServiceLocator.provideRoutineIntensitySource()
         target = TestServiceLocator.provideRoutineProviderDelegate()
-        action = TestServiceLocator.provideRoutinePropertyMediateDelegate()::convert
+        action = TestServiceLocator.provideRoutinePropertyMediateDelegate()::transform
     }
 
     @Test

@@ -2,14 +2,13 @@ package kr.valor.juggernaut.data.session.mapper
 
 import kr.valor.juggernaut.common.*
 import kr.valor.juggernaut.data.common.mapper.EntityMapper
-import kr.valor.juggernaut.data.session.mapper.delegate.RoutineProviderDelegate
+import kr.valor.juggernaut.data.session.mapper.delegate.routine.RoutineProviderDelegate
 import kr.valor.juggernaut.data.session.entity.SessionEntity
 import kr.valor.juggernaut.domain.session.model.*
 import kr.valor.juggernaut.domain.session.model.Session.Progression as Progression
 
 interface SessionMapper: EntityMapper<SessionEntity, Session> {
     fun map(model: Session, params: SessionRecord?): SessionEntity
-    fun map(entities: List<SessionEntity>): List<Session>
 }
 
 class DefaultSessionEntityMapper(

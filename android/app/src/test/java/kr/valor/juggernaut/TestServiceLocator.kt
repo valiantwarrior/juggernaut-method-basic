@@ -6,11 +6,11 @@ import kr.valor.juggernaut.data.session.DefaultSessionRepository
 import kr.valor.juggernaut.data.user.DefaultUserRepository
 import kr.valor.juggernaut.data.session.mapper.DefaultSessionEntityMapper
 import kr.valor.juggernaut.data.session.mapper.SessionMapper
-import kr.valor.juggernaut.data.session.mapper.delegate.RoutineProviderDelegate
+import kr.valor.juggernaut.data.session.mapper.delegate.routine.RoutineProviderDelegate
 import kr.valor.juggernaut.data.session.mapper.delegate.intensity.InMemoryRoutineIntensitySource
 import kr.valor.juggernaut.data.session.mapper.delegate.intensity.RoutineIntensitySource
-import kr.valor.juggernaut.data.common.converter.KgWeightUnitConversionDelegate
-import kr.valor.juggernaut.data.common.converter.WeightUnitConversionDelegate
+import kr.valor.juggernaut.data.common.converter.KgWeightUnitTransformer
+import kr.valor.juggernaut.data.common.converter.WeightUnitTransformer
 import kr.valor.juggernaut.data.session.mapper.delegate.routine.BasicMethodRoutineProviderDelegate
 import kr.valor.juggernaut.data.session.source.FakeSessionDataSource
 import kr.valor.juggernaut.data.user.mapper.DefaultUserTrainingMaxMapper
@@ -42,8 +42,8 @@ object TestServiceLocator {
 
 
 
-    fun provideRoutinePropertyMediateDelegate(): WeightUnitConversionDelegate =
-        KgWeightUnitConversionDelegate
+    fun provideRoutinePropertyMediateDelegate(): WeightUnitTransformer =
+        KgWeightUnitTransformer()
 
     fun provideRoutineIntensitySource(): RoutineIntensitySource<MicroCycle, Phase> =
         InMemoryRoutineIntensitySource()

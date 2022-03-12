@@ -18,6 +18,9 @@ class DefaultUserTrainingMaxMapper: UserTrainingMaxMapper {
             lastUpdatedAt = entity.lastUpdatedAt
         )
 
+    override fun map(entities: List<UserTrainingMaxEntity>): List<UserTrainingMax> =
+        entities.map { map(it) }
+
     override fun map(model: UserTrainingMax): UserTrainingMaxEntity {
         TODO("Not yet implemented")
     }
