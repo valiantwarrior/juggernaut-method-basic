@@ -1,15 +1,13 @@
 package kr.valor.juggernaut.data.user.source
 
 import kotlinx.coroutines.flow.*
-import kr.valor.juggernaut.common.LiftCategory
-import kr.valor.juggernaut.common.MicroCycle
-import kr.valor.juggernaut.common.Phase
+import kr.valor.juggernaut.common.*
 import kr.valor.juggernaut.domain.user.model.UserProgression
 
 class FakeUserProgressionDataSource: UserProgressionDataSource {
 
     private val initialState = UserProgression(
-        1, Phase.REP10, MicroCycle.ACCUMULATION, LiftCategory.BENCH_PRESS
+        MethodCycle(1), Phase.REP10, MicroCycle.ACCUMULATION, LiftCategory.BENCH_PRESS
     )
 
     // mutable state flow UserProgression
@@ -19,22 +17,31 @@ class FakeUserProgressionDataSource: UserProgressionDataSource {
     override fun getUserProgressionData(): Flow<UserProgression> =
         flowOf(_userProgressionStateFlow.value)
 
-    override suspend fun editUserProgression(methodCycle: Int) {
+    override suspend fun editUserProgression(progressionElement: ProgressionElement) {
+        when(progressionElement) {
+            is MethodCycle -> editMethodCyclePreference(progressionElement)
+            is Phase -> editPhasePreference(progressionElement)
+            is MicroCycle -> editMicroCyclePreference(progressionElement)
+            is LiftCategory -> editLiftCategoryPreference(progressionElement)
+        }
+    }
+
+    private fun editMethodCyclePreference(methodCycle: MethodCycle) {
         val current = _userProgressionStateFlow.value
         _userProgressionStateFlow.update { current.copy(methodCycle = methodCycle) }
     }
 
-    override suspend fun editUserProgression(microCycle: MicroCycle) {
+    private fun editMicroCyclePreference(microCycle: MicroCycle) {
         val current = _userProgressionStateFlow.value
         _userProgressionStateFlow.update { current.copy(microCycle = microCycle) }
     }
 
-    override suspend fun editUserProgression(phase: Phase) {
+    private fun editPhasePreference(phase: Phase) {
         val current = _userProgressionStateFlow.value
         _userProgressionStateFlow.update { current.copy(phase = phase) }
     }
 
-    override suspend fun editUserProgression(liftCategory: LiftCategory) {
+    private fun editLiftCategoryPreference(liftCategory: LiftCategory) {
         val current = _userProgressionStateFlow.value
         _userProgressionStateFlow.update { current.copy(liftCategory = liftCategory) }
     }

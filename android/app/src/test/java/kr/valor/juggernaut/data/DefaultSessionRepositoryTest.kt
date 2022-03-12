@@ -8,6 +8,7 @@ import kr.valor.juggernaut.common.MicroCycle
 import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.domain.session.model.Session
 import kr.valor.juggernaut.domain.session.repository.SessionRepository
+import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.domain.user.model.UserProgression
 import kr.valor.juggernaut.domain.user.model.UserTrainingMax
 import org.hamcrest.CoreMatchers.*
@@ -38,7 +39,7 @@ class DefaultSessionRepositoryTest {
         }
 
         var userProgression = UserProgression(
-            1, Phase.REP10, MicroCycle.ACCUMULATION, LiftCategory.BENCH_PRESS
+            MethodCycle(1), Phase.REP10, MicroCycle.ACCUMULATION, LiftCategory.BENCH_PRESS
         )
         var userTrainingMax = UserTrainingMax(
             1L, LiftCategory.BENCH_PRESS, 60, System.currentTimeMillis()

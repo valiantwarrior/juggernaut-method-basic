@@ -1,18 +1,13 @@
 package kr.valor.juggernaut.data
 
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.single
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.runTest
 import kr.valor.juggernaut.TestServiceLocator
 import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.common.MicroCycle
 import kr.valor.juggernaut.common.Phase
-import kr.valor.juggernaut.domain.user.model.UserProgression
+import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.domain.user.model.UserTrainingMax
 import kr.valor.juggernaut.domain.user.repository.UserRepository
 import org.hamcrest.CoreMatchers.`is`
@@ -66,7 +61,7 @@ class DefaultUserRepositoryTest {
         repository.getUserProgression().first().let {
             assertThat(it.liftCategory, `is`(LiftCategory.BENCH_PRESS))
             assertThat(it.microCycle, `is`(MicroCycle.ACCUMULATION))
-            assertThat(it.methodCycle, `is`(1))
+            assertThat(it.methodCycle.value, `is`(1))
             assertThat(it.phase, `is`(Phase.REP10))
         }
     }
@@ -75,15 +70,15 @@ class DefaultUserRepositoryTest {
     fun `editUserProgression works as expected`() = runTest {
         repository.getUserProgression().first().let {
             assertThat(it.phase, `is`(Phase.REP10))
-            assertThat(it.methodCycle, `is`(1))
+            assertThat(it.methodCycle.value, `is`(1))
             assertThat(it.microCycle, `is`(MicroCycle.ACCUMULATION))
             assertThat(it.liftCategory, `is`(LiftCategory.BENCH_PRESS))
         }
 
-        repository.updateUserProgression(2)
+        repository.updateUserProgression(MethodCycle(2))
         repository.getUserProgression().first().let {
             assertThat(it.phase, `is`(Phase.REP10))
-            assertThat(it.methodCycle, `is`(2))
+            assertThat(it.methodCycle.value, `is`(2))
             assertThat(it.microCycle, `is`(MicroCycle.ACCUMULATION))
             assertThat(it.liftCategory, `is`(LiftCategory.BENCH_PRESS))
         }
@@ -91,7 +86,7 @@ class DefaultUserRepositoryTest {
         repository.updateUserProgression(LiftCategory.DEAD_LIFT)
         repository.getUserProgression().first().let {
             assertThat(it.phase, `is`(Phase.REP10))
-            assertThat(it.methodCycle, `is`(2))
+            assertThat(it.methodCycle.value, `is`(2))
             assertThat(it.microCycle, `is`(MicroCycle.ACCUMULATION))
             assertThat(it.liftCategory, `is`(LiftCategory.DEAD_LIFT))
         }

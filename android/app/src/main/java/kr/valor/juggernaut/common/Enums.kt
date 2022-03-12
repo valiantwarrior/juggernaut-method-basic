@@ -1,22 +1,18 @@
 package kr.valor.juggernaut.common
 
-enum class MicroCycle {
-    ACCUMULATION, INTENSIFICATION, REALIZATION, DELOAD
-}
+sealed interface ProgressionElement
 
-enum class Phase {
+@JvmInline
+value class MethodCycle(val value: Int): ProgressionElement
+
+enum class Phase: ProgressionElement {
     REP10, REP8, REP5, REP3;
 }
 
-enum class LiftCategory {
-    BENCH_PRESS, DEAD_LIFT, SQUAT, OVERHEAD_PRESS
+enum class MicroCycle: ProgressionElement {
+    ACCUMULATION, INTENSIFICATION, REALIZATION, DELOAD
 }
 
-inline fun <V> createPhaseBasedKeyMapAndReturn(create: (Phase) -> V): Map<Phase, V> {
-    val tempMap = mutableMapOf<Phase, V>()
-    Phase.values().forEach { key ->
-        val value = create(key)
-        tempMap[key] = value
-    }
-    return tempMap.toMap()
+enum class LiftCategory: ProgressionElement {
+    BENCH_PRESS, DEAD_LIFT, SQUAT, OVERHEAD_PRESS
 }

@@ -1,6 +1,5 @@
 package kr.valor.juggernaut.data.user
 
-import androidx.annotation.VisibleForTesting
 import kotlinx.coroutines.flow.Flow
 import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.common.MicroCycle
@@ -9,6 +8,7 @@ import kr.valor.juggernaut.data.user.entity.UserTrainingMaxEntity
 import kr.valor.juggernaut.data.user.mapper.UserTrainingMaxMapper
 import kr.valor.juggernaut.data.user.source.UserProgressionDataSource
 import kr.valor.juggernaut.data.user.source.UserTrainingMaxDataSource
+import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.domain.user.model.UserProgression
 import kr.valor.juggernaut.domain.user.model.UserTrainingMax
 import kr.valor.juggernaut.domain.user.repository.UserRepository
@@ -43,7 +43,7 @@ class DefaultUserRepository(
         userProgressionDataSource.editUserProgression(microCycle)
     }
 
-    override suspend fun updateUserProgression(methodCycle: Int) {
+    override suspend fun updateUserProgression(methodCycle: MethodCycle) {
         userProgressionDataSource.editUserProgression(methodCycle)
     }
 

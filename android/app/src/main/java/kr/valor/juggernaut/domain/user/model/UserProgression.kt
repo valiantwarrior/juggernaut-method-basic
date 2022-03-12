@@ -1,11 +1,9 @@
 package kr.valor.juggernaut.domain.user.model
 
-import kr.valor.juggernaut.common.LiftCategory
-import kr.valor.juggernaut.common.MicroCycle
-import kr.valor.juggernaut.common.Phase
+import kr.valor.juggernaut.common.*
 
 data class UserProgression(
-    val methodCycle: Int,
+    val methodCycle: MethodCycle,
     val phase: Phase,
     val microCycle: MicroCycle,
     val liftCategory: LiftCategory

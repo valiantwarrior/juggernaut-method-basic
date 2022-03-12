@@ -5,9 +5,7 @@ import androidx.datastore.preferences.core.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
-import kr.valor.juggernaut.common.LiftCategory
-import kr.valor.juggernaut.common.MicroCycle
-import kr.valor.juggernaut.common.Phase
+import kr.valor.juggernaut.common.*
 import kr.valor.juggernaut.domain.user.model.UserProgression
 import java.io.IOException
 
@@ -37,27 +35,12 @@ class PreferencesUserProgressionSource(
     override fun getUserProgressionData(): Flow<UserProgression> =
         userProgressionFlow
 
-    override suspend fun editUserProgression(methodCycle: Int) {
-        dataStore.edit { preferences ->
-            preferences[PreferencesKeys.METHOD_CYCLE] = methodCycle
-        }
-    }
-
-    override suspend fun editUserProgression(microCycle: MicroCycle) {
-        dataStore.edit { preferences ->
-            preferences[PreferencesKeys.CYCLE] = microCycle.name
-        }
-    }
-
-    override suspend fun editUserProgression(phase: Phase) {
-        dataStore.edit { preferences ->
-            preferences[PreferencesKeys.PHASE] = phase.name
-        }
-    }
-
-    override suspend fun editUserProgression(liftCategory: LiftCategory) {
-        dataStore.edit { preferences ->
-            preferences[PreferencesKeys.CATEGORY] = liftCategory.name
+    override suspend fun editUserProgression(progressionElement: ProgressionElement) {
+        when(progressionElement) {
+            is MethodCycle -> editMethodCyclePreference(progressionElement)
+            is Phase -> editPhasePreference(progressionElement)
+            is MicroCycle -> editMicroCyclePreference(progressionElement)
+            is LiftCategory -> editLiftCategoryPreference(progressionElement)
         }
     }
 
@@ -65,8 +48,34 @@ class PreferencesUserProgressionSource(
         dataStore.edit { it.clear() }
     }
 
+    private suspend fun editMethodCyclePreference(methodCycle: MethodCycle) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.METHOD_CYCLE] = methodCycle.value
+        }
+    }
+
+    private suspend fun editMicroCyclePreference(microCycle: MicroCycle) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.CYCLE] = microCycle.name
+        }
+    }
+
+    private suspend fun editPhasePreference(phase: Phase) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.PHASE] = phase.name
+        }
+    }
+
+    private suspend fun editLiftCategoryPreference(liftCategory: LiftCategory) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.CATEGORY] = liftCategory.name
+        }
+    }
+
     private fun mapUserProgression(preferences: Preferences): UserProgression {
-        val methodCycle = preferences[PreferencesKeys.METHOD_CYCLE] ?: 1
+        val methodCycle = MethodCycle(
+            preferences[PreferencesKeys.METHOD_CYCLE] ?: 1
+        )
 
         val phase = Phase.valueOf(
             preferences[PreferencesKeys.PHASE] ?: Phase.REP10.name

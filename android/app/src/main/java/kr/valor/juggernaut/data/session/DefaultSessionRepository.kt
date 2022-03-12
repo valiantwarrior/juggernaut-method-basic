@@ -9,6 +9,7 @@ import kr.valor.juggernaut.data.session.mapper.SessionMapper
 import kr.valor.juggernaut.data.session.source.SessionDataSource
 import kr.valor.juggernaut.domain.session.model.Session
 import kr.valor.juggernaut.domain.session.repository.SessionRepository
+import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.domain.user.model.UserProgression
 import kr.valor.juggernaut.domain.user.model.UserTrainingMax
 
@@ -47,7 +48,7 @@ class DefaultSessionRepository(
 
     private suspend fun initSession(userProgression: UserProgression, userTrainingMax: UserTrainingMax) {
         val newSessionEntity = SessionEntity(
-            methodCycle = userProgression.methodCycle,
+            methodCycle = userProgression.methodCycle.value,
             phaseName = userProgression.phase.name,
             microCycleName = userProgression.microCycle.name,
             liftCategoryName = userProgression.liftCategory.name,
@@ -58,7 +59,7 @@ class DefaultSessionRepository(
 
     private fun SessionEntity.getUserProgression(): UserProgression =
         UserProgression(
-            methodCycle = methodCycle,
+            methodCycle = MethodCycle(methodCycle),
             phase = Phase.valueOf(phaseName),
             microCycle = MicroCycle.valueOf(microCycleName),
             liftCategory = LiftCategory.valueOf(liftCategoryName)
