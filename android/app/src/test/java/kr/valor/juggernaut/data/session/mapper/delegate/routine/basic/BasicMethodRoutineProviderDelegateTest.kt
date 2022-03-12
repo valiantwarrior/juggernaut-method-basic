@@ -25,7 +25,7 @@ class BasicMethodRoutineProviderDelegateTest {
     fun `init`() {
         routineIntensitySource = TestServiceLocator.provideRoutineIntensitySource()
         target = TestServiceLocator.provideRoutineProviderDelegate()
-        action = TestServiceLocator.provideRoutinePropertyMediateDelegate()::mediate
+        action = TestServiceLocator.provideRoutinePropertyMediateDelegate()::convert
     }
 
     @Test

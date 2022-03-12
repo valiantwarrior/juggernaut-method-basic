@@ -61,6 +61,10 @@ class PreferencesUserProgressionSource(
         }
     }
 
+    override suspend fun clear() {
+        dataStore.edit { it.clear() }
+    }
+
     private fun mapUserProgression(preferences: Preferences): UserProgression {
         val methodCycle = preferences[PreferencesKeys.METHOD_CYCLE] ?: 1
 

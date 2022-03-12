@@ -1,10 +1,10 @@
-package kr.valor.juggernaut.data.session.mapper.delegate.property
+package kr.valor.juggernaut.data.common.converter
 
-object DefaultPropertyMediateDelegate: RoutinePropertyMediateDelegate {
+object KgWeightUnitConversionDelegate: WeightUnitConversionDelegate {
 
     private const val CEILING_UP_BASE = 2
 
-    override fun mediate(input: Double): Int {
+    override fun convert(input: Double): Int {
         val roundedDownTowardZero = input.toInt()
         val quotient = roundedDownTowardZero / CEILING_UP_BASE
 

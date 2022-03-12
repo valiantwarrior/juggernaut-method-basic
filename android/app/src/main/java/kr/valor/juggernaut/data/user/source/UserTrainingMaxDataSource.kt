@@ -10,4 +10,6 @@ interface UserTrainingMaxDataSource {
     suspend fun insertUserTrainingMaxEntity(entity: UserTrainingMaxEntity): Long
 
     fun getUserTrainingMaxEntities(): Flow<List<UserTrainingMaxEntity>>
+
+    suspend fun clear()
 }

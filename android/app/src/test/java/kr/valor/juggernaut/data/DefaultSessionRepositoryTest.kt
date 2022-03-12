@@ -1,6 +1,5 @@
 package kr.valor.juggernaut.data
 
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kr.valor.juggernaut.TestServiceLocator
@@ -13,6 +12,7 @@ import kr.valor.juggernaut.domain.user.model.UserProgression
 import kr.valor.juggernaut.domain.user.model.UserTrainingMax
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
@@ -23,7 +23,12 @@ class DefaultSessionRepositoryTest {
 
     @Before
     fun `init`() {
-        repository = TestServiceLocator.provideSessionRepository()
+        repository = TestServiceLocator.sessionRepository
+    }
+
+    @After
+    fun `nuke session`() = runBlocking {
+        repository.clear()
     }
 
     @Test

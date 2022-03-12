@@ -1,4 +1,4 @@
-package kr.valor.juggernaut.data
+package kr.valor.juggernaut.data.session
 
 import kotlinx.coroutines.flow.*
 import kr.valor.juggernaut.common.LiftCategory
@@ -39,6 +39,10 @@ class DefaultSessionRepository(
                 initSession(userProgression, userTrainingMax)
             }
         } ?: initSession(userProgression, userTrainingMax)
+    }
+
+    override suspend fun clear() {
+        sessionDataSource.clear()
     }
 
     private suspend fun initSession(userProgression: UserProgression, userTrainingMax: UserTrainingMax) {

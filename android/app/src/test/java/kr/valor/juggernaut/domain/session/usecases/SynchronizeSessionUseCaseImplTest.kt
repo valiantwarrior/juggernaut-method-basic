@@ -1,6 +1,7 @@
 package kr.valor.juggernaut.domain.session.usecases
 
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import kr.valor.juggernaut.TestServiceLocator
 import kr.valor.juggernaut.domain.session.model.Session
@@ -9,6 +10,7 @@ import kr.valor.juggernaut.domain.user.repository.UserRepository
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
@@ -19,10 +21,15 @@ class SynchronizeSessionUseCaseImplTest {
 
     @Before
     fun `init`() {
-        sessionRepository = TestServiceLocator.provideSessionRepository()
-        userRepository = TestServiceLocator.provideUserRepository()
+        sessionRepository = TestServiceLocator.sessionRepository
+        userRepository = TestServiceLocator.userRepository
 
-        useCase = SynchronizeSessionUseCaseImpl(sessionRepository, userRepository)
+        useCase = TestServiceLocator.provideSynchronizeSessionUseCase()
+    }
+
+    @After
+    fun `nuke session`() = runBlocking {
+        sessionRepository.clear()
     }
 
     @Test

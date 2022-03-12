@@ -3,6 +3,8 @@ package kr.valor.juggernaut.domain.session.usecases
 import kotlinx.coroutines.flow.first
 import kr.valor.juggernaut.domain.session.repository.SessionRepository
 import kr.valor.juggernaut.domain.user.repository.UserRepository
+import kr.valor.juggernaut.domain.user.usecases.GetUserProgressionUseCase
+import kr.valor.juggernaut.domain.user.usecases.GetUserTrainingMaxUseCase
 
 interface SynchronizeSessionUseCase {
     suspend operator fun invoke()
@@ -10,12 +12,12 @@ interface SynchronizeSessionUseCase {
 
 class SynchronizeSessionUseCaseImpl(
     private val sessionRepository: SessionRepository,
-    private val userRepository: UserRepository
+    private val getUserProgressionUseCase: GetUserProgressionUseCase,
+    private val getUserTrainingMaxUseCase: GetUserTrainingMaxUseCase
 ): SynchronizeSessionUseCase {
     override suspend fun invoke() {
-        val currentUserProgression = userRepository.getUserProgression().first()
-        val currentUserTm = userRepository.getUserTrainingMax(currentUserProgression.liftCategory)
-
-        sessionRepository.synchronizeSession(currentUserProgression, currentUserTm)
+        val userProgression = getUserProgressionUseCase().first()
+        val userTrainingMax = getUserTrainingMaxUseCase(userProgression.liftCategory)
+        sessionRepository.synchronizeSession(userProgression, userTrainingMax)
     }
 }

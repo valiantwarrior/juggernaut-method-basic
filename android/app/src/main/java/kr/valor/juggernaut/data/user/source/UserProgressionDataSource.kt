@@ -12,4 +12,5 @@ interface UserProgressionDataSource {
     suspend fun editUserProgression(microCycle: MicroCycle)
     suspend fun editUserProgression(phase: Phase)
     suspend fun editUserProgression(liftCategory: LiftCategory)
+    suspend fun clear()
 }

@@ -18,6 +18,7 @@ import kr.valor.juggernaut.domain.user.repository.UserRepository
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
@@ -27,7 +28,12 @@ class DefaultUserRepositoryTest {
 
     @Before
     fun `init`() {
-        repository = TestServiceLocator.provideUserRepository()
+        repository = TestServiceLocator.userRepository
+    }
+
+    @After
+    fun `nuke`() = runBlocking {
+        repository.clearUserProgression()
     }
 
     @Test

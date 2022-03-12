@@ -1,7 +1,7 @@
 package kr.valor.juggernaut.data.session.mapper
 
 import kr.valor.juggernaut.common.*
-import kr.valor.juggernaut.data.common.EntityMapper
+import kr.valor.juggernaut.data.common.mapper.EntityMapper
 import kr.valor.juggernaut.data.session.mapper.delegate.RoutineProviderDelegate
 import kr.valor.juggernaut.data.session.entity.SessionEntity
 import kr.valor.juggernaut.domain.session.model.*
@@ -11,11 +11,6 @@ interface SessionMapper: EntityMapper<SessionEntity, Session> {
     fun map(model: Session, params: SessionRecord?): SessionEntity
     fun map(entities: List<SessionEntity>): List<Session>
 }
-
-data class SessionRecord(
-    val repetitionsRecord: Int?,
-    val completeTimeMillisRecord: Long
-)
 
 class DefaultSessionEntityMapper(
     routineProviderDelegate: RoutineProviderDelegate<Progression>

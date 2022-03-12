@@ -11,4 +11,5 @@ interface SessionRepository {
     fun getAllSessions(): Flow<List<Session>>
     suspend fun getSessionById(sessionId: Long): Session
     suspend fun synchronizeSession(userProgression: UserProgression, userTrainingMax: UserTrainingMax)
+    suspend fun clear()
 }

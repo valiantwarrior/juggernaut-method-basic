@@ -48,4 +48,8 @@ class FakeUserTrainingMaxDataSource: UserTrainingMaxDataSource {
     override fun getUserTrainingMaxEntities(): Flow<List<UserTrainingMaxEntity>> {
         return flowOf(inMemoryStorage)
     }
+
+    override suspend fun clear() {
+        inMemoryStorage.clear()
+    }
 }

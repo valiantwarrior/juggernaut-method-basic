@@ -1,5 +1,6 @@
-package kr.valor.juggernaut.data
+package kr.valor.juggernaut.data.user
 
+import androidx.annotation.VisibleForTesting
 import kotlinx.coroutines.flow.Flow
 import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.common.MicroCycle
@@ -52,5 +53,13 @@ class DefaultUserRepository(
 
     override suspend fun updateUserProgression(liftCategory: LiftCategory) {
         userProgressionDataSource.editUserProgression(liftCategory)
+    }
+
+    override suspend fun clearUserTrainingMax() {
+        userTrainingMaxDataSource.clear()
+    }
+
+    override suspend fun clearUserProgression() {
+        userProgressionDataSource.clear()
     }
 }

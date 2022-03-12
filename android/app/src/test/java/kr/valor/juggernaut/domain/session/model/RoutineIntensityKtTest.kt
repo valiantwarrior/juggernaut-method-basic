@@ -20,7 +20,7 @@ class RoutineIntensityKtTest {
             intensityPercentage = 0.6
         )
 
-        mediate = TestServiceLocator.provideRoutinePropertyMediateDelegate()::mediate
+        mediate = TestServiceLocator.provideRoutinePropertyMediateDelegate()::convert
     }
 
     @Test

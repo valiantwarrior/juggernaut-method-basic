@@ -1,5 +1,6 @@
 package kr.valor.juggernaut.domain.user.repository
 
+import androidx.annotation.VisibleForTesting
 import kotlinx.coroutines.flow.Flow
 import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.common.MicroCycle
@@ -17,4 +18,7 @@ interface UserRepository {
     suspend fun updateUserProgression(methodCycle: Int)
     suspend fun updateUserProgression(phase: Phase)
     suspend fun updateUserProgression(liftCategory: LiftCategory)
+
+    @VisibleForTesting suspend fun clearUserTrainingMax()
+    @VisibleForTesting suspend fun clearUserProgression()
 }

@@ -8,10 +8,13 @@ import kr.valor.juggernaut.domain.user.model.UserProgression
 
 class FakeUserProgressionDataSource: UserProgressionDataSource {
 
-    // mutable state flow UserProgression
-    private val _userProgressionStateFlow: MutableStateFlow<UserProgression> = MutableStateFlow(
-        UserProgression(1, Phase.REP10, MicroCycle.ACCUMULATION, LiftCategory.BENCH_PRESS)
+    private val initialState = UserProgression(
+        1, Phase.REP10, MicroCycle.ACCUMULATION, LiftCategory.BENCH_PRESS
     )
+
+    // mutable state flow UserProgression
+    private val _userProgressionStateFlow: MutableStateFlow<UserProgression> =
+        MutableStateFlow(initialState)
 
     override fun getUserProgressionData(): Flow<UserProgression> =
         flowOf(_userProgressionStateFlow.value)
@@ -34,5 +37,9 @@ class FakeUserProgressionDataSource: UserProgressionDataSource {
     override suspend fun editUserProgression(liftCategory: LiftCategory) {
         val current = _userProgressionStateFlow.value
         _userProgressionStateFlow.update { current.copy(liftCategory = liftCategory) }
+    }
+
+    override suspend fun clear() {
+        _userProgressionStateFlow.update { initialState }
     }
 }
