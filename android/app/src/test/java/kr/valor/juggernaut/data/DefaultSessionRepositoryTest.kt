@@ -44,6 +44,14 @@ class DefaultSessionRepositoryTest {
         repository.synchronizeSessions(mockUserProgression, mockUserTrainingMaxes)
         var synchronizedSessions = repository.findSessionsByUserProgression(mockUserProgression).single()
         assertThat(synchronizedSessions.size, `is`(LiftCategory.TOTAL_LIFT_CATEGORY_COUNT))
+        synchronizedSessions.forEach { session ->
+            val (methodCycle, phase, microCycle) = session.progression
+            with(mockUserProgression) {
+                assertThat(methodCycle, `is`(this.methodCycle))
+                assertThat(phase, `is`(this.phase))
+                assertThat(microCycle, `is`(this.microCycle))
+            }
+        }
 
         synchronizedSessions = repository.getAllSessions().single()
         assertThat(synchronizedSessions.size, `is`(LiftCategory.TOTAL_LIFT_CATEGORY_COUNT))
@@ -54,6 +62,22 @@ class DefaultSessionRepositoryTest {
             assertThat(session.tmWeights, `is`(trainingMax.trainingMaxWeights))
             assertThat(session.category, `is`(trainingMax.liftCategory))
         }
+
+        mockUserProgression = mockUserProgression.copy(microCycle = MicroCycle.INTENSIFICATION)
+        repository.synchronizeSessions(mockUserProgression, mockUserTrainingMaxes)
+        synchronizedSessions = repository.findSessionsByUserProgression(mockUserProgression).single()
+        assertThat(synchronizedSessions.size, `is`(LiftCategory.TOTAL_LIFT_CATEGORY_COUNT))
+        synchronizedSessions.forEach { session ->
+            val (methodCycle, phase, microCycle) = session.progression
+            with(mockUserProgression) {
+                assertThat(methodCycle, `is`(this.methodCycle))
+                assertThat(phase, `is`(this.phase))
+                assertThat(microCycle, `is`(this.microCycle))
+            }
+        }
+
+        synchronizedSessions = repository.getAllSessions().single()
+        assertThat(synchronizedSessions.size, `is`(LiftCategory.TOTAL_LIFT_CATEGORY_COUNT * 2))
     }
 
     private fun mockUserProgression(): UserProgression = UserProgression(

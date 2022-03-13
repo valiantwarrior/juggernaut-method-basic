@@ -109,7 +109,7 @@ class DefaultSessionEntityMapperTest {
 
     private fun `base entity model comparing`(model: Session, entity: SessionEntity) {
         assertThat(model.sessionId, `is`(entity.id))
-        assertThat(model.methodCycle, `is`(entity.methodCycle))
+        assertThat(model.progression.methodCycle.value, `is`(entity.methodCycle))
         assertThat(model.progression.phase, `is`(Phase.valueOf(entity.phaseName)))
         assertThat(model.progression.microCycle, `is`(MicroCycle.valueOf(entity.microCycleName)))
         assertThat(model.category, `is`(LiftCategory.valueOf(entity.liftCategoryName)))

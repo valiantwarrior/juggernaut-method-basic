@@ -20,14 +20,14 @@ class DefaultSessionEntityMapper(
             val category = LiftCategory.valueOf(liftCategoryName)
             val progression = Progression(
                 phase = Phase.valueOf(phaseName),
-                microCycle = MicroCycle.valueOf(microCycleName)
+                microCycle = MicroCycle.valueOf(microCycleName),
+                methodCycle = MethodCycle(methodCycle)
             )
             val sessionRoutine = provideSessionRoutine(progression, baseWeights, amrapRepetitions)
 
             Session(
                 sessionId = id,
                 category = category,
-                methodCycle = methodCycle,
                 tmWeights = baseWeights,
                 progression = progression,
                 routines = sessionRoutine
@@ -42,7 +42,7 @@ class DefaultSessionEntityMapper(
         with(model) {
             SessionEntity(
                 id = sessionId,
-                methodCycle = methodCycle,
+                methodCycle = progression.methodCycle.value,
                 phaseName = progression.phase.name,
                 microCycleName = progression.microCycle.name,
                 liftCategoryName = category.name,

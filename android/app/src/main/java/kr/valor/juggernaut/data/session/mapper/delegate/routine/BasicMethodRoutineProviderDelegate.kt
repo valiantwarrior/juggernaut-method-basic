@@ -13,7 +13,7 @@ class BasicMethodRoutineProviderDelegate(
 ): RoutineProviderDelegate<Progression> {
 
     override fun provideSessionRoutine(progression: Progression, tmWeights: Int, actualRepetitions: Int?): List<Routine> {
-        val (phase, microCycle) = progression
+        val (_, phase, microCycle) = progression
         val routineIntensities = routineIntensitySource.provideRoutineIntensityMap(microCycle)[phase]!!
 
         return if (microCycle == MicroCycle.DELOAD) {

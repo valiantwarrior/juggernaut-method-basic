@@ -1,6 +1,7 @@
 package kr.valor.juggernaut.data.session.mapper.delegate.routine.basic
 
 import kr.valor.juggernaut.TestServiceLocator
+import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.common.MicroCycle
 import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.data.session.mapper.delegate.intensity.RoutineIntensitySource
@@ -21,6 +22,8 @@ class BasicMethodRoutineProviderDelegateTest {
 
     private lateinit var action: (Double) -> Int
 
+    private val mockMethodCycle = MethodCycle(1)
+
     @Before
     fun `init`() {
         routineIntensitySource = TestServiceLocator.provideRoutineIntensitySource()
@@ -31,10 +34,9 @@ class BasicMethodRoutineProviderDelegateTest {
     @Test
     fun `validate routines when actualRepetitions is null`() {
         val tm = 60
-
         Phase.values().forEach { phase ->
             MicroCycle.values().forEach { microCycle ->
-                val progression = Progression(phase, microCycle)
+                val progression = Progression(mockMethodCycle, phase, microCycle)
                 val routineIntensity =
                     routineIntensitySource.provideRoutineIntensityMap(microCycle)
 
@@ -65,7 +67,7 @@ class BasicMethodRoutineProviderDelegateTest {
         Phase.values().forEach { phase ->
             val actualReps = amrapMap[phase]!!
             MicroCycle.values().forEach { microCycle ->
-                val progression = Progression(phase, microCycle)
+                val progression = Progression(mockMethodCycle, phase, microCycle)
                 val routineIntensity =
                     routineIntensitySource.provideRoutineIntensityMap(microCycle)
 

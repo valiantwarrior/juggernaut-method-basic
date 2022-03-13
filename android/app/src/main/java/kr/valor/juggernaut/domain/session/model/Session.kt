@@ -1,6 +1,7 @@
 package kr.valor.juggernaut.domain.session.model
 
 import kr.valor.juggernaut.common.LiftCategory
+import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.common.MicroCycle
 import kr.valor.juggernaut.common.Phase
 
@@ -8,7 +9,6 @@ data class Session(
     val sessionId: Long,
     val category: LiftCategory,
     val tmWeights: Int,
-    val methodCycle: Int,
     val progression: Progression,
     val routines: List<Routine>,
 ) {
@@ -29,6 +29,7 @@ data class Session(
         if (condition) get() else null
 
     data class Progression(
+        val methodCycle: MethodCycle,
         val phase: Phase,
         val microCycle: MicroCycle
     )
