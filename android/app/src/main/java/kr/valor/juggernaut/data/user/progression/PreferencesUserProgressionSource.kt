@@ -18,7 +18,6 @@ class PreferencesUserProgressionSource(
         val METHOD_CYCLE = intPreferencesKey("method_cycle")
         val PHASE = stringPreferencesKey("phase")
         val CYCLE = stringPreferencesKey("micro_cycle")
-        val CATEGORY = stringPreferencesKey("lift_category")
     }
 
     private val userProgressionFlow: Flow<UserProgression> = dataStore.data
@@ -41,7 +40,6 @@ class PreferencesUserProgressionSource(
             is MethodCycle -> editMethodCyclePreference(progressionElement)
             is Phase -> editPhasePreference(progressionElement)
             is MicroCycle -> editMicroCyclePreference(progressionElement)
-            is LiftCategory -> editLiftCategoryPreference(progressionElement)
         }
     }
 
@@ -67,12 +65,6 @@ class PreferencesUserProgressionSource(
         }
     }
 
-    private suspend fun editLiftCategoryPreference(liftCategory: LiftCategory) {
-        dataStore.edit { preferences ->
-            preferences[PreferencesKeys.CATEGORY] = liftCategory.name
-        }
-    }
-
     private fun mapUserProgression(preferences: Preferences): UserProgression {
         val methodCycle = MethodCycle(
             preferences[PreferencesKeys.METHOD_CYCLE] ?: 1
@@ -84,10 +76,8 @@ class PreferencesUserProgressionSource(
         val cycle = MicroCycle.valueOf(
             preferences[PreferencesKeys.CYCLE] ?: MicroCycle.ACCUMULATION.name
         )
-        val category = LiftCategory.valueOf(
-            preferences[PreferencesKeys.CATEGORY] ?: LiftCategory.BENCH_PRESS.name
-        )
 
-        return UserProgression(methodCycle, phase, cycle, category)
+
+        return UserProgression(methodCycle, phase, cycle)
     }
 }

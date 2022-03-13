@@ -18,7 +18,6 @@ interface UserRepository {
     suspend fun updateUserProgression(microCycle: MicroCycle)
     suspend fun updateUserProgression(methodCycle: MethodCycle)
     suspend fun updateUserProgression(phase: Phase)
-    suspend fun updateUserProgression(liftCategory: LiftCategory)
 
     @VisibleForTesting suspend fun clearUserTrainingMax()
     @VisibleForTesting suspend fun clearUserProgression()

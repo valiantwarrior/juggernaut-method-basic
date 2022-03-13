@@ -26,7 +26,7 @@ class DefaultSessionEntityMapperTest {
             methodCycle = 1,
             phaseName = Phase.REP10.name,
             microCycleName = MicroCycle.ACCUMULATION.name,
-            liftCategoryName = LiftCategory.BENCH_PRESS.name,
+            liftCategoryName = LiftCategory.BENCHPRESS.name,
             baseWeights = 60
         )
     }

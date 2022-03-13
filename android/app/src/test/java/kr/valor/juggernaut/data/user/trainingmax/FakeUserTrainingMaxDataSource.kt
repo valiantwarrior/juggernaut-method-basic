@@ -13,13 +13,13 @@ class FakeUserTrainingMaxDataSource: UserTrainingMaxDataSource {
     private val inMemoryStorage = mutableListOf(
         UserTrainingMaxEntity(
             id = entityId++,
-            liftCategoryName = LiftCategory.BENCH_PRESS.name,
+            liftCategoryName = LiftCategory.BENCHPRESS.name,
             trainingMaxWeights = 60,
             lastUpdatedAt = System.currentTimeMillis()
         ),
         UserTrainingMaxEntity(
             id = entityId++,
-            liftCategoryName = LiftCategory.DEAD_LIFT.name,
+            liftCategoryName = LiftCategory.DEADLIFT.name,
             trainingMaxWeights = 120,
             lastUpdatedAt = System.currentTimeMillis()
         ),
@@ -31,7 +31,7 @@ class FakeUserTrainingMaxDataSource: UserTrainingMaxDataSource {
         ),
         UserTrainingMaxEntity(
             id = entityId++,
-            liftCategoryName = LiftCategory.OVERHEAD_PRESS.name,
+            liftCategoryName = LiftCategory.OVERHEADPRESS.name,
             trainingMaxWeights = 50,
             lastUpdatedAt = System.currentTimeMillis()
         )

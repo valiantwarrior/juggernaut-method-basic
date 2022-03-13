@@ -51,10 +51,6 @@ class DefaultUserRepository(
         userProgressionDataSource.editUserProgression(phase)
     }
 
-    override suspend fun updateUserProgression(liftCategory: LiftCategory) {
-        userProgressionDataSource.editUserProgression(liftCategory)
-    }
-
     override suspend fun clearUserTrainingMax() {
         userTrainingMaxDataSource.clear()
     }

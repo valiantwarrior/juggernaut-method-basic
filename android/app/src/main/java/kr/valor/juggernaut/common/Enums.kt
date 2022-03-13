@@ -13,6 +13,31 @@ enum class MicroCycle: ProgressionElement {
     ACCUMULATION, INTENSIFICATION, REALIZATION, DELOAD
 }
 
-enum class LiftCategory: ProgressionElement {
-    BENCH_PRESS, DEAD_LIFT, SQUAT, OVERHEAD_PRESS
+/**
+ * ORDER : BP -> SQ -> OHP -> DL
+ */
+enum class LiftCategory {
+    /**
+     * BP
+     */
+    BENCHPRESS,
+
+    /**
+     * SQ
+     */
+    SQUAT,
+
+    /**
+     * OHP
+     */
+    OVERHEADPRESS,
+
+    /**
+     * DL
+     */
+    DEADLIFT;
+
+    companion object {
+        const val TOTAL_LIFT_CATEGORY_COUNT = 4
+    }
 }

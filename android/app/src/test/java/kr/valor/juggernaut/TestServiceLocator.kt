@@ -15,11 +15,8 @@ import kr.valor.juggernaut.data.session.mapper.delegate.routine.BasicMethodRouti
 import kr.valor.juggernaut.data.session.FakeSessionDataSource
 import kr.valor.juggernaut.data.user.mapper.DefaultUserTrainingMaxMapper
 import kr.valor.juggernaut.data.user.mapper.UserTrainingMaxMapper
-import kr.valor.juggernaut.data.user.progression.FakeUserProgressionDataSource
 import kr.valor.juggernaut.data.user.trainingmax.FakeUserTrainingMaxDataSource
 import kr.valor.juggernaut.domain.session.repository.SessionRepository
-import kr.valor.juggernaut.domain.session.usecases.SynchronizeSessionUseCase
-import kr.valor.juggernaut.domain.session.usecases.SynchronizeSessionUseCaseImpl
 import kr.valor.juggernaut.domain.user.repository.UserRepository
 import kr.valor.juggernaut.domain.session.model.Session.Progression as Progression
 
@@ -32,13 +29,13 @@ object TestServiceLocator {
         )
     }
 
-    val userRepository: UserRepository by lazy {
-        DefaultUserRepository(
-            provideUserTrainingMaxMapper(),
-            FakeUserTrainingMaxDataSource(),
-            FakeUserProgressionDataSource()
-        )
-    }
+//    val userRepository: UserRepository by lazy {
+//        DefaultUserRepository(
+//            provideUserTrainingMaxMapper(),
+//            FakeUserTrainingMaxDataSource(),
+//            FakeUserProgressionDataSource()
+//        )
+//    }
 
 
 
@@ -62,11 +59,11 @@ object TestServiceLocator {
     }
 
 
-    fun provideSynchronizeSessionUseCase(): SynchronizeSessionUseCase {
-        val getUserProgressionUseCase = userRepository::getUserProgression
-        val getUserTrainingMaxUseCase = userRepository::getUserTrainingMax
-
-        return SynchronizeSessionUseCaseImpl(sessionRepository, getUserProgressionUseCase, getUserTrainingMaxUseCase)
-    }
+//    fun provideSynchronizeSessionUseCase(): SynchronizeSessionUseCase {
+//        val getUserProgressionUseCase = userRepository::getUserProgression
+//        val getUserTrainingMaxUseCase = userRepository::getUserTrainingMax
+//
+//        return SynchronizeSessionUseCaseImpl(sessionRepository, getUserProgressionUseCase, getUserTrainingMaxUseCase)
+//    }
 
 }

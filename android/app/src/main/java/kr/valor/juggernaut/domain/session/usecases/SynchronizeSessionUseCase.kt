@@ -9,14 +9,14 @@ interface SynchronizeSessionUseCase {
     suspend operator fun invoke()
 }
 
-class SynchronizeSessionUseCaseImpl(
-    private val sessionRepository: SessionRepository,
-    private val getUserProgressionUseCase: GetUserProgressionUseCase,
-    private val findUserTrainingMaxByLiftCategoryUseCase: FindUserTrainingMaxByLiftCategoryUseCase
-): SynchronizeSessionUseCase {
-    override suspend fun invoke() {
-        val userProgression = getUserProgressionUseCase().first()
-        val userTrainingMax = findUserTrainingMaxByLiftCategoryUseCase(userProgression.liftCategory)
-        sessionRepository.synchronizeSession(userProgression, userTrainingMax)
-    }
-}
+//class SynchronizeSessionUseCaseImpl(
+//    private val sessionRepository: SessionRepository,
+//    private val getUserProgressionUseCase: GetUserProgressionUseCase,
+//    private val findUserTrainingMaxByLiftCategoryUseCase: FindUserTrainingMaxByLiftCategoryUseCase
+//): SynchronizeSessionUseCase {
+//    override suspend fun invoke() {
+//        val userProgression = getUserProgressionUseCase().first()
+//        val userTrainingMax = findUserTrainingMaxByLiftCategoryUseCase(userProgression.liftCategory)
+//        sessionRepository.synchronizeSession(userProgression, userTrainingMax)
+//    }
+//}

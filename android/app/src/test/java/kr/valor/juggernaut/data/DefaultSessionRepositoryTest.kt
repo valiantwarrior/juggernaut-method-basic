@@ -1,17 +1,17 @@
 package kr.valor.juggernaut.data
 
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import kr.valor.juggernaut.TestServiceLocator
 import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.common.MicroCycle
 import kr.valor.juggernaut.common.Phase
-import kr.valor.juggernaut.domain.session.model.Session
 import kr.valor.juggernaut.domain.session.repository.SessionRepository
 import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.domain.user.model.UserProgression
 import kr.valor.juggernaut.domain.user.model.UserTrainingMax
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Before
@@ -21,10 +21,14 @@ import org.junit.Test
 class DefaultSessionRepositoryTest {
 
     private lateinit var repository: SessionRepository
+    private lateinit var mockUserProgression: UserProgression
+    private lateinit var mockUserTrainingMaxes: List<UserTrainingMax>
 
     @Before
     fun `init`() {
         repository = TestServiceLocator.sessionRepository
+        mockUserProgression = mockUserProgression()
+        mockUserTrainingMaxes = mockUserTrainingMaxes()
     }
 
     @After
@@ -33,58 +37,53 @@ class DefaultSessionRepositoryTest {
     }
 
     @Test
-    fun `repository synchronizeSession() works as expected`() = runBlocking {
-        repository.getAllSessions().collect {
-            assertThat(it.isEmpty(), `is`(true))
-        }
+    fun `synchronizeSessions() works as expected`() = runTest {
+        val initialSessions = repository.findSessionsByUserProgression(mockUserProgression).single()
+        assertThat(initialSessions.size, `is`(0))
 
-        var userProgression = UserProgression(
-            MethodCycle(1), Phase.REP10, MicroCycle.ACCUMULATION, LiftCategory.BENCH_PRESS
-        )
-        var userTrainingMax = UserTrainingMax(
-            1L, LiftCategory.BENCH_PRESS, 60, System.currentTimeMillis()
-        )
+        repository.synchronizeSessions(mockUserProgression, mockUserTrainingMaxes)
+        var synchronizedSessions = repository.findSessionsByUserProgression(mockUserProgression).single()
+        assertThat(synchronizedSessions.size, `is`(LiftCategory.TOTAL_LIFT_CATEGORY_COUNT))
 
-        repository.synchronizeSession(userProgression, userTrainingMax)
-        repository.getLatestSession().first().let {
-            assertThat(it, `is`(notNullValue()))
-            assertThat(it, instanceOf(Session::class.java))
-            assertThat(it.progression.phase, `is`(Phase.REP10))
-            assertThat(it.progression.microCycle, `is`(MicroCycle.ACCUMULATION))
-            assertThat(it.category, `is`(LiftCategory.BENCH_PRESS))
-            assertThat(it.tmWeights, `is`(60))
-        }
-        repository.getAllSessions().first().let {
-            assertThat(it.size, `is`(1))
-        }
+        synchronizedSessions = repository.getAllSessions().single()
+        assertThat(synchronizedSessions.size, `is`(LiftCategory.TOTAL_LIFT_CATEGORY_COUNT))
 
-        repository.synchronizeSession(userProgression, userTrainingMax)
-        repository.getLatestSession().first().let {
-            assertThat(it, `is`(notNullValue()))
-            assertThat(it, instanceOf(Session::class.java))
-            assertThat(it.progression.phase, `is`(Phase.REP10))
-            assertThat(it.progression.microCycle, `is`(MicroCycle.ACCUMULATION))
-            assertThat(it.category, `is`(LiftCategory.BENCH_PRESS))
-            assertThat(it.tmWeights, `is`(60))
-        }
-        repository.getAllSessions().first().let {
-            assertThat(it.size, `is`(1))
-        }
-
-        userProgression = userProgression.copy(liftCategory = LiftCategory.DEAD_LIFT)
-        userTrainingMax = userTrainingMax.copy(liftCategory = LiftCategory.DEAD_LIFT, trainingMaxWeights = 100)
-
-        repository.synchronizeSession(userProgression, userTrainingMax)
-        repository.getLatestSession().first().let {
-            assertThat(it, `is`(notNullValue()))
-            assertThat(it, instanceOf(Session::class.java))
-            assertThat(it.progression.phase, `is`(Phase.REP10))
-            assertThat(it.progression.microCycle, `is`(MicroCycle.ACCUMULATION))
-            assertThat(it.category, `is`(LiftCategory.DEAD_LIFT))
-            assertThat(it.tmWeights, `is`(100))
-        }
-        repository.getAllSessions().first().let {
-            assertThat(it.size, `is`(2))
+        LiftCategory.values().forEach { liftCategory ->
+            var session = synchronizedSessions.find { it.category == liftCategory }!!
+            val trainingMax = mockUserTrainingMaxes.find { it.liftCategory == liftCategory }!!
+            assertThat(session.tmWeights, `is`(trainingMax.trainingMaxWeights))
+            assertThat(session.category, `is`(trainingMax.liftCategory))
         }
     }
+
+    private fun mockUserProgression(): UserProgression = UserProgression(
+        MethodCycle(1), Phase.REP10, MicroCycle.ACCUMULATION
+    )
+
+    private fun mockUserTrainingMaxes(): List<UserTrainingMax> = listOf(
+        UserTrainingMax(
+            id = 0L,
+            liftCategory = LiftCategory.BENCHPRESS,
+            trainingMaxWeights = 60,
+            lastUpdatedAt = System.currentTimeMillis()
+        ),
+        UserTrainingMax(
+            id = 1L,
+            liftCategory = LiftCategory.SQUAT,
+            trainingMaxWeights = 100,
+            lastUpdatedAt = System.currentTimeMillis()
+        ),
+        UserTrainingMax(
+            id = 2L,
+            liftCategory = LiftCategory.OVERHEADPRESS,
+            trainingMaxWeights = 40,
+            lastUpdatedAt = System.currentTimeMillis()
+        ),
+        UserTrainingMax(
+            id = 3L,
+            liftCategory = LiftCategory.DEADLIFT,
+            trainingMaxWeights = 140,
+            lastUpdatedAt = System.currentTimeMillis()
+        )
+    )
 }
