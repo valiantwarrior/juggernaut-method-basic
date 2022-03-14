@@ -1,12 +1,12 @@
 package kr.valor.juggernaut.data
 
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.withContext
 import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.data.session.entity.SessionEntity
 import kr.valor.juggernaut.data.session.mapper.SessionMapper
 import kr.valor.juggernaut.data.session.source.SessionDataSource
 import kr.valor.juggernaut.domain.session.model.Session
+import kr.valor.juggernaut.domain.session.model.SessionRecord
 import kr.valor.juggernaut.domain.session.repository.SessionRepository
 import kr.valor.juggernaut.domain.user.model.UserProgression
 import kr.valor.juggernaut.domain.user.model.UserTrainingMax
@@ -16,20 +16,26 @@ class DefaultSessionRepository(
     private val sessionDataSource: SessionDataSource
 ): SessionRepository {
 
+    private val toDatabaseModel: Session.(SessionRecord?) -> SessionEntity = { sessionRecord ->
+        sessionMapper.mapModel(this, sessionRecord)
+    }
+
+    private val toDomainModel: SessionEntity.() -> Session = {
+        sessionMapper.mapEntity(this)
+    }
+
     override fun getAllSessions(): Flow<List<Session>> =
-        sessionDataSource.getAllSessionEntities().map { sessionEntities ->
-            sessionMapper.map(sessionEntities)
+        sessionDataSource.getAllSessionEntities().map { entities ->
+            entities.map(toDomainModel)
         }
 
     override fun findSessionsByUserProgression(userProgression: UserProgression): Flow<List<Session>> =
         sessionDataSource.findSessionEntitiesByUserProgression(userProgression).map { entities ->
-            sessionMapper.map(entities)
+            entities.map(toDomainModel)
         }
 
-    override suspend fun findSessionById(sessionId: Long): Session {
-        val sessionEntity = sessionDataSource.findSessionEntityById(sessionId)
-        return sessionMapper.map(sessionEntity)
-    }
+    override suspend fun findSessionById(sessionId: Long): Session =
+        sessionDataSource.findSessionEntityById(sessionId).toDomainModel()
 
     // considering RoomDatabase.withTransaction
     override suspend fun synchronizeSessions(userProgression: UserProgression, userTrainingMaxes: List<UserTrainingMax>) {

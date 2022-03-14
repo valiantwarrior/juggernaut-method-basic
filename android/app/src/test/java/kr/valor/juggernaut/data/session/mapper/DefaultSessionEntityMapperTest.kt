@@ -34,8 +34,8 @@ class DefaultSessionEntityMapperTest {
     @Test
     fun `mapping when cycle is not DELOAD task works as expected (without SessionRecord)`() {
         val entity = baseEntity
-        val model = mapper.map(entity)
-        val entityFromModel = mapper.map(model, null)
+        val model = mapper.mapEntity(entity)
+        val entityFromModel = mapper.mapModel(model, null)
 
         `comparing between entity and model - Not DELOAD `(model, entity)
         `comparing between two entities`(entity, entityFromModel)
@@ -44,13 +44,13 @@ class DefaultSessionEntityMapperTest {
     @Test
     fun `mapping when cycle is not DELOAD task works as expected (with SessionRecord)`() {
         val entity = baseEntity
-        val model = mapper.map(entity)
+        val model = mapper.mapEntity(entity)
 
         val userCompleteTimeMillisRecord = System.currentTimeMillis()
         val userRepetitionsRecord = 16
         val userSessionRecord = SessionRecord(userRepetitionsRecord, userCompleteTimeMillisRecord)
 
-        val entityFromModel = mapper.map(model, userSessionRecord)
+        val entityFromModel = mapper.mapModel(model, userSessionRecord)
 
         `comparing between two entities`(entity, entityFromModel)
         assertThat(entityFromModel.completeDateMillis, `is`(notNullValue()))
@@ -58,7 +58,7 @@ class DefaultSessionEntityMapperTest {
         assertThat(entityFromModel.amrapRepetitions, `is`(notNullValue()))
         assertThat(entityFromModel.amrapRepetitions, `is`(userRepetitionsRecord))
 
-        val modelFromEntity = mapper.map(entityFromModel)
+        val modelFromEntity = mapper.mapEntity(entityFromModel)
         `comparing between entity and model - Not DELOAD `(modelFromEntity, entityFromModel)
         assertThat(modelFromEntity.amrapRoutine!!.reps, `is`(userRepetitionsRecord))
     }
@@ -66,8 +66,8 @@ class DefaultSessionEntityMapperTest {
     @Test
     fun `mapping when cycle is DELOAD works as expected (without SessionRecord)`() {
         val entity = baseEntity.copy(microCycleName = MicroCycle.DELOAD.name)
-        val model = mapper.map(entity)
-        val entityFromModel = mapper.map(model, null)
+        val model = mapper.mapEntity(entity)
+        val entityFromModel = mapper.mapModel(model, null)
 
         `comparing between entity and model - DELOAD `(model, entity)
         `comparing between two entities`(entity, entityFromModel)
@@ -76,19 +76,19 @@ class DefaultSessionEntityMapperTest {
     @Test
     fun `mapping when cycle is DELOAD works as expected (with SessionRecord)`() {
         val entity = baseEntity.copy(microCycleName = MicroCycle.DELOAD.name)
-        val model = mapper.map(entity)
+        val model = mapper.mapEntity(entity)
 
         val userCompleteTimeMillisRecord = System.currentTimeMillis()
         val userSessionRecord = SessionRecord(null, userCompleteTimeMillisRecord)
 
-        val entityFromModel = mapper.map(model, userSessionRecord)
+        val entityFromModel = mapper.mapModel(model, userSessionRecord)
 
         `comparing between two entities`(entity, entityFromModel)
         assertThat(entityFromModel.completeDateMillis, `is`(notNullValue()))
         assertThat(entityFromModel.completeDateMillis, `is`(userCompleteTimeMillisRecord))
         assertThat(entityFromModel.amrapRepetitions, `is`(nullValue()))
 
-        val modelFromEntity = mapper.map(entityFromModel)
+        val modelFromEntity = mapper.mapEntity(entityFromModel)
         `comparing between entity and model - DELOAD `(modelFromEntity, entityFromModel)
 
     }

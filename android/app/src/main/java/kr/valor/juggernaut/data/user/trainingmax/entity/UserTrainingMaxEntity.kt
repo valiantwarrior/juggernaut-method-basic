@@ -9,6 +9,12 @@ data class UserTrainingMaxEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
 
+    @ColumnInfo(name = "method_cycle")
+    val methodCycle: Int,
+
+    @ColumnInfo(name = "phase_name")
+    val phaseName: String,
+
     @ColumnInfo(name = "lift_category_name")
     val liftCategoryName: String,
 

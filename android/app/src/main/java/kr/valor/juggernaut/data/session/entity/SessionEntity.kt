@@ -12,13 +12,13 @@ data class SessionEntity(
     @ColumnInfo(name = "method_cycle")
     val methodCycle: Int,
 
-    @ColumnInfo(name = "phase")
+    @ColumnInfo(name = "phase_name")
     val phaseName: String,
 
-    @ColumnInfo(name = "micro_cycle")
+    @ColumnInfo(name = "micro_cycle_name")
     val microCycleName: String,
 
-    @ColumnInfo(name = "category")
+    @ColumnInfo(name = "lift_category_name")
     val liftCategoryName: String,
 
     @ColumnInfo(name = "current_tm_weights")

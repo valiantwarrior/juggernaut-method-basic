@@ -9,9 +9,11 @@ import kr.valor.juggernaut.common.MicroCycle
 import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.domain.session.repository.SessionRepository
 import kr.valor.juggernaut.common.MethodCycle
+import kr.valor.juggernaut.domain.session.model.Session
 import kr.valor.juggernaut.domain.user.model.UserProgression
 import kr.valor.juggernaut.domain.user.model.UserTrainingMax
 import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Before
@@ -27,8 +29,7 @@ class DefaultSessionRepositoryTest {
     @Before
     fun `init`() {
         repository = TestServiceLocator.sessionRepository
-        mockUserProgression = mockUserProgression()
-        mockUserTrainingMaxes = mockUserTrainingMaxes()
+        initMock()
     }
 
     @After
@@ -45,6 +46,7 @@ class DefaultSessionRepositoryTest {
         var synchronizedSessions = repository.findSessionsByUserProgression(mockUserProgression).single()
         assertThat(synchronizedSessions.size, `is`(LiftCategory.TOTAL_LIFT_CATEGORY_COUNT))
         synchronizedSessions.forEach { session ->
+            assertThat(session, instanceOf(Session::class.java))
             val (methodCycle, phase, microCycle) = session.progression
             with(mockUserProgression) {
                 assertThat(methodCycle, `is`(this.methodCycle))
@@ -80,34 +82,45 @@ class DefaultSessionRepositoryTest {
         assertThat(synchronizedSessions.size, `is`(LiftCategory.TOTAL_LIFT_CATEGORY_COUNT * 2))
     }
 
-    private fun mockUserProgression(): UserProgression = UserProgression(
-        MethodCycle(1), Phase.REP10, MicroCycle.ACCUMULATION
-    )
-
-    private fun mockUserTrainingMaxes(): List<UserTrainingMax> = listOf(
-        UserTrainingMax(
-            id = 0L,
-            liftCategory = LiftCategory.BENCHPRESS,
-            trainingMaxWeights = 60,
-            lastUpdatedAt = System.currentTimeMillis()
-        ),
-        UserTrainingMax(
-            id = 1L,
-            liftCategory = LiftCategory.SQUAT,
-            trainingMaxWeights = 100,
-            lastUpdatedAt = System.currentTimeMillis()
-        ),
-        UserTrainingMax(
-            id = 2L,
-            liftCategory = LiftCategory.OVERHEADPRESS,
-            trainingMaxWeights = 40,
-            lastUpdatedAt = System.currentTimeMillis()
-        ),
-        UserTrainingMax(
-            id = 3L,
-            liftCategory = LiftCategory.DEADLIFT,
-            trainingMaxWeights = 140,
-            lastUpdatedAt = System.currentTimeMillis()
+    private fun initMock() {
+        mockUserProgression = UserProgression(
+            MethodCycle(1), Phase.REP10, MicroCycle.ACCUMULATION
         )
-    )
+
+        mockUserTrainingMaxes = listOf(
+            UserTrainingMax(
+                id = 0L,
+                methodCycle = mockUserProgression.methodCycle,
+                phase = mockUserProgression.phase,
+                liftCategory = LiftCategory.BENCHPRESS,
+                trainingMaxWeights = 60,
+                lastUpdatedAt = System.currentTimeMillis()
+            ),
+            UserTrainingMax(
+                id = 1L,
+                methodCycle = mockUserProgression.methodCycle,
+                phase = mockUserProgression.phase,
+                liftCategory = LiftCategory.SQUAT,
+                trainingMaxWeights = 100,
+                lastUpdatedAt = System.currentTimeMillis()
+            ),
+            UserTrainingMax(
+                id = 2L,
+                methodCycle = mockUserProgression.methodCycle,
+                phase = mockUserProgression.phase,
+                liftCategory = LiftCategory.OVERHEADPRESS,
+                trainingMaxWeights = 40,
+                lastUpdatedAt = System.currentTimeMillis()
+            ),
+            UserTrainingMax(
+                id = 3L,
+                methodCycle = mockUserProgression.methodCycle,
+                phase = mockUserProgression.phase,
+                liftCategory = LiftCategory.DEADLIFT,
+                trainingMaxWeights = 140,
+                lastUpdatedAt = System.currentTimeMillis()
+            )
+        )
+    }
+
 }
