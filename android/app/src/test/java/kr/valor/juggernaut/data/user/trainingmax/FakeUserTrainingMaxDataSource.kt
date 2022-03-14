@@ -12,49 +12,19 @@ class FakeUserTrainingMaxDataSource: UserTrainingMaxDataSource {
 
     private var entityId: Long = 0L
 
-    private val inMemoryStorage = mutableListOf(
-        UserTrainingMaxEntity(
-            id = entityId++,
-            methodCycle = 1,
-            phaseName = Phase.REP10.name,
-            liftCategoryName = LiftCategory.BENCHPRESS.name,
-            trainingMaxWeights = 60,
-            lastUpdatedAt = System.currentTimeMillis()
-        ),
-        UserTrainingMaxEntity(
-            id = entityId++,
-            methodCycle = 1,
-            phaseName = Phase.REP10.name,
-            liftCategoryName = LiftCategory.DEADLIFT.name,
-            trainingMaxWeights = 120,
-            lastUpdatedAt = System.currentTimeMillis()
-        ),
-        UserTrainingMaxEntity(
-            id = entityId++,
-            methodCycle = 1,
-            phaseName = Phase.REP10.name,
-            liftCategoryName = LiftCategory.SQUAT.name,
-            trainingMaxWeights = 100,
-            lastUpdatedAt = System.currentTimeMillis()
-        ),
-        UserTrainingMaxEntity(
-            id = entityId++,
-            methodCycle = 1,
-            phaseName = Phase.REP10.name,
-            liftCategoryName = LiftCategory.OVERHEADPRESS.name,
-            trainingMaxWeights = 50,
-            lastUpdatedAt = System.currentTimeMillis()
-        )
-    )
+    private val inMemoryStorage = mutableListOf<UserTrainingMaxEntity>()
 
     override suspend fun insertUserTrainingMaxEntity(entity: UserTrainingMaxEntity): Long {
         inMemoryStorage.add(entity)
         return entityId
     }
 
-    override suspend fun findUserTrainingMaxEntitiesByUserProgression(userProgression: UserProgression): List<UserTrainingMaxEntity> {
-        TODO()
-    }
+    override suspend fun findUserTrainingMaxEntitiesByUserProgression(userProgression: UserProgression): List<UserTrainingMaxEntity> =
+        inMemoryStorage.filter { entity ->
+            entity.methodCycle == userProgression.methodCycle.value &&
+                    entity.phaseName == userProgression.phase.name
+        }
+
 
     override fun getUserTrainingMaxEntities(): Flow<List<UserTrainingMaxEntity>> {
         return flowOf(inMemoryStorage)
