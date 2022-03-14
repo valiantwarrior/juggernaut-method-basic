@@ -39,12 +39,12 @@ class DefaultUserTrainingMaxRepository(
     override suspend fun insertUserTrainingMax(trainingMax: UserTrainingMax): Long =
         userTrainingMaxDataSource.insertUserTrainingMaxEntity(trainingMax.toDatabaseModel())
 
-    override fun createUserTrainingMax(rawTmWeights: Double, liftCategory: LiftCategory, userProgression: UserProgression): UserTrainingMax =
+    override fun createUserTrainingMax(liftCategory: LiftCategory, inputWeights: Double, userProgression: UserProgression): UserTrainingMax =
         UserTrainingMax(
             methodCycle = userProgression.methodCycle,
             phase = userProgression.phase,
             liftCategory = liftCategory,
-            trainingMaxWeights = transform(rawTmWeights),
+            trainingMaxWeights = transform(inputWeights),
             lastUpdatedAt = System.currentTimeMillis()
         )
 

@@ -17,10 +17,10 @@ class PreferencesUserProgressionSource(
     private object PreferencesKeys {
         val METHOD_CYCLE = intPreferencesKey("method_cycle")
         val PHASE = stringPreferencesKey("phase")
-        val CYCLE = stringPreferencesKey("micro_cycle")
+        val MICRO_CYCLE = stringPreferencesKey("micro_cycle")
     }
-
-    private val userProgressionFlow: Flow<UserProgression> = dataStore.data
+    
+    override fun getUserProgressionData(): Flow<UserProgression> = dataStore.data
         .catch { exception ->
             if (exception is IOException) {
                 emit(emptyPreferences())
@@ -32,14 +32,11 @@ class PreferencesUserProgressionSource(
             mapUserProgression(preferences)
         }
 
-    override fun getUserProgressionData(): Flow<UserProgression> =
-        userProgressionFlow
-
     override suspend fun editUserProgression(progressionElement: ProgressionElement) {
         when(progressionElement) {
-            is MethodCycle -> editMethodCyclePreference(progressionElement)
-            is Phase -> editPhasePreference(progressionElement)
-            is MicroCycle -> editMicroCyclePreference(progressionElement)
+            is MethodCycle -> editPreference(progressionElement.value, PreferencesKeys.METHOD_CYCLE)
+            is Phase -> editPreference(progressionElement.name, PreferencesKeys.PHASE)
+            is MicroCycle -> editPreference(progressionElement.name, PreferencesKeys.MICRO_CYCLE)
         }
     }
 
@@ -47,21 +44,9 @@ class PreferencesUserProgressionSource(
         dataStore.edit { it.clear() }
     }
 
-    private suspend fun editMethodCyclePreference(methodCycle: MethodCycle) {
+    private suspend inline fun <T> editPreference(value: T, key: Preferences.Key<T>) {
         dataStore.edit { preferences ->
-            preferences[PreferencesKeys.METHOD_CYCLE] = methodCycle.value
-        }
-    }
-
-    private suspend fun editMicroCyclePreference(microCycle: MicroCycle) {
-        dataStore.edit { preferences ->
-            preferences[PreferencesKeys.CYCLE] = microCycle.name
-        }
-    }
-
-    private suspend fun editPhasePreference(phase: Phase) {
-        dataStore.edit { preferences ->
-            preferences[PreferencesKeys.PHASE] = phase.name
+            preferences[key] = value
         }
     }
 
@@ -74,9 +59,8 @@ class PreferencesUserProgressionSource(
             preferences[PreferencesKeys.PHASE] ?: Phase.REP10.name
         )
         val cycle = MicroCycle.valueOf(
-            preferences[PreferencesKeys.CYCLE] ?: MicroCycle.ACCUMULATION.name
+            preferences[PreferencesKeys.MICRO_CYCLE] ?: MicroCycle.ACCUMULATION.name
         )
-
 
         return UserProgression(methodCycle, phase, cycle)
     }
