@@ -55,7 +55,7 @@ class DefaultProgressionStateRepositoryTest {
     fun `updateUseProgression() works as expected`() = runTest {
         val updateValue = MicroCycle.INTENSIFICATION
         repository.updateMethodProgressState(MethodProgressState.ONGOING)
-        repository.updateUserProgression(updateValue)
+        repository.updateMicroCycleState(updateValue)
 
         val progressionState = repository.getProgressionState().first()
         val userProgression = (progressionState as ProgressionState.OnGoing).currentUserProgression

@@ -3,7 +3,9 @@ package kr.valor.juggernaut.domain.user.usecases.contract
 import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.common.MicroCycle
 import kr.valor.juggernaut.common.Phase
-import kr.valor.juggernaut.domain.user.usecases.usecase.UpdateUserProgressionUseCase
+import kr.valor.juggernaut.domain.user.usecases.usecase.UpdateMethodCycleStateUseCase
+import kr.valor.juggernaut.domain.user.usecases.usecase.UpdateMicroCycleStateUseCase
+import kr.valor.juggernaut.domain.user.usecases.usecase.UpdatePhaseStateUseCase
 
 interface UpdateUserProgressionNewCycleContract {
 
@@ -12,13 +14,15 @@ interface UpdateUserProgressionNewCycleContract {
 }
 
 class UpdateUserProgressionNewCycleContractImpl(
-    private val updateUserProgressionUseCase: UpdateUserProgressionUseCase
+    private val updateMethodCycleStateUseCase: UpdateMethodCycleStateUseCase,
+    private val updatePhaseStateUseCase: UpdatePhaseStateUseCase,
+    private val updateMicroCycleStateUseCase: UpdateMicroCycleStateUseCase
 ): UpdateUserProgressionNewCycleContract {
 
     override suspend fun invoke(newCycle: MethodCycle) {
-        updateUserProgressionUseCase(newCycle)
-        updateUserProgressionUseCase(Phase.REP10)
-        updateUserProgressionUseCase(MicroCycle.ACCUMULATION)
+        updateMethodCycleStateUseCase(newCycle)
+        updatePhaseStateUseCase(Phase.INITIAL)
+        updateMicroCycleStateUseCase(MicroCycle.INITIAL)
     }
 
 }

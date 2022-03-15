@@ -6,7 +6,9 @@ import kr.valor.juggernaut.domain.user.model.ProgressionState
 
 interface ProgressionStateDataSource {
     fun getProgressionStateData(): Flow<ProgressionState>
-    suspend fun editUserProgression(progressionElement: ProgressionElement)
+    suspend fun editMethodCycleState(methodCycle: MethodCycle)
+    suspend fun editPhaseState(phase: Phase)
+    suspend fun editMicroCycleState(microCycle: MicroCycle)
     suspend fun editMethodProgressState(methodProgressState: MethodProgressState)
     suspend fun clear()
 }

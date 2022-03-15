@@ -34,12 +34,16 @@ class PreferencesProgressionStateSource(
             it.toDomainModel()
         }
 
-    override suspend fun editUserProgression(progressionElement: ProgressionElement) {
-        when(progressionElement) {
-            is MethodCycle -> editPreference(progressionElement.value, PreferencesKeys.METHOD_CYCLE)
-            is Phase -> editPreference(progressionElement.name, PreferencesKeys.PHASE)
-            is MicroCycle -> editPreference(progressionElement.name, PreferencesKeys.MICRO_CYCLE)
-        }
+    override suspend fun editMethodCycleState(methodCycle: MethodCycle) {
+        editPreference(methodCycle.value, PreferencesKeys.METHOD_CYCLE)
+    }
+
+    override suspend fun editPhaseState(phase: Phase) {
+        editPreference(phase.name, PreferencesKeys.PHASE)
+    }
+
+    override suspend fun editMicroCycleState(microCycle: MicroCycle) {
+        editPreference(microCycle.name, PreferencesKeys.MICRO_CYCLE)
     }
 
     override suspend fun editMethodProgressState(methodProgressState: MethodProgressState) {

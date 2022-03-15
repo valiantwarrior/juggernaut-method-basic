@@ -1,15 +1,13 @@
 package kr.valor.juggernaut.common
 
-sealed interface ProgressionElement
-
 @JvmInline
-value class MethodCycle(val value: Int): ProgressionElement {
+value class MethodCycle(val value: Int) {
     companion object {
         const val INITIAL = 1
     }
 }
 
-enum class Phase: ProgressionElement {
+enum class Phase {
     REP10, REP8, REP5, REP3;
 
     companion object {
@@ -17,7 +15,7 @@ enum class Phase: ProgressionElement {
     }
 }
 
-enum class MicroCycle: ProgressionElement {
+enum class MicroCycle {
     ACCUMULATION, INTENSIFICATION, REALIZATION, DELOAD;
 
     companion object {

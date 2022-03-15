@@ -13,8 +13,16 @@ class DefaultProgressionStateRepository(
     override fun getProgressionState(): Flow<ProgressionState> =
         progressionStateDataSource.getProgressionStateData()
 
-    override suspend fun updateUserProgression(element: ProgressionElement) {
-        progressionStateDataSource.editUserProgression(element)
+    override suspend fun updateMethodCycleState(methodCycle: MethodCycle) {
+        progressionStateDataSource.editMethodCycleState(methodCycle)
+    }
+
+    override suspend fun updatePhaseState(phase: Phase) {
+        progressionStateDataSource.editPhaseState(phase)
+    }
+
+    override suspend fun updateMicroCycleState(microCycle: MicroCycle) {
+        progressionStateDataSource.editMicroCycleState(microCycle)
     }
 
     override suspend fun updateMethodProgressState(methodProgressState: MethodProgressState) {

@@ -27,18 +27,20 @@ class FakeProgressionStateDataSource: ProgressionStateDataSource {
             }
         }
 
-    override suspend fun editMethodProgressState(methodProgressState: MethodProgressState) {
-        methodProgressionState.value = methodProgressState
+    override suspend fun editMethodCycleState(methodCycle: MethodCycle) {
+        userProgression.value = userProgression.value.copy(methodCycle = methodCycle)
     }
 
-    override suspend fun editUserProgression(progressionElement: ProgressionElement) {
-        userProgression.value = with(userProgression.value) {
-            when(progressionElement) {
-                is MethodCycle -> copy(methodCycle = progressionElement)
-                is Phase -> copy(phase = progressionElement)
-                is MicroCycle -> copy(microCycle = progressionElement)
-            }
-        }
+    override suspend fun editPhaseState(phase: Phase) {
+        userProgression.value = userProgression.value.copy(phase = phase)
+    }
+
+    override suspend fun editMicroCycleState(microCycle: MicroCycle) {
+        userProgression.value = userProgression.value.copy(microCycle = microCycle)
+    }
+
+    override suspend fun editMethodProgressState(methodProgressState: MethodProgressState) {
+        methodProgressionState.value = methodProgressState
     }
 
     override suspend fun clear() {
