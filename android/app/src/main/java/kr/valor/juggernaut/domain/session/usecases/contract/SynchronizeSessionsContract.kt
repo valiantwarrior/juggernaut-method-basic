@@ -1,9 +1,9 @@
-package kr.valor.juggernaut.domain.session.contract
+package kr.valor.juggernaut.domain.session.usecases.contract
 
 import kotlinx.coroutines.flow.first
 import kr.valor.juggernaut.domain.session.repository.SessionRepository
-import kr.valor.juggernaut.domain.user.usecase.FindUserTrainingMaxesByUserProgressionUseCase
-import kr.valor.juggernaut.domain.user.usecase.GetUserProgressionUseCase
+import kr.valor.juggernaut.domain.user.usecases.usecase.FindUserTrainingMaxesByUserProgressionUseCase
+import kr.valor.juggernaut.domain.user.usecases.usecase.GetUserProgressionUseCase
 
 interface SynchronizeSessionsContract {
 

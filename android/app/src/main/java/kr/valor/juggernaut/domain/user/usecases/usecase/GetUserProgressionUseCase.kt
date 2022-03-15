@@ -1,4 +1,4 @@
-package kr.valor.juggernaut.domain.user.usecase
+package kr.valor.juggernaut.domain.user.usecases.usecase
 
 import kotlinx.coroutines.flow.Flow
 import kr.valor.juggernaut.domain.user.model.UserProgression

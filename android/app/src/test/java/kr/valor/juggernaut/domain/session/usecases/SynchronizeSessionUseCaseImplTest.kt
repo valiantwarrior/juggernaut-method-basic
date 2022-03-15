@@ -1,4 +1,4 @@
-package kr.valor.juggernaut.domain.session.usecase
+package kr.valor.juggernaut.domain.session.usecases
 
 //class SynchronizeSessionUseCaseImplTest {
 //    private lateinit var useCase: SynchronizeSessionUseCase
