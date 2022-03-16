@@ -10,8 +10,8 @@ import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.domain.session.repository.SessionRepository
 import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.domain.session.model.Session
-import kr.valor.juggernaut.domain.user.model.UserProgression
-import kr.valor.juggernaut.domain.user.model.UserTrainingMax
+import kr.valor.juggernaut.domain.progression.model.UserProgression
+import kr.valor.juggernaut.domain.trainingmax.model.TrainingMax
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.MatcherAssert.assertThat
@@ -24,7 +24,7 @@ class DefaultSessionRepositoryTest {
 
     private lateinit var repository: SessionRepository
     private lateinit var mockUserProgression: UserProgression
-    private lateinit var mockUserTrainingMaxes: List<UserTrainingMax>
+    private lateinit var mockTrainingMaxes: List<TrainingMax>
 
     @Before
     fun `init`() {
@@ -42,7 +42,7 @@ class DefaultSessionRepositoryTest {
         val initialSessions = repository.findSessionsByUserProgression(mockUserProgression).single()
         assertThat(initialSessions.size, `is`(0))
 
-        repository.synchronizeSessions(mockUserProgression, mockUserTrainingMaxes)
+        repository.synchronizeSessions(mockUserProgression, mockTrainingMaxes)
         var synchronizedSessions = repository.findSessionsByUserProgression(mockUserProgression).single()
         assertThat(synchronizedSessions.size, `is`(LiftCategory.TOTAL_LIFT_CATEGORY_COUNT))
         synchronizedSessions.forEach { session ->
@@ -60,13 +60,13 @@ class DefaultSessionRepositoryTest {
 
         LiftCategory.values().forEach { liftCategory ->
             var session = synchronizedSessions.find { it.category == liftCategory }!!
-            val trainingMax = mockUserTrainingMaxes.find { it.liftCategory == liftCategory }!!
+            val trainingMax = mockTrainingMaxes.find { it.liftCategory == liftCategory }!!
             assertThat(session.tmWeights, `is`(trainingMax.trainingMaxWeights))
             assertThat(session.category, `is`(trainingMax.liftCategory))
         }
 
         mockUserProgression = mockUserProgression.copy(microCycle = MicroCycle.INTENSIFICATION)
-        repository.synchronizeSessions(mockUserProgression, mockUserTrainingMaxes)
+        repository.synchronizeSessions(mockUserProgression, mockTrainingMaxes)
         synchronizedSessions = repository.findSessionsByUserProgression(mockUserProgression).single()
         assertThat(synchronizedSessions.size, `is`(LiftCategory.TOTAL_LIFT_CATEGORY_COUNT))
         synchronizedSessions.forEach { session ->
@@ -87,8 +87,8 @@ class DefaultSessionRepositoryTest {
             MethodCycle(1), Phase.REP10, MicroCycle.ACCUMULATION
         )
 
-        mockUserTrainingMaxes = listOf(
-            UserTrainingMax(
+        mockTrainingMaxes = listOf(
+            TrainingMax(
                 id = 0L,
                 methodCycle = mockUserProgression.methodCycle,
                 phase = mockUserProgression.phase,
@@ -96,7 +96,7 @@ class DefaultSessionRepositoryTest {
                 trainingMaxWeights = 60,
                 lastUpdatedAt = System.currentTimeMillis()
             ),
-            UserTrainingMax(
+            TrainingMax(
                 id = 1L,
                 methodCycle = mockUserProgression.methodCycle,
                 phase = mockUserProgression.phase,
@@ -104,7 +104,7 @@ class DefaultSessionRepositoryTest {
                 trainingMaxWeights = 100,
                 lastUpdatedAt = System.currentTimeMillis()
             ),
-            UserTrainingMax(
+            TrainingMax(
                 id = 2L,
                 methodCycle = mockUserProgression.methodCycle,
                 phase = mockUserProgression.phase,
@@ -112,7 +112,7 @@ class DefaultSessionRepositoryTest {
                 trainingMaxWeights = 40,
                 lastUpdatedAt = System.currentTimeMillis()
             ),
-            UserTrainingMax(
+            TrainingMax(
                 id = 3L,
                 methodCycle = mockUserProgression.methodCycle,
                 phase = mockUserProgression.phase,

@@ -2,60 +2,63 @@ package kr.valor.juggernaut.data
 
 import kotlinx.coroutines.flow.*
 import kr.valor.juggernaut.common.LiftCategory
+import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.data.session.entity.SessionEntity
 import kr.valor.juggernaut.data.session.mapper.SessionMapper
 import kr.valor.juggernaut.data.session.source.SessionDataSource
 import kr.valor.juggernaut.domain.session.model.Session
 import kr.valor.juggernaut.domain.session.model.SessionRecord
 import kr.valor.juggernaut.domain.session.repository.SessionRepository
-import kr.valor.juggernaut.domain.user.model.UserProgression
-import kr.valor.juggernaut.domain.user.model.UserTrainingMax
+import kr.valor.juggernaut.domain.progression.model.UserProgression
+import kr.valor.juggernaut.domain.trainingmax.model.TrainingMax
 
 class DefaultSessionRepository(
     private val sessionMapper: SessionMapper,
     private val sessionDataSource: SessionDataSource
 ): SessionRepository {
 
-    private val toDatabaseModel: Session.(SessionRecord?) -> SessionEntity = { sessionRecord ->
-        sessionMapper.mapModel(this, sessionRecord)
-    }
-
-    private val toDomainModel: SessionEntity.() -> Session = {
-        sessionMapper.mapEntity(this)
-    }
-
     override fun getAllSessions(): Flow<List<Session>> =
         sessionDataSource.getAllSessionEntities().map { entities ->
-            entities.map(toDomainModel)
+            entities.map { it.toDomainModel() }
         }
 
     override fun findSessionsByUserProgression(userProgression: UserProgression): Flow<List<Session>> =
         sessionDataSource.findSessionEntitiesByUserProgression(userProgression).map { entities ->
-            entities.map(toDomainModel)
+            entities.map { it.toDomainModel() }
         }
 
     override suspend fun findSessionById(sessionId: Long): Session =
         sessionDataSource.findSessionEntityById(sessionId).toDomainModel()
 
     // considering RoomDatabase.withTransaction
-    override suspend fun synchronizeSessions(userProgression: UserProgression, userTrainingMaxes: List<UserTrainingMax>) {
+    override suspend fun synchronizeSessions(userProgression: UserProgression, trainingMaxes: List<TrainingMax>) {
         sessionDataSource.findSessionEntitiesByUserProgressionOrNull(userProgression)?.let { entities ->
             if (entities.size != LiftCategory.TOTAL_LIFT_CATEGORY_COUNT) {
                 entities.forEach { entity ->
                     sessionDataSource.deleteSessionEntity(entity)
                 }
-                initWeeklySession(userProgression, userTrainingMaxes)
+                initWeeklySession(userProgression, trainingMaxes)
             }
-        } ?: initWeeklySession(userProgression, userTrainingMaxes)
+        } ?: initWeeklySession(userProgression, trainingMaxes)
+    }
+
+    override suspend fun deleteSessionsByMethodCycle(methodCycle: MethodCycle) {
+        sessionDataSource.deleteSessionEntitiesByMethodCycle(methodCycle.value)
     }
 
     override suspend fun clear() {
         sessionDataSource.clear()
     }
 
+    private fun Session.toDatabaseModel(sessionRecord: SessionRecord?): SessionEntity =
+        sessionMapper.mapModel(this, sessionRecord)
+
+    private fun SessionEntity.toDomainModel(): Session =
+        sessionMapper.mapEntity(this)
+
     // considering RoomDatabase.withTransaction
-    private suspend fun initWeeklySession(userProgression: UserProgression, userTrainingMaxes: List<UserTrainingMax>) {
-        userTrainingMaxes.forEach { userTrainingMax ->
+    private suspend fun initWeeklySession(userProgression: UserProgression, trainingMaxes: List<TrainingMax>) {
+        trainingMaxes.forEach { userTrainingMax ->
             val newSessionEntity = SessionEntity(
                 methodCycle = userProgression.methodCycle.value,
                 phaseName = userProgression.phase.name,

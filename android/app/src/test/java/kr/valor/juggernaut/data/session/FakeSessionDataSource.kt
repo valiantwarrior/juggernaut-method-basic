@@ -1,12 +1,11 @@
 package kr.valor.juggernaut.data.session
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flowOf
 import kr.valor.juggernaut.data.session.entity.SessionEntity
 import kr.valor.juggernaut.data.session.source.SessionDataSource
-import kr.valor.juggernaut.domain.user.model.UserProgression
-import kr.valor.juggernaut.domain.user.model.extractUserProgression
+import kr.valor.juggernaut.domain.progression.model.UserProgression
+import kr.valor.juggernaut.domain.progression.model.extractUserProgression
 
 class FakeSessionDataSource: SessionDataSource {
 
@@ -33,24 +32,16 @@ class FakeSessionDataSource: SessionDataSource {
             }
         )
 
-    override suspend fun updateSessionEntity(entity: SessionEntity) {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun deleteSessionEntity(entity: SessionEntity) {
         inMemoryStorage.remove(entity)
     }
 
+    override suspend fun deleteSessionEntitiesByMethodCycle(methodCycle: Int) {
+        inMemoryStorage.removeAll { it.methodCycle == methodCycle }
+    }
+
     override suspend fun findSessionEntityById(id: Long): SessionEntity {
         return inMemoryStorage.find { it.id == id }!!
-    }
-
-    override suspend fun getLatestSessionEntityOrNull(): SessionEntity? {
-        return inMemoryStorage.lastOrNull()
-    }
-
-    override fun getLatestSessionEntity(): Flow<SessionEntity> {
-        return flowOf(inMemoryStorage.last())
     }
 
     override fun getAllSessionEntities(): Flow<List<SessionEntity>> {

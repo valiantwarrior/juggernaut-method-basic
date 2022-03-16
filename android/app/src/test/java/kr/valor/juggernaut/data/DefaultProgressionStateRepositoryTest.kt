@@ -8,8 +8,8 @@ import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.common.MethodProgressState
 import kr.valor.juggernaut.common.MicroCycle
 import kr.valor.juggernaut.common.Phase
-import kr.valor.juggernaut.domain.user.model.ProgressionState
-import kr.valor.juggernaut.domain.user.repository.ProgressionStateRepository
+import kr.valor.juggernaut.domain.progression.model.ProgressionState
+import kr.valor.juggernaut.domain.progression.repository.ProgressionStateRepository
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.MatcherAssert.assertThat
@@ -48,7 +48,7 @@ class DefaultProgressionStateRepositoryTest {
         progressionState as ProgressionState.OnGoing
         assertThat(progressionState.currentUserProgression.phase, `is`(Phase.INITIAL))
         assertThat(progressionState.currentUserProgression.microCycle, `is`(MicroCycle.INITIAL))
-        assertThat(progressionState.currentUserProgression.methodCycle.value, `is`(MethodCycle.INITIAL))
+        assertThat(progressionState.currentUserProgression.methodCycle.value, `is`(MethodCycle.INITIAL_VALUE))
     }
 
     @Test
@@ -60,7 +60,7 @@ class DefaultProgressionStateRepositoryTest {
         val progressionState = repository.getProgressionState().first()
         val userProgression = (progressionState as ProgressionState.OnGoing).currentUserProgression
 
-        assertThat(userProgression.methodCycle.value, `is`(MethodCycle.INITIAL))
+        assertThat(userProgression.methodCycle.value, `is`(MethodCycle.INITIAL_VALUE))
         assertThat(userProgression.phase, `is`(Phase.INITIAL))
         assertThat(userProgression.microCycle, `is`(updateValue))
     }
