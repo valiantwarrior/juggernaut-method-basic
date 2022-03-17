@@ -6,11 +6,13 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.data.trainingmax.entity.TrainingMaxEntity
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -29,6 +31,11 @@ class TrainingMaxDaoTest {
     @Before
     fun init() {
         rule.inject()
+    }
+
+    @After
+    fun cleanUp() = runTest {
+        trainingMaxDao.clear()
     }
 
     @Test

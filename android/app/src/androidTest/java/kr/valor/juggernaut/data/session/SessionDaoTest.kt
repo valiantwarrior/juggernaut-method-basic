@@ -6,6 +6,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.common.MicroCycle
@@ -15,6 +16,7 @@ import kr.valor.juggernaut.domain.progression.model.UserProgression
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -33,6 +35,11 @@ class SessionDaoTest {
     @Before
     fun init() {
         rule.inject()
+    }
+
+    @After
+    fun cleanUp() = runTest {
+        sessionDao.clear()
     }
 
     @Test
