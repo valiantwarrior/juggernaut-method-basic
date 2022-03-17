@@ -33,7 +33,6 @@ class DefaultSessionRepository(
         }
     }
 
-
     override suspend fun findSessionById(sessionId: Long): Session =
         sessionDataSource.findSessionEntityById(sessionId).toDomainModel()
 
@@ -42,16 +41,21 @@ class DefaultSessionRepository(
         val (methodCycleValue, phaseName, microCycleName) =
             userProgression.serializedValue
 
-        sessionDataSource.findSessionEntitiesByUserProgressionOrNull(
+        val sessionEntities = sessionDataSource.findSessionEntitiesByUserProgression(
             methodCycleValue, phaseName, microCycleName
-        )?.let { entities ->
-            if (entities.size != LiftCategory.TOTAL_LIFT_CATEGORY_COUNT) {
-                entities.forEach { entity ->
-                    sessionDataSource.deleteSessionEntity(entity)
+        ).first()
+
+        when(sessionEntities.isEmpty()) {
+            true -> initWeeklySession(userProgression, trainingMaxes)
+            false -> {
+                if (sessionEntities.size != LiftCategory.TOTAL_LIFT_CATEGORY_COUNT) {
+                    sessionEntities.forEach { entity ->
+                        sessionDataSource.deleteSessionEntity(entity)
+                    }
+                    initWeeklySession(userProgression, trainingMaxes)
                 }
-                initWeeklySession(userProgression, trainingMaxes)
             }
-        } ?: initWeeklySession(userProgression, trainingMaxes)
+        }
     }
 
     override suspend fun deleteSessionsByMethodCycle(methodCycle: MethodCycle) {

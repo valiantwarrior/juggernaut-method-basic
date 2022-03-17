@@ -17,14 +17,6 @@ class FakeSessionDataSource: SessionDataSource {
         return entityWithFakeId.id
     }
 
-    override suspend fun findSessionEntitiesByUserProgressionOrNull(methodCycleValue: Int, phaseName: String, microCycleName: String): List<SessionEntity>? {
-        return inMemoryStorage.filter { entity ->
-            entity.methodCycleValue == methodCycleValue
-                    && entity.phaseName == phaseName
-                    && entity.microCycleName == microCycleName
-        }.ifEmpty { null }
-    }
-
     override fun findSessionEntitiesByUserProgression(methodCycleValue: Int, phaseName: String, microCycleName: String): Flow<List<SessionEntity>> =
         flowOf(
             inMemoryStorage.filter { entity ->

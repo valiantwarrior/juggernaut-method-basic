@@ -22,9 +22,6 @@ interface SessionDao: SessionDataSource {
     override suspend fun findSessionEntityById(id: Long): SessionEntity
 
     @Query("SELECT * FROM session_table WHERE method_cycle is :methodCycleValue AND phase_name is :phaseName AND micro_cycle_name is :microCycleName")
-    override suspend fun findSessionEntitiesByUserProgressionOrNull(methodCycleValue: Int, phaseName: String, microCycleName: String): List<SessionEntity>?
-
-    @Query("SELECT * FROM session_table WHERE method_cycle is :methodCycleValue AND phase_name is :phaseName AND micro_cycle_name is :microCycleName")
     override fun findSessionEntitiesByUserProgression(methodCycleValue: Int, phaseName: String, microCycleName: String): Flow<List<SessionEntity>>
 
     @Query("SELECT * FROM session_table ORDER BY id ASC")

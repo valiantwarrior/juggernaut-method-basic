@@ -14,8 +14,6 @@ interface SessionDataSource {
 
     suspend fun findSessionEntityById(id: Long): SessionEntity
 
-    suspend fun findSessionEntitiesByUserProgressionOrNull(methodCycleValue: Int, phaseName: String, microCycleName: String): List<SessionEntity>?
-
     fun findSessionEntitiesByUserProgression(methodCycleValue: Int, phaseName: String, microCycleName: String): Flow<List<SessionEntity>>
 
     fun getAllSessionEntities(): Flow<List<SessionEntity>>
