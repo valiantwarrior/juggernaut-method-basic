@@ -47,7 +47,9 @@ dependencies {
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"
 
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0'
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0"
+
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0"
 
     // Room
     implementation "androidx.room:room-ktx:$room_version"
@@ -65,6 +67,7 @@ dependencies {
 
     // DataStore
     implementation "androidx.datastore:datastore-preferences-core:$datastore_version"
+    implementation "androidx.datastore:datastore-preferences:$datastore_version"
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.hamcrest:hamcrest:$hamcrest_version"

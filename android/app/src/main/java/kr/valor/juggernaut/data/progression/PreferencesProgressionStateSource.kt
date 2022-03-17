@@ -10,8 +10,10 @@ import kr.valor.juggernaut.data.progression.source.ProgressionStateDataSource
 import kr.valor.juggernaut.domain.progression.model.ProgressionState
 import kr.valor.juggernaut.domain.progression.model.UserProgression
 import java.io.IOException
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class PreferencesProgressionStateSource(
+class PreferencesProgressionStateSource @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ): ProgressionStateDataSource {
 

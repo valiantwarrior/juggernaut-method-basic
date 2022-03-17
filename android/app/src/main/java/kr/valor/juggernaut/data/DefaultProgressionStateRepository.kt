@@ -5,8 +5,10 @@ import kr.valor.juggernaut.common.*
 import kr.valor.juggernaut.data.progression.source.ProgressionStateDataSource
 import kr.valor.juggernaut.domain.progression.model.ProgressionState
 import kr.valor.juggernaut.domain.progression.repository.ProgressionStateRepository
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class DefaultProgressionStateRepository(
+class DefaultProgressionStateRepository @Inject constructor(
     private val progressionStateDataSource: ProgressionStateDataSource
 ): ProgressionStateRepository {
 
