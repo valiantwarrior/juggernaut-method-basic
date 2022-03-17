@@ -6,13 +6,13 @@ import kr.valor.juggernaut.domain.progression.model.UserProgression
 
 interface TrainingMaxDataSource {
 
-    suspend fun insertUserTrainingMaxEntity(entity: TrainingMaxEntity): Long
+    suspend fun insertTrainingMaxEntity(entity: TrainingMaxEntity): Long
 
-    suspend fun findUserTrainingMaxEntitiesByMethodCycleAndPhase(methodCycleValue: Int, phaseName: String): List<TrainingMaxEntity>
+    suspend fun findTrainingMaxEntitiesByMethodCycleAndPhase(methodCycleValue: Int, phaseName: String): List<TrainingMaxEntity>
 
-    suspend fun deleteUserTrainingMaxesByMethodCycle(methodCycle: Int)
+    suspend fun deleteTrainingMaxesByMethodCycle(methodCycle: Int)
 
-    fun getUserTrainingMaxEntities(): Flow<List<TrainingMaxEntity>>
+    fun getAllTrainingMaxEntities(): Flow<List<TrainingMaxEntity>>
 
     suspend fun clear()
 

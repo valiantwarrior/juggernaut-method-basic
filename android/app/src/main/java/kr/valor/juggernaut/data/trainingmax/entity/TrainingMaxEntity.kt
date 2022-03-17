@@ -10,7 +10,7 @@ data class TrainingMaxEntity(
     val id: Long = 0L,
 
     @ColumnInfo(name = "method_cycle")
-    val methodCycle: Int,
+    val methodCycleValue: Int,
 
     @ColumnInfo(name = "phase_name")
     val phaseName: String,

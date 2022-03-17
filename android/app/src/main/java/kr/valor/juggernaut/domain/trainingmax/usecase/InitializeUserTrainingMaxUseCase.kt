@@ -15,7 +15,7 @@ class InitializeUserTrainingMaxUseCaseImpl(
 ): InitializeUserTrainingMaxUseCase {
 
     override suspend fun invoke(liftCategory: LiftCategory, inputWeights: Double, userProgression: UserProgression) {
-        val newTrainingMax = repository.createUserTrainingMax(liftCategory, inputWeights, userProgression)
-        repository.insertUserTrainingMax(newTrainingMax)
+        val newTrainingMax = repository.createTrainingMax(liftCategory, inputWeights, userProgression)
+        repository.insertTrainingMax(newTrainingMax)
     }
 }

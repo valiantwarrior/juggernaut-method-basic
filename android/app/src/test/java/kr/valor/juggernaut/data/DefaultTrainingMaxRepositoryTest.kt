@@ -41,22 +41,22 @@ class DefaultTrainingMaxRepositoryTest {
     fun `Task - create, insert and get TM - works as expected`() = runTest {
 
         var initialUserTrainingMaxes =
-            repository.findUserTrainingMaxesByUserProgression(userProgression)
+            repository.findTrainingMaxesByUserProgression(userProgression)
         assertThat(initialUserTrainingMaxes.size, `is`(0))
 
         initialUserTrainingMaxes =
-            repository.getAllUserTrainingMaxes().first()
+            repository.getAllTrainingMaxes().first()
         assertThat(initialUserTrainingMaxes.size, `is`(0))
 
 
         tmMap.forEach { (liftCategory, weights) ->
             val userTrainingMax =
-                repository.createUserTrainingMax(liftCategory, weights, userProgression)
-            repository.insertUserTrainingMax(userTrainingMax)
+                repository.createTrainingMax(liftCategory, weights, userProgression)
+            repository.insertTrainingMax(userTrainingMax)
         }
 
         var afterUserTrainingMaxes =
-            repository.findUserTrainingMaxesByUserProgression(userProgression)
+            repository.findTrainingMaxesByUserProgression(userProgression)
 
         assertThat(afterUserTrainingMaxes.size, `is`(LiftCategory.TOTAL_LIFT_CATEGORY_COUNT))
         afterUserTrainingMaxes.forEach { userTrainingMax ->

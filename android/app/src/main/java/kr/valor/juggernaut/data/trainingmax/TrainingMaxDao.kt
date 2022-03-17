@@ -13,16 +13,16 @@ import kr.valor.juggernaut.domain.progression.model.UserProgression
 interface TrainingMaxDao: TrainingMaxDataSource {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    override suspend fun insertUserTrainingMaxEntity(entity: TrainingMaxEntity): Long
+    override suspend fun insertTrainingMaxEntity(entity: TrainingMaxEntity): Long
 
     @Query("SELECT * FROM training_max_table WHERE method_cycle is :methodCycleValue AND phase_name is :phaseName")
-    override suspend fun findUserTrainingMaxEntitiesByMethodCycleAndPhase(methodCycleValue: Int, phaseName: String): List<TrainingMaxEntity>
+    override suspend fun findTrainingMaxEntitiesByMethodCycleAndPhase(methodCycleValue: Int, phaseName: String): List<TrainingMaxEntity>
 
     @Query("DELETE FROM training_max_table WHERE method_cycle is :methodCycle")
-    override suspend fun deleteUserTrainingMaxesByMethodCycle(methodCycle: Int)
+    override suspend fun deleteTrainingMaxesByMethodCycle(methodCycle: Int)
 
     @Query("SELECT * FROM training_max_table ORDER BY id ASC")
-    override fun getUserTrainingMaxEntities(): Flow<List<TrainingMaxEntity>>
+    override fun getAllTrainingMaxEntities(): Flow<List<TrainingMaxEntity>>
 
     @Query("DELETE FROM training_max_table")
     override suspend fun clear()

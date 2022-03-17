@@ -4,7 +4,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kr.valor.juggernaut.data.trainingmax.entity.TrainingMaxEntity
 import kr.valor.juggernaut.data.trainingmax.source.TrainingMaxDataSource
-import kr.valor.juggernaut.domain.progression.model.UserProgression
 
 class FakeTrainingMaxDataSource: TrainingMaxDataSource {
 
@@ -12,22 +11,22 @@ class FakeTrainingMaxDataSource: TrainingMaxDataSource {
 
     private val inMemoryStorage = mutableListOf<TrainingMaxEntity>()
 
-    override suspend fun insertUserTrainingMaxEntity(entity: TrainingMaxEntity): Long {
+    override suspend fun insertTrainingMaxEntity(entity: TrainingMaxEntity): Long {
         inMemoryStorage.add(entity)
         return entityId
     }
 
-    override suspend fun findUserTrainingMaxEntitiesByMethodCycleAndPhase(methodCycleValue: Int, phaseName: String): List<TrainingMaxEntity> =
+    override suspend fun findTrainingMaxEntitiesByMethodCycleAndPhase(methodCycleValue: Int, phaseName: String): List<TrainingMaxEntity> =
         inMemoryStorage.filter { entity ->
-            entity.methodCycle == methodCycleValue &&
+            entity.methodCycleValue == methodCycleValue &&
                     entity.phaseName == phaseName
         }
 
-    override suspend fun deleteUserTrainingMaxesByMethodCycle(methodCycle: Int) {
-        inMemoryStorage.removeAll { it.methodCycle == methodCycle }
+    override suspend fun deleteTrainingMaxesByMethodCycle(methodCycle: Int) {
+        inMemoryStorage.removeAll { it.methodCycleValue == methodCycle }
     }
 
-    override fun getUserTrainingMaxEntities(): Flow<List<TrainingMaxEntity>> {
+    override fun getAllTrainingMaxEntities(): Flow<List<TrainingMaxEntity>> {
         return flowOf(inMemoryStorage)
     }
 

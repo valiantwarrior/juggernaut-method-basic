@@ -8,15 +8,15 @@ import kr.valor.juggernaut.domain.trainingmax.model.TrainingMax
 
 interface TrainingMaxRepository {
 
-    fun getAllUserTrainingMaxes(): Flow<List<TrainingMax>>
+    fun getAllTrainingMaxes(): Flow<List<TrainingMax>>
 
-    suspend fun findUserTrainingMaxesByUserProgression(userProgression: UserProgression): List<TrainingMax>
+    suspend fun findTrainingMaxesByUserProgression(userProgression: UserProgression): List<TrainingMax>
 
-    suspend fun deleteUserTrainingMaxesByMethodCycle(methodCycle: MethodCycle)
+    suspend fun deleteTrainingMaxesByMethodCycle(methodCycle: MethodCycle)
 
-    suspend fun insertUserTrainingMax(trainingMax: TrainingMax): Long
+    suspend fun insertTrainingMax(trainingMax: TrainingMax): Long
 
-    fun createUserTrainingMax(liftCategory: LiftCategory, inputWeights: Double, userProgression: UserProgression): TrainingMax
+    fun createTrainingMax(liftCategory: LiftCategory, inputWeights: Double, userProgression: UserProgression): TrainingMax
 
     suspend fun clear()
 

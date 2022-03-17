@@ -20,25 +20,25 @@ class DefaultTrainingMaxRepository(
 
     private val transform: (Double) -> Int = weightUnitTransformer::transform
 
-    override fun getAllUserTrainingMaxes(): Flow<List<TrainingMax>> =
-        trainingMaxDataSource.getUserTrainingMaxEntities().map { entities ->
+    override fun getAllTrainingMaxes(): Flow<List<TrainingMax>> =
+        trainingMaxDataSource.getAllTrainingMaxEntities().map { entities ->
             entities.toDomainModels()
         }
 
-    override suspend fun findUserTrainingMaxesByUserProgression(userProgression: UserProgression): List<TrainingMax> =
+    override suspend fun findTrainingMaxesByUserProgression(userProgression: UserProgression): List<TrainingMax> =
         with(userProgression) {
-            trainingMaxDataSource.findUserTrainingMaxEntitiesByMethodCycleAndPhase(methodCycle.value, phase.name)
+            trainingMaxDataSource.findTrainingMaxEntitiesByMethodCycleAndPhase(methodCycle.value, phase.name)
                 .toDomainModels()
         }
 
-    override suspend fun deleteUserTrainingMaxesByMethodCycle(methodCycle: MethodCycle) {
-        trainingMaxDataSource.deleteUserTrainingMaxesByMethodCycle(methodCycle.value)
+    override suspend fun deleteTrainingMaxesByMethodCycle(methodCycle: MethodCycle) {
+        trainingMaxDataSource.deleteTrainingMaxesByMethodCycle(methodCycle.value)
     }
 
-    override suspend fun insertUserTrainingMax(trainingMax: TrainingMax): Long =
-        trainingMaxDataSource.insertUserTrainingMaxEntity(trainingMax.toDatabaseModel())
+    override suspend fun insertTrainingMax(trainingMax: TrainingMax): Long =
+        trainingMaxDataSource.insertTrainingMaxEntity(trainingMax.toDatabaseModel())
 
-    override fun createUserTrainingMax(liftCategory: LiftCategory, inputWeights: Double, userProgression: UserProgression): TrainingMax =
+    override fun createTrainingMax(liftCategory: LiftCategory, inputWeights: Double, userProgression: UserProgression): TrainingMax =
         TrainingMax(
             methodCycle = userProgression.methodCycle,
             phase = userProgression.phase,

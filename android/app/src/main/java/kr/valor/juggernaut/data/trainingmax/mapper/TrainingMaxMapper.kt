@@ -18,7 +18,7 @@ class DefaultTrainingMaxMapper: TrainingMaxMapper {
     override fun mapEntity(entity: TrainingMaxEntity): TrainingMax =
         TrainingMax(
             id = entity.id,
-            methodCycle = MethodCycle(entity.methodCycle),
+            methodCycle = MethodCycle(entity.methodCycleValue),
             phase = Phase.valueOf(entity.phaseName),
             liftCategory = LiftCategory.valueOf(entity.liftCategoryName),
             trainingMaxWeights = entity.trainingMaxWeights,
@@ -28,7 +28,7 @@ class DefaultTrainingMaxMapper: TrainingMaxMapper {
     override fun mapModel(model: TrainingMax): TrainingMaxEntity =
         with(model) {
             TrainingMaxEntity(
-                methodCycle = methodCycle.value,
+                methodCycleValue = methodCycle.value,
                 phaseName = phase.name,
                 liftCategoryName = liftCategory.name,
                 trainingMaxWeights = trainingMaxWeights,
