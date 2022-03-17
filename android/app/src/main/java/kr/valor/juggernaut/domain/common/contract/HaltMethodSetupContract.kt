@@ -1,4 +1,4 @@
-package kr.valor.juggernaut.domain
+package kr.valor.juggernaut.domain.common.contract
 
 import kotlinx.coroutines.flow.first
 import kr.valor.juggernaut.common.MethodCycle
@@ -6,7 +6,7 @@ import kr.valor.juggernaut.common.MethodCycle.Companion.minus
 import kr.valor.juggernaut.common.MethodProgressState
 import kr.valor.juggernaut.domain.session.usecase.usecase.DeleteSessionsByMethodCycleUseCase
 import kr.valor.juggernaut.domain.progression.model.ProgressionState
-import kr.valor.juggernaut.domain.IllegalProgressionStateSetupException.Companion.HALT_ERROR_MESSAGE
+import kr.valor.juggernaut.domain.common.contract.IllegalProgressionStateSetupException.Companion.HALT_ERROR_MESSAGE
 import kr.valor.juggernaut.domain.progression.usecase.contract.RollbackMethodStateContract
 import kr.valor.juggernaut.domain.progression.usecase.usecase.ClearProgressionStateUseCase
 import kr.valor.juggernaut.domain.trainingmax.usecase.DeleteUserTrainingMaxesByMethodCycleUseCase

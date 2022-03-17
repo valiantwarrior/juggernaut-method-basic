@@ -20,22 +20,16 @@ class DefaultTrainingMaxRepository(
 
     private val transform: (Double) -> Int = weightUnitTransformer::transform
 
-    private val toDatabaseModel: TrainingMax.() -> TrainingMaxEntity = {
-        trainingMaxMapper.mapModel(this)
-    }
-
-    private val toDomainModel: TrainingMaxEntity.() -> TrainingMax = {
-        trainingMaxMapper.mapEntity(this)
-    }
-
     override fun getAllUserTrainingMaxes(): Flow<List<TrainingMax>> =
         trainingMaxDataSource.getUserTrainingMaxEntities().map { entities ->
-            entities.map(toDomainModel)
+            entities.toDomainModels()
         }
 
     override suspend fun findUserTrainingMaxesByUserProgression(userProgression: UserProgression): List<TrainingMax> =
-        trainingMaxDataSource.findUserTrainingMaxEntitiesByUserProgression(userProgression)
-            .map(toDomainModel)
+        with(userProgression) {
+            trainingMaxDataSource.findUserTrainingMaxEntitiesByMethodCycleAndPhase(methodCycle.value, phase.name)
+                .toDomainModels()
+        }
 
     override suspend fun deleteUserTrainingMaxesByMethodCycle(methodCycle: MethodCycle) {
         trainingMaxDataSource.deleteUserTrainingMaxesByMethodCycle(methodCycle.value)
@@ -56,5 +50,14 @@ class DefaultTrainingMaxRepository(
     override suspend fun clear() {
         trainingMaxDataSource.clear()
     }
+
+    private fun TrainingMax.toDatabaseModel(): TrainingMaxEntity =
+        trainingMaxMapper.mapModel(this)
+
+    private fun TrainingMaxEntity.toDomainModel(): TrainingMax =
+        trainingMaxMapper.mapEntity(this)
+
+    private fun List<TrainingMaxEntity>.toDomainModels(): List<TrainingMax> =
+        map { entity -> entity.toDomainModel() }
 
 }

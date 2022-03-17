@@ -9,7 +9,7 @@ import kr.valor.juggernaut.domain.progression.usecase.usecase.UpdatePhaseStateUs
 
 interface UpdateUserProgressionNewCycleContract {
 
-    suspend operator fun invoke(nextMethodCycle: MethodCycle)
+    suspend operator fun invoke(newMethodCycle: MethodCycle)
 
 }
 
@@ -19,8 +19,8 @@ class UpdateUserProgressionNewCycleContractImpl(
     private val updateMicroCycleStateUseCase: UpdateMicroCycleStateUseCase
 ): UpdateUserProgressionNewCycleContract {
 
-    override suspend fun invoke(newCycle: MethodCycle) {
-        updateMethodCycleStateUseCase(newCycle)
+    override suspend fun invoke(newMethodCycle: MethodCycle) {
+        updateMethodCycleStateUseCase(newMethodCycle)
         updatePhaseStateUseCase(Phase.INITIAL)
         updateMicroCycleStateUseCase(MicroCycle.INITIAL)
     }

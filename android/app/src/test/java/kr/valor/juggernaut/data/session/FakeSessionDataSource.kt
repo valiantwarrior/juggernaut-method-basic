@@ -4,8 +4,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kr.valor.juggernaut.data.session.entity.SessionEntity
 import kr.valor.juggernaut.data.session.source.SessionDataSource
-import kr.valor.juggernaut.domain.progression.model.UserProgression
-import kr.valor.juggernaut.domain.progression.model.extractUserProgression
 
 class FakeSessionDataSource: SessionDataSource {
 
@@ -19,16 +17,20 @@ class FakeSessionDataSource: SessionDataSource {
         return entityWithFakeId.id
     }
 
-    override suspend fun findSessionEntitiesByUserProgressionOrNull(userProgression: UserProgression): List<SessionEntity>? {
+    override suspend fun findSessionEntitiesByUserProgressionOrNull(methodCycleValue: Int, phaseName: String, microCycleName: String): List<SessionEntity>? {
         return inMemoryStorage.filter { entity ->
-            entity.extractUserProgression() == userProgression
+            entity.methodCycleValue == methodCycleValue
+                    && entity.phaseName == phaseName
+                    && entity.microCycleName == microCycleName
         }.ifEmpty { null }
     }
 
-    override fun findSessionEntitiesByUserProgression(userProgression: UserProgression): Flow<List<SessionEntity>> =
+    override fun findSessionEntitiesByUserProgression(methodCycleValue: Int, phaseName: String, microCycleName: String): Flow<List<SessionEntity>> =
         flowOf(
             inMemoryStorage.filter { entity ->
-                entity.extractUserProgression() == userProgression
+                entity.methodCycleValue == methodCycleValue
+                        && entity.phaseName == phaseName
+                        && entity.microCycleName == microCycleName
             }
         )
 
@@ -37,7 +39,7 @@ class FakeSessionDataSource: SessionDataSource {
     }
 
     override suspend fun deleteSessionEntitiesByMethodCycle(methodCycle: Int) {
-        inMemoryStorage.removeAll { it.methodCycle == methodCycle }
+        inMemoryStorage.removeAll { it.methodCycleValue == methodCycle }
     }
 
     override suspend fun findSessionEntityById(id: Long): SessionEntity {

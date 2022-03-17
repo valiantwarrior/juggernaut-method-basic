@@ -23,7 +23,7 @@ class DefaultSessionEntityMapperTest {
         mapper = TestServiceLocator.provideSessionMapper()
         routineProvider = TestServiceLocator.provideRoutineProviderDelegate()
         baseEntity = SessionEntity(
-            methodCycle = 1,
+            methodCycleValue = 1,
             phaseName = Phase.REP10.name,
             microCycleName = MicroCycle.ACCUMULATION.name,
             liftCategoryName = LiftCategory.BENCHPRESS.name,
@@ -109,7 +109,7 @@ class DefaultSessionEntityMapperTest {
 
     private fun `base entity model comparing`(model: Session, entity: SessionEntity) {
         assertThat(model.sessionId, `is`(entity.id))
-        assertThat(model.progression.methodCycle.value, `is`(entity.methodCycle))
+        assertThat(model.progression.methodCycle.value, `is`(entity.methodCycleValue))
         assertThat(model.progression.phase, `is`(Phase.valueOf(entity.phaseName)))
         assertThat(model.progression.microCycle, `is`(MicroCycle.valueOf(entity.microCycleName)))
         assertThat(model.category, `is`(LiftCategory.valueOf(entity.liftCategoryName)))
@@ -119,7 +119,7 @@ class DefaultSessionEntityMapperTest {
         assertThat(actual.liftCategoryName, `is`(expected.liftCategoryName))
         assertThat(actual.phaseName, `is`(expected.phaseName))
         assertThat(actual.microCycleName, `is`(expected.microCycleName))
-        assertThat(actual.methodCycle, `is`(expected.methodCycle))
+        assertThat(actual.methodCycleValue, `is`(expected.methodCycleValue))
         assertThat(actual.baseWeights, `is`(expected.baseWeights))
         assertThat(actual.id, `is`(expected.id))
     }

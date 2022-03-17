@@ -22,17 +22,29 @@ class DefaultSessionRepository(
             entities.map { it.toDomainModel() }
         }
 
-    override fun findSessionsByUserProgression(userProgression: UserProgression): Flow<List<Session>> =
-        sessionDataSource.findSessionEntitiesByUserProgression(userProgression).map { entities ->
+    override fun findSessionsByUserProgression(userProgression: UserProgression): Flow<List<Session>> {
+        val (methodCycleValue, phaseName, microCycleName) =
+            userProgression.serializedValue
+
+        return sessionDataSource.findSessionEntitiesByUserProgression(
+            methodCycleValue, phaseName, microCycleName
+        ).map { entities ->
             entities.map { it.toDomainModel() }
         }
+    }
+
 
     override suspend fun findSessionById(sessionId: Long): Session =
         sessionDataSource.findSessionEntityById(sessionId).toDomainModel()
 
     // considering RoomDatabase.withTransaction
     override suspend fun synchronizeSessions(userProgression: UserProgression, trainingMaxes: List<TrainingMax>) {
-        sessionDataSource.findSessionEntitiesByUserProgressionOrNull(userProgression)?.let { entities ->
+        val (methodCycleValue, phaseName, microCycleName) =
+            userProgression.serializedValue
+
+        sessionDataSource.findSessionEntitiesByUserProgressionOrNull(
+            methodCycleValue, phaseName, microCycleName
+        )?.let { entities ->
             if (entities.size != LiftCategory.TOTAL_LIFT_CATEGORY_COUNT) {
                 entities.forEach { entity ->
                     sessionDataSource.deleteSessionEntity(entity)
@@ -60,7 +72,7 @@ class DefaultSessionRepository(
     private suspend fun initWeeklySession(userProgression: UserProgression, trainingMaxes: List<TrainingMax>) {
         trainingMaxes.forEach { userTrainingMax ->
             val newSessionEntity = SessionEntity(
-                methodCycle = userProgression.methodCycle.value,
+                methodCycleValue = userProgression.methodCycle.value,
                 phaseName = userProgression.phase.name,
                 microCycleName = userProgression.microCycle.name,
                 liftCategoryName = userTrainingMax.liftCategory.name,

@@ -13,10 +13,9 @@ data class UserProgression(
     val methodCycle: MethodCycle,
     val phase: Phase,
     val microCycle: MicroCycle
-)
+) {
 
-fun SessionEntity.extractUserProgression() = UserProgression(
-    methodCycle = MethodCycle(value = methodCycle),
-    phase = Phase.valueOf(phaseName),
-    microCycle = MicroCycle.valueOf(microCycleName)
-)
+    val serializedValue: Triple<Int, String, String>
+        get() = Triple(methodCycle.value, phase.name, microCycle.name)
+
+}

@@ -1,4 +1,4 @@
-package kr.valor.juggernaut.domain
+package kr.valor.juggernaut.domain.common.contract
 
 import kotlinx.coroutines.flow.first
 import kr.valor.juggernaut.common.LiftCategory
@@ -6,7 +6,7 @@ import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.common.MethodCycle.Companion.plus
 import kr.valor.juggernaut.domain.progression.model.ProgressionState
 import kr.valor.juggernaut.domain.progression.model.UserProgression
-import kr.valor.juggernaut.domain.IllegalProgressionStateSetupException.Companion.START_ERROR_MESSAGE
+import kr.valor.juggernaut.domain.common.contract.IllegalProgressionStateSetupException.Companion.START_ERROR_MESSAGE
 import kr.valor.juggernaut.domain.progression.usecase.contract.UpdateUserProgressionNewCycleContract
 import kr.valor.juggernaut.domain.progression.usecase.usecase.GetProgressionStateUseCase
 import kr.valor.juggernaut.domain.trainingmax.usecase.InitializeUserTrainingMaxUseCase

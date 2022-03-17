@@ -17,10 +17,10 @@ class FakeTrainingMaxDataSource: TrainingMaxDataSource {
         return entityId
     }
 
-    override suspend fun findUserTrainingMaxEntitiesByUserProgression(userProgression: UserProgression): List<TrainingMaxEntity> =
+    override suspend fun findUserTrainingMaxEntitiesByMethodCycleAndPhase(methodCycleValue: Int, phaseName: String): List<TrainingMaxEntity> =
         inMemoryStorage.filter { entity ->
-            entity.methodCycle == userProgression.methodCycle.value &&
-                    entity.phaseName == userProgression.phase.name
+            entity.methodCycle == methodCycleValue &&
+                    entity.phaseName == phaseName
         }
 
     override suspend fun deleteUserTrainingMaxesByMethodCycle(methodCycle: Int) {

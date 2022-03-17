@@ -8,7 +8,7 @@ interface TrainingMaxDataSource {
 
     suspend fun insertUserTrainingMaxEntity(entity: TrainingMaxEntity): Long
 
-    suspend fun findUserTrainingMaxEntitiesByUserProgression(userProgression: UserProgression): List<TrainingMaxEntity>
+    suspend fun findUserTrainingMaxEntitiesByMethodCycleAndPhase(methodCycleValue: Int, phaseName: String): List<TrainingMaxEntity>
 
     suspend fun deleteUserTrainingMaxesByMethodCycle(methodCycle: Int)
 

@@ -1,4 +1,4 @@
-package kr.valor.juggernaut.domain
+package kr.valor.juggernaut.domain.common.contract
 
 import kr.valor.juggernaut.common.MethodProgressState
 import kr.valor.juggernaut.domain.progression.usecase.usecase.UpdateMethodProgressStateUseCase
