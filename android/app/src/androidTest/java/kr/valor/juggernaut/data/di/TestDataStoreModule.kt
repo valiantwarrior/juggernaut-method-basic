@@ -16,6 +16,8 @@ import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import javax.inject.Singleton
 
+const val TEST_PROGRESSION_STATE_PREFERENCES = "test_progression_state_preferences"
+
 @ExperimentalCoroutinesApi
 @TestInstallIn(
     components = [SingletonComponent::class],
@@ -24,13 +26,11 @@ import javax.inject.Singleton
 @Module
 object TestDataStoreModule {
 
-    private const val TEST_PROGRESSION_STATE_PREFERENCES = "test_progression_state_preferences"
-
     @Provides
     @Singleton
-    fun providePreferencesDataStore(@ApplicationContext applicationContext: Context): DataStore<Preferences> {
+    fun providePreferencesDataStore(@ApplicationContext applicationContext: Context, @DataStoreScope testScope: TestScope): DataStore<Preferences> {
         return PreferenceDataStoreFactory.create(
-            scope = TestScope(UnconfinedTestDispatcher() + Job()),
+            scope = testScope,
             produceFile = {
                 applicationContext.preferencesDataStoreFile(TEST_PROGRESSION_STATE_PREFERENCES)
             }
