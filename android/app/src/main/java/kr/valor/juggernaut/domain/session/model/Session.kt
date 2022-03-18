@@ -5,6 +5,8 @@ import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.common.MicroCycle
 import kr.valor.juggernaut.common.Phase
 
+typealias Progression = Session.Progression
+
 data class Session(
     val sessionId: Long,
     val category: LiftCategory,

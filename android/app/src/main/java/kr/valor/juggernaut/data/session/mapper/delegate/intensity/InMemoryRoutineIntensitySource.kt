@@ -5,6 +5,8 @@ import kr.valor.juggernaut.common.MicroCycle.*
 import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.common.Phase.*
 import kr.valor.juggernaut.domain.session.model.RoutineIntensity
+import javax.inject.Inject
+import javax.inject.Singleton
 import kr.valor.juggernaut.domain.session.model.Session.Progression as Progression
 
 private typealias InMemoryRoutineIntensityItem = Pair<Int, Double>
@@ -21,7 +23,8 @@ private fun List<InMemoryRoutineIntensityItem>.toRoutineIntensityModelMap(): Map
     }
 
 
-class InMemoryRoutineIntensitySource: RoutineIntensitySource<MicroCycle, Phase> {
+@Singleton
+class InMemoryRoutineIntensitySource @Inject constructor() : RoutineIntensitySource<MicroCycle, Phase> {
 
     override fun provideRoutineIntensityMap(key: MicroCycle): Map<Phase, List<RoutineIntensity>> {
         return when(key) {

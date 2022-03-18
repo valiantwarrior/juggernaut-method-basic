@@ -3,13 +3,15 @@ package kr.valor.juggernaut.data.session.mapper.delegate.routine
 import kr.valor.juggernaut.common.MicroCycle
 import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.data.common.converter.WeightUnitTransformer
+import kr.valor.juggernaut.data.common.di.KgWeightUnit
 import kr.valor.juggernaut.data.session.mapper.delegate.intensity.RoutineIntensitySource
+import kr.valor.juggernaut.data.session.mapper.di.InMemorySource
 import kr.valor.juggernaut.domain.session.model.*
-import kr.valor.juggernaut.domain.session.model.Session.Progression as Progression
+import javax.inject.Inject
 
-class BasicMethodRoutineProviderDelegate(
-    private val routineIntensitySource: RoutineIntensitySource<MicroCycle, Phase>, // In Memory source
-    private val transformer: WeightUnitTransformer // run time injection
+class BasicMethodRoutineProviderDelegate @Inject constructor(
+    @InMemorySource private val routineIntensitySource: RoutineIntensitySource<MicroCycle, Phase>,
+    @KgWeightUnit private val transformer: WeightUnitTransformer // run time injection (maybe)
 ): RoutineProviderDelegate<Progression> {
 
     override fun provideSessionRoutine(progression: Progression, tmWeights: Int, actualRepetitions: Int?): List<Routine> {

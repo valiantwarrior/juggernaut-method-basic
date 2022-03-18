@@ -1,6 +1,10 @@
 package kr.valor.juggernaut.data.common.converter
 
-class KgWeightUnitTransformer: WeightUnitTransformer {
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class KgWeightUnitTransformer @Inject constructor(): WeightUnitTransformer {
 
     override fun transform(input: Double): Int {
         val roundedDownTowardZero = input.toInt()

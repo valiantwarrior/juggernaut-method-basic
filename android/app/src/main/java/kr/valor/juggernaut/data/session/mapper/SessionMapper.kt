@@ -5,6 +5,7 @@ import kr.valor.juggernaut.data.common.mapper.EntityMapper
 import kr.valor.juggernaut.data.session.mapper.delegate.routine.RoutineProviderDelegate
 import kr.valor.juggernaut.data.session.entity.SessionEntity
 import kr.valor.juggernaut.domain.session.model.*
+import javax.inject.Inject
 import kr.valor.juggernaut.domain.session.model.Session.Progression as Progression
 
 interface SessionMapper: EntityMapper<SessionEntity, Session> {
@@ -13,7 +14,7 @@ interface SessionMapper: EntityMapper<SessionEntity, Session> {
 
 }
 
-class DefaultSessionEntityMapper(
+class DefaultSessionEntityMapper @Inject constructor(
     routineProviderDelegate: RoutineProviderDelegate<Progression>
 ) : SessionMapper, RoutineProviderDelegate<Progression> by routineProviderDelegate {
 

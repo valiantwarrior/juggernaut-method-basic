@@ -11,8 +11,11 @@ import kr.valor.juggernaut.domain.session.model.SessionRecord
 import kr.valor.juggernaut.domain.session.repository.SessionRepository
 import kr.valor.juggernaut.domain.progression.model.UserProgression
 import kr.valor.juggernaut.domain.trainingmax.model.TrainingMax
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class DefaultSessionRepository(
+@Singleton
+class DefaultSessionRepository @Inject constructor(
     private val sessionMapper: SessionMapper,
     private val sessionDataSource: SessionDataSource
 ): SessionRepository {
