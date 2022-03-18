@@ -8,10 +8,17 @@ class KgWeightUnitTransformer @Inject constructor(): WeightUnitTransformer {
 
     override fun transform(input: Double): Int {
         val roundedDownTowardZero = input.toInt()
-        val quotient = roundedDownTowardZero / CEILING_UP_BASE
 
-        return if (quotient % 2 == 0)
-            roundedDownTowardZero else (quotient + 1) * CEILING_UP_BASE
+        return when(roundedDownTowardZero % 2) {
+            0 -> {
+                if (input % 2.0 == 0.0) {
+                    input.toInt()
+                } else {
+                    roundedDownTowardZero + CEILING_UP_BASE
+                }
+            }
+            else -> roundedDownTowardZero + 1
+        }
     }
 
     companion object {

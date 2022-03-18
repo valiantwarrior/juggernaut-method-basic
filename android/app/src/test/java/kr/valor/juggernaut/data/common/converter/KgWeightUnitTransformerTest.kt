@@ -15,32 +15,77 @@ class KgWeightUnitTransformerTest {
     }
 
     @Test
-    fun `Case - integer part is odd validate`() {
-        var input = 63.1
-        var expected = 64
-        var actual = target.transform(input)
-
-        assertThat(actual, `is`(expected))
-
-        input = 63.0
-        expected = 64
-        actual = target.transform(input)
+    fun `Case - integer part is odd validate 0`() {
+        val input = 61.1
+        val expected = 62
+        val actual = target.transform(input)
 
         assertThat(actual, `is`(expected))
     }
 
     @Test
-    fun `Case - integer part is even validate`() {
-        var input = 64.4
-        var expected = 64
-        var actual = target.transform(input)
-
-        assertThat(actual, `is`(expected))
-
-        input = 64.0
-        expected = 64
-        actual = target.transform(input)
+    fun `Case - integer part is odd validate 1`() {
+        val input = 69.1
+        val expected = 70
+        val actual = target.transform(input)
 
         assertThat(actual, `is`(expected))
     }
+
+    @Test
+    fun `Case - integer part is odd validate 2`() {
+        val input = 65.1
+        val expected = 66
+        val actual = target.transform(input)
+
+        assertThat(actual, `is`(expected))
+    }
+
+
+
+    @Test
+    fun `Case - integer part is even validate 0`() {
+        val input = 62.1
+        val expected = 64
+        val actual = target.transform(input)
+
+        assertThat(actual, `is`(expected))
+    }
+
+    @Test
+    fun `Case - integer part is even validate 1`() {
+        val input = 62.0
+        val expected = 62
+        val actual = target.transform(input)
+
+        assertThat(actual, `is`(expected))
+    }
+
+    @Test
+    fun `Case - integer part is even validate 2`() {
+        val input = 62.5
+        val expected = 64
+        val actual = target.transform(input)
+
+        assertThat(actual, `is`(expected))
+    }
+
+    @Test
+    fun `Case - integer part is even validate 3`() {
+        val input = 60.5
+        val expected = 62
+        val actual = target.transform(input)
+
+        assertThat(actual, `is`(expected))
+    }
+
+    @Test
+    fun `Case - integer part is even validate 4`() {
+        val input = 60.0
+        val expected = 60
+        val actual = target.transform(input)
+
+        assertThat(actual, `is`(expected))
+    }
+
 }

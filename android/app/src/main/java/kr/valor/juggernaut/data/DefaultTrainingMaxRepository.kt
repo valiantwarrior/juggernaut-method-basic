@@ -5,17 +5,21 @@ import kotlinx.coroutines.flow.map
 import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.data.common.converter.WeightUnitTransformer
+import kr.valor.juggernaut.data.common.di.KgWeightUnit
 import kr.valor.juggernaut.data.trainingmax.entity.TrainingMaxEntity
 import kr.valor.juggernaut.data.trainingmax.mapper.TrainingMaxMapper
 import kr.valor.juggernaut.data.trainingmax.source.TrainingMaxDataSource
 import kr.valor.juggernaut.domain.progression.model.UserProgression
 import kr.valor.juggernaut.domain.trainingmax.model.TrainingMax
 import kr.valor.juggernaut.domain.trainingmax.repository.TrainingMaxRepository
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class DefaultTrainingMaxRepository(
+@Singleton
+class DefaultTrainingMaxRepository @Inject constructor(
     private val trainingMaxMapper: TrainingMaxMapper,
     private val trainingMaxDataSource: TrainingMaxDataSource,
-    private val weightUnitTransformer: WeightUnitTransformer
+    @KgWeightUnit private val weightUnitTransformer: WeightUnitTransformer
 ): TrainingMaxRepository {
 
     private val transform: (Double) -> Int = weightUnitTransformer::transform

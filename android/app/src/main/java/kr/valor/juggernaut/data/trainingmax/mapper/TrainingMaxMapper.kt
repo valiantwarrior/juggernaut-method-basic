@@ -6,6 +6,7 @@ import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.data.common.mapper.EntityMapper
 import kr.valor.juggernaut.data.trainingmax.entity.TrainingMaxEntity
 import kr.valor.juggernaut.domain.trainingmax.model.TrainingMax
+import javax.inject.Inject
 
 interface TrainingMaxMapper: EntityMapper<TrainingMaxEntity, TrainingMax> {
 
@@ -13,7 +14,7 @@ interface TrainingMaxMapper: EntityMapper<TrainingMaxEntity, TrainingMax> {
 
 }
 
-class DefaultTrainingMaxMapper: TrainingMaxMapper {
+class DefaultTrainingMaxMapper @Inject constructor(): TrainingMaxMapper {
 
     override fun mapEntity(entity: TrainingMaxEntity): TrainingMax =
         TrainingMax(
