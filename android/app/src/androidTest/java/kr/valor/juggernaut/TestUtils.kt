@@ -6,6 +6,9 @@ import kotlinx.coroutines.test.runTest
 
 @ExperimentalCoroutinesApi
 fun TestScope.runTestAndCleanup(clean: suspend () -> Unit, body: suspend () -> Unit) = runTest {
-    body()
-    clean()
+    try {
+        body()
+    } finally {
+        clean()
+    }
 }
