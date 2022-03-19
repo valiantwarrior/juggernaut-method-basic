@@ -11,7 +11,6 @@ import kr.valor.juggernaut.common.MethodProgressState
 import kr.valor.juggernaut.common.MicroCycle
 import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.data.di.DataStoreScope
-import kr.valor.juggernaut.data.di.DefaultRepository
 import kr.valor.juggernaut.domain.progression.model.ProgressionState
 import kr.valor.juggernaut.domain.progression.repository.ProgressionStateRepository
 import kr.valor.juggernaut.runTestAndCleanup
@@ -32,7 +31,6 @@ class DefaultProgressionStateRepositoryAndroidTest {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
-    @DefaultRepository
     @Inject
     lateinit var repository: ProgressionStateRepository
 

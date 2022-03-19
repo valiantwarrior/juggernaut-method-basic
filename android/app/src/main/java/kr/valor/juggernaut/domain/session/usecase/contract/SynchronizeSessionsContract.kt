@@ -4,24 +4,19 @@ import kotlinx.coroutines.flow.first
 import kr.valor.juggernaut.domain.progression.model.ProgressionState
 import kr.valor.juggernaut.domain.progression.model.UserProgression
 import kr.valor.juggernaut.domain.session.repository.SessionRepository
-import kr.valor.juggernaut.domain.trainingmax.usecase.FindUserTrainingMaxesByUserProgressionUseCase
-import kr.valor.juggernaut.domain.progression.usecase.usecase.GetProgressionStateUseCase
+import kr.valor.juggernaut.domain.trainingmax.usecase.FindTrainingMaxesUseCase
+import kr.valor.juggernaut.domain.progression.usecase.usecase.LoadProgressionStateUseCase
+import javax.inject.Inject
 
-interface SynchronizeSessionsContract {
+class SynchronizeSessionsContract @Inject constructor(
+    private val sessionRepository: SessionRepository,
+    private val loadProgressionStateUseCase: LoadProgressionStateUseCase,
+    private val findTrainingMaxesUseCase: FindTrainingMaxesUseCase
+) {
 
-    suspend operator fun invoke()
-
-}
-
-class SynchronizeSessionsContractImpl(
-    private val repository: SessionRepository,
-    private val getProgressionStateUseCase: GetProgressionStateUseCase,
-    private val findUserTrainingMaxesByUserProgressionUseCase: FindUserTrainingMaxesByUserProgressionUseCase
-): SynchronizeSessionsContract {
-
-    override suspend fun invoke() {
-        when(val currentProgressionSate = getProgressionStateUseCase().first()) {
-            is ProgressionState.None -> return
+    suspend operator fun invoke() {
+        when(val currentProgressionSate = loadProgressionStateUseCase().first()) {
+            ProgressionState.None -> return
             is ProgressionState.OnGoing -> {
                 synchronizeSessionsWithCurrentUserProgression(currentProgressionSate.currentUserProgression)
             }
@@ -32,8 +27,8 @@ class SynchronizeSessionsContractImpl(
     }
 
     private suspend fun synchronizeSessionsWithCurrentUserProgression(userProgression: UserProgression) {
-        val userTrainingMaxes = findUserTrainingMaxesByUserProgressionUseCase(userProgression)
-        repository.synchronizeSessions(userProgression, userTrainingMaxes)
+        val userTrainingMaxes = findTrainingMaxesUseCase(userProgression)
+        sessionRepository.synchronizeSessions(userProgression, userTrainingMaxes)
     }
 
 }

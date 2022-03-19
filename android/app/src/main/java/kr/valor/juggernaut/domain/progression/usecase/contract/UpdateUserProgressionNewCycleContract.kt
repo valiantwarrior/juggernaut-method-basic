@@ -6,20 +6,15 @@ import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.domain.progression.usecase.usecase.UpdateMethodCycleStateUseCase
 import kr.valor.juggernaut.domain.progression.usecase.usecase.UpdateMicroCycleStateUseCase
 import kr.valor.juggernaut.domain.progression.usecase.usecase.UpdatePhaseStateUseCase
+import javax.inject.Inject
 
-interface UpdateUserProgressionNewCycleContract {
-
-    suspend operator fun invoke(newMethodCycle: MethodCycle)
-
-}
-
-class UpdateUserProgressionNewCycleContractImpl(
+class UpdateUserProgressionNewCycleContract @Inject constructor(
     private val updateMethodCycleStateUseCase: UpdateMethodCycleStateUseCase,
     private val updatePhaseStateUseCase: UpdatePhaseStateUseCase,
     private val updateMicroCycleStateUseCase: UpdateMicroCycleStateUseCase
-): UpdateUserProgressionNewCycleContract {
+) {
 
-    override suspend fun invoke(newMethodCycle: MethodCycle) {
+    suspend operator fun invoke(newMethodCycle: MethodCycle) {
         updateMethodCycleStateUseCase(newMethodCycle)
         updatePhaseStateUseCase(Phase.INITIAL)
         updateMicroCycleStateUseCase(MicroCycle.INITIAL)

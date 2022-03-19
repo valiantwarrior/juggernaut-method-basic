@@ -1,48 +1,43 @@
-package kr.valor.juggernaut.domain.common.contract
+package kr.valor.juggernaut.domain.common
 
 import kotlinx.coroutines.flow.first
 import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.common.MethodCycle.Companion.minus
 import kr.valor.juggernaut.common.MethodProgressState
-import kr.valor.juggernaut.domain.session.usecase.usecase.DeleteSessionsByMethodCycleUseCase
+import kr.valor.juggernaut.domain.session.usecase.usecase.DeleteSessionsUseCase
 import kr.valor.juggernaut.domain.progression.model.ProgressionState
-import kr.valor.juggernaut.domain.common.contract.IllegalProgressionStateSetupException.Companion.HALT_ERROR_MESSAGE
+import kr.valor.juggernaut.domain.common.IllegalProgressionStateSetupException.Companion.HALT_ERROR_MESSAGE
 import kr.valor.juggernaut.domain.progression.usecase.contract.RollbackMethodStateContract
 import kr.valor.juggernaut.domain.progression.usecase.usecase.ClearProgressionStateUseCase
-import kr.valor.juggernaut.domain.trainingmax.usecase.DeleteUserTrainingMaxesByMethodCycleUseCase
-import kr.valor.juggernaut.domain.progression.usecase.usecase.GetProgressionStateUseCase
+import kr.valor.juggernaut.domain.progression.usecase.usecase.LoadProgressionStateUseCase
 import kr.valor.juggernaut.domain.progression.usecase.usecase.UpdateMethodProgressStateUseCase
+import kr.valor.juggernaut.domain.trainingmax.usecase.DeleteTrainingMaxesUseCase
+import javax.inject.Inject
 
-enum class HaltBehavior {
-    DELETE_ALL_ENTITIES, PRESERVE
-}
-
-interface HaltMethodStateContract {
-
-    suspend operator fun invoke(haltBehavior: HaltBehavior = HaltBehavior.DELETE_ALL_ENTITIES)
-
-}
-
-class HaltMethodStateContractImpl(
-    private val getProgressionStateUseCase: GetProgressionStateUseCase,
+class HaltMethodStateContract @Inject constructor(
+    private val loadProgressionStateUseCase: LoadProgressionStateUseCase,
     private val updateMethodProgressStateUseCase: UpdateMethodProgressStateUseCase,
     private val clearProgressionStateUseCase: ClearProgressionStateUseCase,
     private val rollbackMethodStateContract: RollbackMethodStateContract,
-    private val deleteUserTrainingMaxesByMethodCycleUseCase: DeleteUserTrainingMaxesByMethodCycleUseCase,
-    private val deleteSessionsByMethodCycleUseCase: DeleteSessionsByMethodCycleUseCase
-): HaltMethodStateContract {
+    private val deleteTrainingMaxesUseCase: DeleteTrainingMaxesUseCase,
+    private val deleteSessionsUseCase: DeleteSessionsUseCase
+) {
 
-    override suspend fun invoke(haltBehavior: HaltBehavior) {
-        when(val currentProgressionState = getProgressionStateUseCase().first()) {
+    enum class HaltBehavior {
+        DELETE_ALL_ENTITIES, PRESERVE
+    }
+
+    suspend operator fun invoke(haltBehavior: HaltBehavior = HaltBehavior.DELETE_ALL_ENTITIES) {
+        when(val currentProgressionState = loadProgressionStateUseCase().first()) {
             is ProgressionState.None -> {
                 throw IllegalProgressionStateSetupException(HALT_ERROR_MESSAGE)
             }
             is ProgressionState.OnGoing -> {
                 val currentMethodCycle = currentProgressionState.currentUserProgression.methodCycle
 
-                deleteUserTrainingMaxesByMethodCycleUseCase(currentMethodCycle)
+                deleteTrainingMaxesUseCase(currentMethodCycle)
                 if (haltBehavior == HaltBehavior.DELETE_ALL_ENTITIES) {
-                    deleteSessionsByMethodCycleUseCase(currentMethodCycle)
+                    deleteSessionsUseCase(currentMethodCycle)
                 }
 
                 if (currentMethodCycle == MethodCycle.INITIAL) {

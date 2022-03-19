@@ -10,7 +10,6 @@ import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.common.MicroCycle
 import kr.valor.juggernaut.common.Phase
-import kr.valor.juggernaut.data.di.DefaultRepository
 import kr.valor.juggernaut.domain.progression.model.UserProgression
 import kr.valor.juggernaut.domain.trainingmax.repository.TrainingMaxRepository
 import org.hamcrest.CoreMatchers.`is`
@@ -30,7 +29,6 @@ class DefaultTrainingMaxRepositoryAndroidTest {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
-    @DefaultRepository
     @Inject
     lateinit var repository: TrainingMaxRepository
 

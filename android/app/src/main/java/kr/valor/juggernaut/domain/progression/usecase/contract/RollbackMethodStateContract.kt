@@ -6,22 +6,18 @@ import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.domain.progression.usecase.usecase.UpdateMethodCycleStateUseCase
 import kr.valor.juggernaut.domain.progression.usecase.usecase.UpdateMicroCycleStateUseCase
 import kr.valor.juggernaut.domain.progression.usecase.usecase.UpdatePhaseStateUseCase
+import javax.inject.Inject
 
-interface RollbackMethodStateContract {
-
-    suspend operator fun invoke(checkpoint: MethodCycle)
-
-}
-
-class RollbackMethodStateContractImpl(
+class RollbackMethodStateContract @Inject constructor(
     private val updateMethodCycleStateUseCase: UpdateMethodCycleStateUseCase,
     private val updatePhaseStateUseCase: UpdatePhaseStateUseCase,
     private val updateMicroCycleStateUseCase: UpdateMicroCycleStateUseCase
-): RollbackMethodStateContract {
+) {
 
-    override suspend fun invoke(checkpoint: MethodCycle) {
+    suspend operator fun invoke(checkpoint: MethodCycle) {
         updateMethodCycleStateUseCase(checkpoint)
         updatePhaseStateUseCase(Phase.FINAL)
         updateMicroCycleStateUseCase(MicroCycle.FINAL)
     }
+
 }
