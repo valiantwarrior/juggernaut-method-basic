@@ -21,13 +21,16 @@ class OnboardingFragment : Fragment() {
     private lateinit var binding: FragmentOnboardingBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentOnboardingBinding.inflate(inflater, container, false)
-            .apply {
-                initViewPager()
-                initEventObserver()
-            }
+        return FragmentOnboardingBinding.inflate(inflater, container, false)
+            .also { binding = it }
+            .root
+    }
 
-        return binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.apply {
+            initViewPager()
+            initEventObserver()
+        }
     }
 
     private fun FragmentOnboardingBinding.initViewPager() {

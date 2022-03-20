@@ -6,7 +6,6 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.runTest
 import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.common.MethodProgressState
 import kr.valor.juggernaut.common.MicroCycle

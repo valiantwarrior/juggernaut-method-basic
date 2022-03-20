@@ -60,28 +60,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="8dp" />
+            app:layout_constraintGuide_begin="@dimen/guideline_margin_dp_default" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/end_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_end="8dp" />
+            app:layout_constraintGuide_end="@dimen/guideline_margin_dp_default" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/top_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="8dp" />
+            app:layout_constraintGuide_begin="@dimen/guideline_margin_dp_default" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/bottom_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_end="8dp" />
+            app:layout_constraintGuide_end="@dimen/guideline_margin_dp_default" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

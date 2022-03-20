@@ -9,7 +9,11 @@
         android:id="@+id/home_dest"
         android:name="kr.valor.juggernaut.ui.home.HomeFragment"
         android:label="home_fragment"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_home_dest_to_empty_dest"
+            app:destination="@id/empty_dest" />
+    </fragment>
     <fragment
         android:id="@+id/empty_dest"
         android:name="kr.valor.juggernaut.ui.home.ProgressionEmptyFragment"
