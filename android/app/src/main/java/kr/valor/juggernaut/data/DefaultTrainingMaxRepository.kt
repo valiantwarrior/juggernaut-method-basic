@@ -18,11 +18,8 @@ import javax.inject.Singleton
 @Singleton
 class DefaultTrainingMaxRepository @Inject constructor(
     private val trainingMaxMapper: TrainingMaxMapper,
-    private val trainingMaxDataSource: TrainingMaxDataSource,
-    @KgWeightUnit private val weightUnitTransformer: WeightUnitTransformer
+    private val trainingMaxDataSource: TrainingMaxDataSource
 ): TrainingMaxRepository {
-
-    private val transform: (Double) -> Int = weightUnitTransformer::transform
 
     override fun getAllTrainingMaxes(): Flow<List<TrainingMax>> =
         trainingMaxDataSource.getAllTrainingMaxEntities().map { entities ->
@@ -42,12 +39,12 @@ class DefaultTrainingMaxRepository @Inject constructor(
     override suspend fun insertTrainingMax(trainingMax: TrainingMax): Long =
         trainingMaxDataSource.insertTrainingMaxEntity(trainingMax.toDatabaseModel())
 
-    override fun createTrainingMax(liftCategory: LiftCategory, inputWeights: Double, userProgression: UserProgression): TrainingMax =
+    override fun createTrainingMax(liftCategory: LiftCategory, inputWeights: Int, userProgression: UserProgression): TrainingMax =
         TrainingMax(
             methodCycle = userProgression.methodCycle,
             phase = userProgression.phase,
             liftCategory = liftCategory,
-            trainingMaxWeights = transform(inputWeights),
+            trainingMaxWeights = inputWeights,
             lastUpdatedAt = System.currentTimeMillis()
         )
 

@@ -21,7 +21,7 @@ class StartMethodSetupContract @Inject constructor(
     private val updateMethodProgressStateUseCase: UpdateMethodProgressStateUseCase
 ) {
 
-    suspend operator fun invoke(liftCategoryWeightsMap: Map<LiftCategory, Double>) {
+    suspend operator fun invoke(liftCategoryWeightsMap: Map<LiftCategory, Int>) {
         when(val previousProgressionState = loadProgressionStateUseCase().first()) {
             is ProgressionState.None -> {
                 updateMethodProgressStateUseCase(MethodProgressState.ONGOING)
@@ -40,7 +40,7 @@ class StartMethodSetupContract @Inject constructor(
         }
     }
 
-    private suspend fun initializeUserTrainingMaxByUpdatedUserProgression(liftCategoryWeightsMap: Map<LiftCategory, Double>) {
+    private suspend fun initializeUserTrainingMaxByUpdatedUserProgression(liftCategoryWeightsMap: Map<LiftCategory, Int>) {
         val userProgressionAfterUpdatedInThisContext = getUserProgressionAfterUpdated()
         liftCategoryWeightsMap.forEach { (liftCategory, inputWeights) ->
             initTrainingMaxUseCase(liftCategory, inputWeights, userProgressionAfterUpdatedInThisContext)

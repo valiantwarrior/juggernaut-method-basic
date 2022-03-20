@@ -16,7 +16,7 @@ interface TrainingMaxRepository {
 
     suspend fun insertTrainingMax(trainingMax: TrainingMax): Long
 
-    fun createTrainingMax(liftCategory: LiftCategory, inputWeights: Double, userProgression: UserProgression): TrainingMax
+    fun createTrainingMax(liftCategory: LiftCategory, inputWeights: Int, userProgression: UserProgression): TrainingMax
 
     suspend fun clear()
 

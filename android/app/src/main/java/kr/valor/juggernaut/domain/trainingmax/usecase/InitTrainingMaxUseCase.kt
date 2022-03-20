@@ -9,7 +9,7 @@ class InitTrainingMaxUseCase @Inject constructor(
     private val repository: TrainingMaxRepository
 ) {
 
-    suspend operator fun invoke(liftCategory: LiftCategory, inputWeights: Double, userProgression: UserProgression) {
+    suspend operator fun invoke(liftCategory: LiftCategory, inputWeights: Int, userProgression: UserProgression) {
         val newTrainingMax = repository.createTrainingMax(liftCategory, inputWeights, userProgression)
         repository.insertTrainingMax(newTrainingMax)
     }

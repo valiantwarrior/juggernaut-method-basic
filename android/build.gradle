@@ -27,4 +27,5 @@ ext {
     room_version = "2.4.2"
     hamcrest_version = "2.2"
     datastore_version = "1.0.0"
+    navigation_version = "2.4.1"
 }
