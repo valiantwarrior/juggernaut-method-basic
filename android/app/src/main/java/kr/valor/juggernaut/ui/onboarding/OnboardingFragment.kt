@@ -1,20 +1,18 @@
 package kr.valor.juggernaut.ui.onboarding
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kr.valor.juggernaut.R
 import kr.valor.juggernaut.databinding.FragmentOnboardingBinding
+import kr.valor.juggernaut.ui.NavigationFragment
 import kr.valor.juggernaut.ui.observeFlowEvent
 import kr.valor.juggernaut.ui.onboarding.OnboardingPagerAdapter.Companion.FOOTER_PAGE_POSITION
 
 @AndroidEntryPoint
-class OnboardingFragment : Fragment() {
+class OnboardingFragment : NavigationFragment() {
 
     private val onboardingViewModel: OnboardingViewModel by viewModels()
 
@@ -59,7 +57,7 @@ class OnboardingFragment : Fragment() {
             when(event) {
                 is OnboardingUiEvent.Next -> onboardingPager.currentItem = event.nextPagePosition
                 is OnboardingUiEvent.Previous -> onboardingPager.currentItem = event.previousPagePosition
-                OnboardingUiEvent.Done -> findNavController().navigate(R.id.action_onboarding_dest_to_home_dest)
+                OnboardingUiEvent.Done -> navigate(OnboardingFragmentDirections.actionOnboardingDestToHomeDest())
             }
         }
     }

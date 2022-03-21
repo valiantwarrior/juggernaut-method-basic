@@ -1,14 +1,17 @@
-package kr.valor.juggernaut.ui.home.session
+package kr.valor.juggernaut.ui.home.sessionsummary
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import kr.valor.juggernaut.domain.session.model.Session
+import kr.valor.juggernaut.ui.home.NavigateClickListener
 
-class SessionSummaryAdapter: ListAdapter<Session, SessionSummaryViewHolder>(DIFF_CALLBACK) {
+class SessionSummaryAdapter(
+    private val navigateClickListener: NavigateClickListener
+): ListAdapter<Session, SessionSummaryViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SessionSummaryViewHolder =
-        SessionSummaryViewHolder.create(parent)
+        SessionSummaryViewHolder.create(parent, navigateClickListener)
 
     override fun onBindViewHolder(holder: SessionSummaryViewHolder, position: Int) {
         holder.bind(getItem(position))

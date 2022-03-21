@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_home_dest_to_empty_dest"
             app:destination="@id/empty_dest" />
+        <action
+            android:id="@+id/action_home_dest_to_preview_dest"
+            app:destination="@id/preview_dest" />
     </fragment>
     <fragment
         android:id="@+id/empty_dest"
@@ -31,5 +34,29 @@
         <action
             android:id="@+id/action_onboarding_dest_to_home_dest"
             app:destination="@id/home_dest" />
+    </fragment>
+    <fragment
+        android:id="@+id/preview_dest"
+        android:name="kr.valor.juggernaut.ui.session.preview.PreviewFragment"
+        android:label="fragment_preview"
+        tools:layout="@layout/fragment_preview" >
+        <argument
+            android:name="sessionId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_preview_dest_to_home_dest"
+            app:destination="@id/home_dest" />
+        <action
+            android:id="@+id/action_preview_dest_to_recordFragment"
+            app:destination="@id/record_dest" />
+    </fragment>
+    <fragment
+        android:id="@+id/record_dest"
+        android:name="kr.valor.juggernaut.ui.session.record.RecordFragment"
+        android:label="fragment_record"
+        tools:layout="@layout/fragment_record" >
+        <argument
+            android:name="sessionId"
+            app:argType="long" />
     </fragment>
 </navigation>

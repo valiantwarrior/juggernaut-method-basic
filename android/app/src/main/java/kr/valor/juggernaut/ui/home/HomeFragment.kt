@@ -1,20 +1,19 @@
 package kr.valor.juggernaut.ui.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.juggernaut.R
 import kr.valor.juggernaut.databinding.FragmentHomeBinding
-import kr.valor.juggernaut.ui.home.session.SessionSummaryAdapter
+import kr.valor.juggernaut.ui.NavigationFragment
+import kr.valor.juggernaut.ui.home.sessionsummary.SessionSummaryAdapter
 import kr.valor.juggernaut.ui.observeFlowEvent
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : NavigationFragment() {
 
     private val homeViewModel: HomeViewModel by viewModels()
 
@@ -41,14 +40,25 @@ class HomeFragment : Fragment() {
         observeFlowEvent(homeViewModel.uiEventFlow) { event ->
             when(event) {
                 HomeUiEvent.HaltMethod -> {
-                    findNavController().navigate(R.id.action_home_dest_to_empty_dest)
+                    navigate(HomeFragmentDirections.actionHomeDestToEmptyDest())
+                }
+                is HomeUiEvent.NavigateSessionPreview -> {
+                    navigate(HomeFragmentDirections.actionHomeDestToPreviewDest(event.sessionId))
                 }
             }
         }
     }
 
     private fun FragmentHomeBinding.initAdapter() {
-        sessionsSummaryInfoList.adapter = SessionSummaryAdapter()
+        sessionsSummaryInfoList.adapter = SessionSummaryAdapter(
+            navigateClickListener = NavigateClickListener { sessionId ->
+                homeViewModel.onClickSessionItem(sessionId)
+            }
+        )
     }
 
+}
+
+class NavigateClickListener(private val clickListener: (Long) -> Unit) {
+    fun onClick(sessionId: Long) = clickListener(sessionId)
 }

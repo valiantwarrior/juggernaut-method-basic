@@ -7,13 +7,18 @@
         <variable
             name="session"
             type="kr.valor.juggernaut.domain.session.model.Session" />
+
+        <variable
+            name="navigateAction"
+            type="kr.valor.juggernaut.ui.home.NavigateClickListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="@dimen/item_session_summary_width"
         android:layout_height="@dimen/item_session_summary_height"
         android:layout_marginVertical="@dimen/margin_dp_default"
-        android:layout_marginHorizontal="@dimen/recyclerview_item_margin_horizontal_default">
+        android:layout_marginHorizontal="@dimen/recyclerview_item_margin_horizontal_default"
+        android:onClick="@{() -> navigateAction.onClick(session.sessionId)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="@dimen/item_session_summary_width"

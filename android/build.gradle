@@ -2,10 +2,12 @@
 buildscript {
     ext {
         hilt_version = "2.40"
+        navigation_version = "2.4.1"
     }
 
     dependencies {
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigation_version"
     }
 }
 
@@ -27,5 +29,4 @@ ext {
     room_version = "2.4.2"
     hamcrest_version = "2.2"
     datastore_version = "1.0.0"
-    navigation_version = "2.4.1"
 }

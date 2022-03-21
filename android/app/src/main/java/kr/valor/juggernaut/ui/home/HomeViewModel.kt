@@ -16,6 +16,7 @@ import javax.inject.Inject
 
 sealed class HomeUiEvent {
     object HaltMethod: HomeUiEvent()
+    data class NavigateSessionPreview(val sessionId: Long): HomeUiEvent()
 }
 
 @HiltViewModel
@@ -62,6 +63,11 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun onClickSessionItem(sessionId: Long) {
+        viewModelScope.launch {
+            _eventChannel.send(HomeUiEvent.NavigateSessionPreview(sessionId))
+        }
+    }
 
     fun onClickHalt() {
         viewModelScope.launch {

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.valor.juggernaut.R
 import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.domain.progression.model.UserProgression
-import kr.valor.juggernaut.ui.home.session.SessionSummaryAdapter
+import kr.valor.juggernaut.ui.home.sessionsummary.SessionSummaryAdapter
 
 @BindingAdapter("submitList")
 fun RecyclerView.bindSessions(uiResult: UiResult) {
