@@ -5,12 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.juggernaut.R
 import kr.valor.juggernaut.databinding.FragmentHomeBinding
+import kr.valor.juggernaut.ui.home.session.SessionSummaryAdapter
 import kr.valor.juggernaut.ui.observeFlowEvent
 
 @AndroidEntryPoint
@@ -33,6 +33,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.apply {
             initEventObserver()
+            initAdapter()
         }
     }
 
@@ -44,6 +45,10 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun FragmentHomeBinding.initAdapter() {
+        sessionsSummaryInfoList.adapter = SessionSummaryAdapter()
     }
 
 }

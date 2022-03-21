@@ -14,6 +14,53 @@
         android:layout_height="match_parent"
         tools:context=".ui.home.HomeFragment">
 
+        <TextView
+            android:id="@+id/current_phase_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:currentPhase="@{viewModel.homeUiModel}"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toTopOf="@id/top_guideline" />
+
+        <TextView
+            android:id="@+id/current_micro_cycle_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:currentMicroCycle="@{viewModel.homeUiModel}"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toBottomOf="@id/current_phase_label" />
+
+        <TextView
+            android:id="@+id/current_method_milestone_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:milestone="@{viewModel.homeUiModel}"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toBottomOf="@id/current_micro_cycle_label" />
+
+        <TextView
+            android:id="@+id/weekly_achievement_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:weeklyAchievement="@{viewModel.homeUiModel}"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toBottomOf="@id/current_method_milestone_label" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sessions_summary_info_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/recyclerview_container_padding_horizontal_default"
+            android:clipToPadding="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toTopOf="@id/sessions_list_top_guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:submitList="@{viewModel.homeUiModel}"
+            tools:listitem="@layout/item_home_session_summary" />
+
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:id="@+id/halt_button"
@@ -24,6 +71,13 @@
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintBottom_toBottomOf="@id/bottom_guideline" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/sessions_list_top_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/start_guideline"

@@ -18,9 +18,20 @@ data class UserProgression(
 
     val serializedValue: Triple<Int, String, String>
         get() = Triple(methodCycle.value, phase.name, microCycle.name)
+    
+    val currentMethodMilestone: Int
+        get() {
+            val phaseMilestone = phase.ordinal + 1
+            val microCycleMilestone = microCycle.ordinal + 1
+
+            return phaseMilestone * microCycleMilestone
+        }
 
     fun toSessionProgression() = Progression(
         methodCycle, phase, microCycle
     )
 
+    companion object {
+        const val OVERALL_METHOD_MILESTONE = 16
+    }
 }

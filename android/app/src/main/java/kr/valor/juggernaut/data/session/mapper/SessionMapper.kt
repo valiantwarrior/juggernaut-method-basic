@@ -33,6 +33,7 @@ class DefaultSessionEntityMapper @Inject constructor(
                 category = category,
                 tmWeights = baseWeights,
                 progression = progression,
+                isCompleted = entity.completeDateMillis != null,
                 routines = sessionRoutine
             )
         }

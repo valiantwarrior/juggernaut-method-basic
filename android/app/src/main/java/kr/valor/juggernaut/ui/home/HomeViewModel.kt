@@ -1,6 +1,5 @@
 package kr.valor.juggernaut.ui.home
 
-import android.util.Log
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -71,10 +70,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        Log.d("Home","onCleared()")
-    }
 }
 
 sealed class UiResult {

@@ -12,6 +12,7 @@ data class Session(
     val category: LiftCategory,
     val tmWeights: Int,
     val progression: Progression,
+    val isCompleted: Boolean,
     val routines: List<Routine>,
 ) {
 
