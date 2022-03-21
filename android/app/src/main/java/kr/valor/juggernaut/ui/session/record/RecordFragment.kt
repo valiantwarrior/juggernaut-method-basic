@@ -27,4 +27,21 @@ class RecordFragment : NavigationFragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        with(binding) {
+//            plusAction = RecordActionClickListener {
+//                val currentRepetitions = (recordViewModel.uiState.value as UiState.AmrapSession).amrapRepetitions
+//                recordViewModel.accept(UiAction.Plus(currentRepetitions))
+//            }
+//            minusAction = RecordActionClickListener {
+//                val currentRepetitions = (recordViewModel.uiState.value as UiState.AmrapSession).amrapRepetitions
+//                recordViewModel.accept(UiAction.Minus(currentRepetitions))
+//            }
+        }
+    }
+
+}
+
+class RecordActionClickListener(private val clickListener: () -> Unit) {
+    fun onClick() = clickListener()
 }

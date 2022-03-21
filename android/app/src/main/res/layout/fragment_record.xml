@@ -15,12 +15,39 @@
         tools:context=".ui.session.record.RecordFragment">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@{String.valueOf(viewModel.session)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(viewModel.uiState)}"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toTopOf="@id/top_guideline"
-            app:layout_constraintEnd_toEndOf="@id/end_guideline" />
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintBottom_toBottomOf="@id/bottom_guideline" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/plus_reps_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="plus"
+            android:onClick="@{() -> viewModel.onClickPlus()}"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintBottom_toBottomOf="@id/bottom_guideline" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/minus_reps_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="minus"
+            android:onClick="@{() -> viewModel.onClickMinus()}"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintBottom_toTopOf="@id/plus_reps_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/submit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="submit"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintBottom_toBottomOf="@id/bottom_guideline" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/start_guideline"
