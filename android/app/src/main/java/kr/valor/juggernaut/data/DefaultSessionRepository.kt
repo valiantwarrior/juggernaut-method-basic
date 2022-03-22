@@ -36,8 +36,14 @@ class DefaultSessionRepository @Inject constructor(
         }
     }
 
-    override suspend fun findSessionById(sessionId: Long): Session =
+    override suspend fun findSessionByIdOneShot(sessionId: Long): Session =
         sessionDataSource.findSessionEntityById(sessionId).toDomainModel()
+
+    override fun findSessionById(sessionId: Long): Flow<Session> =
+        flow {
+            val session = sessionDataSource.findSessionEntityById(sessionId).toDomainModel()
+            emit(session)
+        }
 
     // considering RoomDatabase.withTransaction
     override suspend fun synchronizeSessions(userProgression: UserProgression, trainingMaxes: List<TrainingMax>) {

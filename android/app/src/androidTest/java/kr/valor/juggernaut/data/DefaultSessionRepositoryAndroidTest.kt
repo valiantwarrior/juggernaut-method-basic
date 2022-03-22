@@ -133,7 +133,7 @@ class DefaultSessionRepositoryAndroidTest {
         val sessionIds = sessions.mapIndexed { index, session -> index to session.sessionId }
 
         sessionIds.forEach { (sessionIndex, sessionId) ->
-            val sessionFromRepository = repository.findSessionById(sessionId)
+            val sessionFromRepository = repository.findSessionByIdOneShot(sessionId)
             assertThat(sessionFromRepository, `is`(sessions[sessionIndex]))
         }
     }

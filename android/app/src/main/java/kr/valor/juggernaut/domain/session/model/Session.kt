@@ -16,17 +16,14 @@ data class Session(
     val routines: List<Routine>,
 ) {
 
-    private val isDeloadSession: Boolean
-        get() = progression.microCycle == MicroCycle.DELOAD
-
     val warmupRoutines: List<Routine>?
-        get() = getOrNull(!isDeloadSession) { routines.dropLast(1) }
+        get() = getOrNull(progression.isAmrapSession) { routines.dropLast(1) }
 
     val amrapRoutine: Routine?
-        get() = getOrNull(!isDeloadSession) { routines.last() }
+        get() = getOrNull(progression.isAmrapSession) { routines.last() }
 
     val deloadRoutines: List<Routine>?
-        get() = getOrNull(isDeloadSession) { routines }
+        get() = getOrNull(!progression.isAmrapSession) { routines }
 
     private inline fun <T> getOrNull(condition: Boolean, get: () -> T): T? =
         if (condition) get() else null
@@ -35,5 +32,27 @@ data class Session(
         val methodCycle: MethodCycle,
         val phase: Phase,
         val microCycle: MicroCycle
-    )
+    ) {
+
+        val isAmrapSession: Boolean
+            get() = when(microCycle) {
+                MicroCycle.DELOAD -> false
+                else -> true
+            }
+
+        val baseAmrapRepetitions: Int
+            get() {
+                return if (isAmrapSession) {
+                    phase.baseAmrapRepetitions
+                } else {
+                    DELOAD_SESSION_INDICATOR
+                }
+            }
+
+        companion object {
+            const val DELOAD_SESSION_INDICATOR = -1
+        }
+
+    }
+
 }

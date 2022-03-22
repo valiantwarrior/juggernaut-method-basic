@@ -8,7 +8,7 @@ import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.domain.progression.model.UserProgression
 import kr.valor.juggernaut.ui.home.sessionsummary.SessionSummaryAdapter
 
-@BindingAdapter("submitList")
+@BindingAdapter("sessionSummaries")
 fun RecyclerView.bindSessions(uiResult: UiResult) {
     bindUiResult(uiResult) { uiModel ->
         val sessions = uiModel.sessions
@@ -57,7 +57,7 @@ fun TextView.bindWeeklyAchievement(uiResult: UiResult) {
     }
 }
 
-private inline fun bindUiResult(uiResult: UiResult, crossinline block: (UiResult.Success) -> Unit) {
+private inline fun bindUiResult(uiResult: UiResult, block: (UiResult.Success) -> Unit) {
     if (uiResult !is UiResult.Success) {
         return
     } else {

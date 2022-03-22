@@ -1,10 +1,11 @@
 package kr.valor.juggernaut.ui.home.sessionsummary
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kr.valor.juggernaut.R
 import kr.valor.juggernaut.databinding.ItemHomeSessionSummaryBinding
 import kr.valor.juggernaut.domain.session.model.Session
+import kr.valor.juggernaut.ui.ViewHolderDataBindingFactory
 import kr.valor.juggernaut.ui.home.NavigateClickListener
 
 class SessionSummaryViewHolder private constructor(
@@ -18,11 +19,11 @@ class SessionSummaryViewHolder private constructor(
         }
     }
 
-    companion object {
+    companion object: ViewHolderDataBindingFactory() {
         fun create(parent: ViewGroup, navigateClickListener: NavigateClickListener): SessionSummaryViewHolder {
-            val layoutInflater = LayoutInflater.from(parent.context)
-            val binding = ItemHomeSessionSummaryBinding.inflate(layoutInflater, parent, false)
-            binding.navigateAction = navigateClickListener
+            val binding =
+                provideDataBinding<ItemHomeSessionSummaryBinding>(parent, R.layout.item_home_session_summary)
+                    .apply { navigateAction = navigateClickListener }
 
             return SessionSummaryViewHolder(binding)
         }

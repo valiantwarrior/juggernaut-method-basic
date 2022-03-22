@@ -35,7 +35,7 @@ class PreviewFragment : NavigationFragment() {
         observeFlowEvent(previewViewModel.uiEventFlow) { event ->
             when(event) {
                 is PreviewUiEvent.StartSession -> {
-                    navigate(PreviewFragmentDirections.actionPreviewDestToRecordFragment(event.sessionId))
+                    navigate(PreviewFragmentDirections.actionPreviewDestToRecordFragment(event.sessionId, event.baseAmrapRepetitions))
                 }
                 PreviewUiEvent.Back -> {
                     navigate(PreviewFragmentDirections.actionPreviewDestToHomeDest())

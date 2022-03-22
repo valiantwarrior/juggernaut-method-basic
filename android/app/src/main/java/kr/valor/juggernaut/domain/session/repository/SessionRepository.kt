@@ -12,7 +12,9 @@ interface SessionRepository {
 
     fun findSessionsByUserProgression(userProgression: UserProgression): Flow<List<Session>>
 
-    suspend fun findSessionById(sessionId: Long): Session
+    suspend fun findSessionByIdOneShot(sessionId: Long): Session
+
+    fun findSessionById(sessionId: Long): Flow<Session>
 
     suspend fun synchronizeSessions(userProgression: UserProgression, trainingMaxes: List<TrainingMax>)
 

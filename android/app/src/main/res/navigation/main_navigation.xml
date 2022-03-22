@@ -58,5 +58,8 @@
         <argument
             android:name="sessionId"
             app:argType="long" />
+        <argument
+            android:name="baseAmrapRepetitions"
+            app:argType="integer" />
     </fragment>
 </navigation>

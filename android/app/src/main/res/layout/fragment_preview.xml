@@ -17,14 +17,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@{String.valueOf(viewModel.session)}" />
+            android:text="@{String.valueOf(viewModel.uiState)}" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/start_session_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="start"
-            android:onClick="@{() -> viewModel.onClickStart(viewModel.session.sessionId)}"
+            android:onClick="@{() -> viewModel.onClickStart()}"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintBottom_toBottomOf="@id/bottom_guideline" />

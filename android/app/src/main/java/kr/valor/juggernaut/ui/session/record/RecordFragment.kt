@@ -5,15 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
-import kr.valor.juggernaut.R
 import kr.valor.juggernaut.databinding.FragmentRecordBinding
+import kr.valor.juggernaut.domain.session.model.Session.Progression.Companion.DELOAD_SESSION_INDICATOR
 import kr.valor.juggernaut.ui.NavigationFragment
+import kr.valor.juggernaut.ui.session.record.amrap.AmrapSessionAdapter
 
 @AndroidEntryPoint
 class RecordFragment : NavigationFragment() {
 
     private val recordViewModel: RecordViewModel by viewModels()
+
+    private val navArgs: RecordFragmentArgs by navArgs()
 
     private lateinit var binding: FragmentRecordBinding
 
@@ -29,19 +33,17 @@ class RecordFragment : NavigationFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         with(binding) {
-//            plusAction = RecordActionClickListener {
-//                val currentRepetitions = (recordViewModel.uiState.value as UiState.AmrapSession).amrapRepetitions
-//                recordViewModel.accept(UiAction.Plus(currentRepetitions))
-//            }
-//            minusAction = RecordActionClickListener {
-//                val currentRepetitions = (recordViewModel.uiState.value as UiState.AmrapSession).amrapRepetitions
-//                recordViewModel.accept(UiAction.Minus(currentRepetitions))
-//            }
+            when(navArgs.baseAmrapRepetitions) {
+                DELOAD_SESSION_INDICATOR -> bindDeloadSession()
+                else -> bindAmrapSession()
+            }
         }
     }
 
-}
+    private fun FragmentRecordBinding.bindAmrapSession() {
+        sessionsRecordList.adapter = AmrapSessionAdapter()
+    }
 
-class RecordActionClickListener(private val clickListener: () -> Unit) {
-    fun onClick() = clickListener()
+    private fun FragmentRecordBinding.bindDeloadSession() {}
+
 }

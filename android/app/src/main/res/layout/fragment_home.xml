@@ -58,7 +58,7 @@
             app:layout_constraintTop_toTopOf="@id/sessions_list_top_guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:submitList="@{viewModel.homeUiModel}"
+            app:sessionSummaries="@{viewModel.homeUiModel}"
             tools:listitem="@layout/item_home_session_summary" />
 
         <com.google.android.material.button.MaterialButton
