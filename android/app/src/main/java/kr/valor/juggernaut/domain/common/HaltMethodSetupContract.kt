@@ -3,7 +3,9 @@ package kr.valor.juggernaut.domain.common
 import kotlinx.coroutines.flow.first
 import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.common.MethodCycle.Companion.minus
+import kr.valor.juggernaut.common.MethodCycle.Companion.plus
 import kr.valor.juggernaut.common.MethodProgressState
+import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.domain.session.usecase.usecase.DeleteSessionsUseCase
 import kr.valor.juggernaut.domain.progression.model.ProgressionState
 import kr.valor.juggernaut.domain.common.IllegalProgressionStateSetupException.Companion.HALT_ERROR_MESSAGE
@@ -34,8 +36,20 @@ class HaltMethodStateContract @Inject constructor(
             }
             is ProgressionState.OnGoing -> {
                 val currentMethodCycle = currentProgressionState.currentUserProgression.methodCycle
+                val currentPhase = currentProgressionState.currentUserProgression.phase
 
                 deleteTrainingMaxesUseCase(currentMethodCycle)
+                if (currentPhase == Phase.FINAL) {
+                    /**
+                     * When user attempt to halt method at Realization phase,
+                     * Maybe, there are training maxes generated after Realization phase
+                     * A MethodCycle for those things are set to next method cycle,
+                     * So delete those things.
+                     * See [InitNextPhaseTrainingMaxUseCase]
+                     */
+                    deleteTrainingMaxesUseCase(currentMethodCycle + 1)
+                }
+
                 if (haltBehavior == HaltBehavior.DELETE_ALL_ENTITIES) {
                     deleteSessionsUseCase(currentMethodCycle)
                 }

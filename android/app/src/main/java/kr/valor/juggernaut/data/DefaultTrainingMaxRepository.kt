@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.common.MethodCycle
+import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.data.common.converter.WeightUnitTransformer
 import kr.valor.juggernaut.data.common.di.KgWeightUnit
 import kr.valor.juggernaut.data.trainingmax.entity.TrainingMaxEntity
@@ -39,10 +40,10 @@ class DefaultTrainingMaxRepository @Inject constructor(
     override suspend fun insertTrainingMax(trainingMax: TrainingMax): Long =
         trainingMaxDataSource.insertTrainingMaxEntity(trainingMax.toDatabaseModel())
 
-    override fun createTrainingMax(liftCategory: LiftCategory, inputWeights: Int, userProgression: UserProgression): TrainingMax =
+    override fun createTrainingMax(liftCategory: LiftCategory, inputWeights: Int, methodCycle: MethodCycle, phase: Phase): TrainingMax =
         TrainingMax(
-            methodCycle = userProgression.methodCycle,
-            phase = userProgression.phase,
+            methodCycle = methodCycle,
+            phase = phase,
             liftCategory = liftCategory,
             trainingMaxWeights = inputWeights,
             lastUpdatedAt = System.currentTimeMillis()

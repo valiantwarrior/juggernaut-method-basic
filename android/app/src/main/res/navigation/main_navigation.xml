@@ -61,5 +61,8 @@
         <argument
             android:name="baseAmrapRepetitions"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_record_dest_to_home_dest"
+            app:destination="@id/home_dest" />
     </fragment>
 </navigation>

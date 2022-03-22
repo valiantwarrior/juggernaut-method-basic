@@ -4,7 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="routine"
+            type="kr.valor.juggernaut.domain.session.model.Routine" />
+        <variable
+            name="repetitions"
+            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,12 +19,27 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Amrap"
+            android:text="@{String.valueOf(routine) + String.valueOf(repetitions)}"
             android:textSize="48sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/plus_reps_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="plus"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/minus_reps_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="minus"
+            app:layout_constraintEnd_toStartOf="@id/plus_reps_button"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

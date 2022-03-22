@@ -50,23 +50,23 @@ class StartMethodSetupContractTest {
         hiltRule.inject()
     }
 
-    @Test
-    fun givenProgressionStateNone_startMethodSetupContract_worksAsExpected() {
-        testScope.runTestAndCleanup(clear::invoke) {
-            var currentProgressionState = loadProgressionStateUseCase().first()
-            assertThat(currentProgressionState, instanceOf(ProgressionState.None::class.java))
-
-            startMethodSetupContract(TestData.liftCategoryWeightsMap)
-
-            currentProgressionState = loadProgressionStateUseCase().first()
-            assertThat(currentProgressionState, instanceOf(ProgressionState.OnGoing::class.java))
-
-            val currentUserProgression = (currentProgressionState as ProgressionState.OnGoing).currentUserProgression
-            assertThat(currentUserProgression.methodCycle, `is`(MethodCycle.INITIAL))
-            assertThat(currentUserProgression.phase, `is`(Phase.INITIAL))
-            assertThat(currentUserProgression.microCycle, `is`(MicroCycle.INITIAL))
-        }
-    }
+//    @Test
+//    fun givenProgressionStateNone_startMethodSetupContract_worksAsExpected() {
+//        testScope.runTestAndCleanup(clear::invoke) {
+//            var currentProgressionState = loadProgressionStateUseCase().first()
+//            assertThat(currentProgressionState, instanceOf(ProgressionState.None::class.java))
+//
+//            startMethodSetupContract(TestData.liftCategoryWeightsMap)
+//
+//            currentProgressionState = loadProgressionStateUseCase().first()
+//            assertThat(currentProgressionState, instanceOf(ProgressionState.OnGoing::class.java))
+//
+//            val currentUserProgression = (currentProgressionState as ProgressionState.OnGoing).currentUserProgression
+//            assertThat(currentUserProgression.methodCycle, `is`(MethodCycle.INITIAL))
+//            assertThat(currentUserProgression.phase, `is`(Phase.INITIAL))
+//            assertThat(currentUserProgression.microCycle, `is`(MicroCycle.INITIAL))
+//        }
+//    }
 
 
 }

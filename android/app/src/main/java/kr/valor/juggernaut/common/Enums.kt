@@ -48,28 +48,33 @@ enum class MethodProgressState {
 /**
  * ORDER : BP -> SQ -> OHP -> DL
  */
-enum class LiftCategory {
+enum class LiftCategory(val baseIncrement: Double) {
     /**
      * BP
      */
-    BENCHPRESS,
+    BENCHPRESS(LiftCategory.BASE_INCREMENT_UPPER_BODY_EXERCISE),
 
     /**
      * SQ
      */
-    SQUAT,
+    SQUAT(LiftCategory.BASE_INCREMENT_LOWER_BODY_EXERCISE),
 
     /**
      * OHP
      */
-    OVERHEADPRESS,
+    OVERHEADPRESS(LiftCategory.BASE_INCREMENT_UPPER_BODY_EXERCISE),
 
     /**
      * DL
      */
-    DEADLIFT;
+    DEADLIFT(LiftCategory.BASE_INCREMENT_LOWER_BODY_EXERCISE);
 
     companion object {
         const val TOTAL_LIFT_CATEGORY_COUNT = 4
+        private const val BASE_INCREMENT_LOWER_BODY_EXERCISE = 2.0
+        private const val BASE_INCREMENT_UPPER_BODY_EXERCISE = 1.0
+
+        const val KG_FACTOR = 1.0
+        const val LBS_FACTOR = 2.5
     }
 }

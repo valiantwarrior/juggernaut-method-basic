@@ -35,8 +35,7 @@ object TestServiceLocator {
     val userTrainingMaxRepository: TrainingMaxRepository by lazy {
         DefaultTrainingMaxRepository(
             provideUserTrainingMaxMapper(),
-            FakeTrainingMaxDataSource(),
-            provideWeightUnitTransformer()
+            FakeTrainingMaxDataSource()
         )
     }
 

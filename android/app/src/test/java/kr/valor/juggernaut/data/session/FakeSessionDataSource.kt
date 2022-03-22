@@ -17,6 +17,10 @@ class FakeSessionDataSource: SessionDataSource {
         return entityWithFakeId.id
     }
 
+    override suspend fun updateSessionEntity(entity: SessionEntity) {
+        TODO("Not yet implemented")
+    }
+
     override fun findSessionEntitiesByUserProgression(methodCycleValue: Int, phaseName: String, microCycleName: String): Flow<List<SessionEntity>> =
         flowOf(
             inMemoryStorage.filter { entity ->

@@ -15,6 +15,9 @@ interface SessionDao: SessionDataSource {
     @Delete
     override suspend fun deleteSessionEntity(entity: SessionEntity)
 
+    @Update
+    override suspend fun updateSessionEntity(entity: SessionEntity)
+
     @Query("DELETE FROM session_table WHERE method_cycle is :methodCycle")
     override suspend fun deleteSessionEntitiesByMethodCycle(methodCycle: Int)
 

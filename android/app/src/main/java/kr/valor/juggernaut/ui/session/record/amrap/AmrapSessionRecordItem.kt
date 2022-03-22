@@ -11,7 +11,7 @@ sealed class AmrapSessionRecordItem {
             get() = routine.hashCode().toLong()
     }
 
-    data class AmrapRoutineItem(val routine: Routine): AmrapSessionRecordItem() {
+    data class AmrapRoutineItem(val routine: Routine, val repetitions: Int): AmrapSessionRecordItem() {
         override val itemId: Long
             get() = routine.hashCode().toLong()
     }

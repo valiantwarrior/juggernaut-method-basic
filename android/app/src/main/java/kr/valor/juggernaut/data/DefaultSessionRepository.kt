@@ -45,6 +45,11 @@ class DefaultSessionRepository @Inject constructor(
             emit(session)
         }
 
+    override suspend fun updateSession(session: Session, sessionRecord: SessionRecord) {
+        val sessionEntity = session.toDatabaseModel(sessionRecord)
+        sessionDataSource.updateSessionEntity(sessionEntity)
+    }
+
     // considering RoomDatabase.withTransaction
     override suspend fun synchronizeSessions(userProgression: UserProgression, trainingMaxes: List<TrainingMax>) {
         val (methodCycleValue, phaseName, microCycleName) =

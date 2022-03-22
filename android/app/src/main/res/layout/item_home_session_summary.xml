@@ -33,6 +33,13 @@
                 app:layout_constraintTop_toTopOf="@id/top_guideline"
                 tools:text="Bench press" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(session.isCompleted)}"
+                app:layout_constraintEnd_toEndOf="@id/end_guideline"
+                app:layout_constraintBottom_toBottomOf="@id/bottom_guideline" />
+
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/start_guideline"
                 android:layout_width="wrap_content"

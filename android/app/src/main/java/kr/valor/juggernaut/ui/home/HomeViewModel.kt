@@ -11,6 +11,7 @@ import kr.valor.juggernaut.domain.progression.model.UserProgression
 import kr.valor.juggernaut.domain.progression.usecase.usecase.LoadProgressionStateUseCase
 import kr.valor.juggernaut.domain.session.model.Session
 import kr.valor.juggernaut.domain.session.usecase.contract.SynchronizeSessionsContract
+import kr.valor.juggernaut.domain.session.usecase.usecase.FindSessionsUseCase
 import kr.valor.juggernaut.domain.session.usecase.usecase.LoadSessionsUseCase
 import javax.inject.Inject
 
@@ -31,7 +32,7 @@ class HomeViewModel @Inject constructor(
     val uiEventFlow: Flow<HomeUiEvent>
         get() = _eventChannel.receiveAsFlow()
 
-    private val _homeUiModelFlow = combine(
+    val homeUiModel = combine(
         loadSessionsUseCase(),
         loadProgressionStateUseCase()
     ) { sessions: List<Session>, progressionState: ProgressionState ->
@@ -46,16 +47,9 @@ class HomeViewModel @Inject constructor(
             userProgression = userProgression,
             sessions = sessions.filter { session ->
                 session.progression == userProgression.toSessionProgression()
-            }
+            }.sortedWith(compareBy<Session> { it.isCompleted }.thenBy { it.category.ordinal })
         )
-    }
-
-    val homeUiModel = _homeUiModelFlow.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L),
-        UiResult.None
-    )
-
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L), UiResult.Loading)
 
     init {
         viewModelScope.launch {
@@ -81,5 +75,5 @@ class HomeViewModel @Inject constructor(
 sealed class UiResult {
     data class Success(val userProgression: UserProgression, val sessions: List<Session>): UiResult()
     object Error: UiResult()
-    object None: UiResult()
+    object Loading: UiResult()
 }

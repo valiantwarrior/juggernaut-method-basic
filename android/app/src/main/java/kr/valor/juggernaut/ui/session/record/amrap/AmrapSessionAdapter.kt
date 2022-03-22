@@ -3,10 +3,12 @@ package kr.valor.juggernaut.ui.session.record.amrap
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import kr.valor.juggernaut.domain.session.model.Routine
-import kr.valor.juggernaut.ui.session.record.RecordUiAction
 
-class AmrapSessionAdapter: ListAdapter<AmrapSessionRecordItem, AmrapSessionViewHolder>(DIFF_CALLBACK) {
+class AmrapSessionAdapter(
+    private val plusRepsAction: () -> Unit,
+    private val minusRepsAction: () -> Unit,
+    private val submitAction:() -> Unit
+): ListAdapter<AmrapSessionRecordItem, AmrapSessionViewHolder>(DIFF_CALLBACK) {
 
     override fun getItemViewType(position: Int): Int {
         return when(getItem(position)) {
@@ -19,17 +21,17 @@ class AmrapSessionAdapter: ListAdapter<AmrapSessionRecordItem, AmrapSessionViewH
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AmrapSessionViewHolder {
         return when(viewType) {
             ITEM_VIEW_TYPE_WARMUP -> AmrapSessionWarmupRoutineViewHolder.create(parent)
-            ITEM_VIEW_TYPE_AMRAP -> AmrapSessionAmrapRoutineViewHolder.create(parent)
-            ITEM_VIEW_TYPE_FOOTER -> AmrapSessionFooterViewHolder.create(parent)
+            ITEM_VIEW_TYPE_AMRAP -> AmrapSessionAmrapRoutineViewHolder.create(parent, plusRepsAction, minusRepsAction)
+            ITEM_VIEW_TYPE_FOOTER -> AmrapSessionFooterViewHolder.create(parent, submitAction)
             else -> throw IllegalArgumentException("Unknown viewType $viewType")
         }
     }
 
     override fun onBindViewHolder(holder: AmrapSessionViewHolder, position: Int) {
-        when(getItem(position)) {
-            is AmrapSessionRecordItem.WarmupRoutineItem -> (holder as AmrapSessionWarmupRoutineViewHolder).bind()
-            is AmrapSessionRecordItem.AmrapRoutineItem -> (holder as AmrapSessionAmrapRoutineViewHolder).bind()
-            is AmrapSessionRecordItem.Footer -> (holder as AmrapSessionFooterViewHolder).bind()
+        when(val item = getItem(position)) {
+            is AmrapSessionRecordItem.WarmupRoutineItem -> (holder as AmrapSessionWarmupRoutineViewHolder).bind(item)
+            is AmrapSessionRecordItem.AmrapRoutineItem -> (holder as AmrapSessionAmrapRoutineViewHolder).bind(item)
+            is AmrapSessionRecordItem.Footer -> return
         }
     }
 

@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.SimpleItemAnimator
 import dagger.hilt.android.AndroidEntryPoint
+import kr.valor.juggernaut.R
 import kr.valor.juggernaut.databinding.FragmentRecordBinding
 import kr.valor.juggernaut.domain.session.model.Session.Progression.Companion.DELOAD_SESSION_INDICATOR
 import kr.valor.juggernaut.ui.NavigationFragment
+import kr.valor.juggernaut.ui.observeFlowEvent
 import kr.valor.juggernaut.ui.session.record.amrap.AmrapSessionAdapter
 
 @AndroidEntryPoint
@@ -33,6 +36,7 @@ class RecordFragment : NavigationFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         with(binding) {
+            initEventObserver()
             when(navArgs.baseAmrapRepetitions) {
                 DELOAD_SESSION_INDICATOR -> bindDeloadSession()
                 else -> bindAmrapSession()
@@ -41,9 +45,23 @@ class RecordFragment : NavigationFragment() {
     }
 
     private fun FragmentRecordBinding.bindAmrapSession() {
-        sessionsRecordList.adapter = AmrapSessionAdapter()
+        val adapter = AmrapSessionAdapter(
+            plusRepsAction = { recordViewModel.accept(RecordUiAction.Plus) },
+            minusRepsAction = { recordViewModel.accept(RecordUiAction.Minus) },
+            submitAction = { recordViewModel.accept(RecordUiAction.Submit) }
+        )
+        sessionsRecordList.adapter = adapter
+        (sessionsRecordList.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
     }
 
     private fun FragmentRecordBinding.bindDeloadSession() {}
+
+    private fun initEventObserver() {
+        observeFlowEvent(recordViewModel.eventFlow) { recordEvent ->
+            when(recordEvent) {
+                RecordEvent.Done -> navigate(R.id.action_record_dest_to_home_dest)
+            }
+        }
+    }
 
 }

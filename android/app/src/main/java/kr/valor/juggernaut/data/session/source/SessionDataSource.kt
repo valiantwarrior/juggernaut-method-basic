@@ -8,6 +8,8 @@ interface SessionDataSource {
 
     suspend fun insertSessionEntity(entity: SessionEntity): Long
 
+    suspend fun updateSessionEntity(entity: SessionEntity)
+
     suspend fun deleteSessionEntity(entity: SessionEntity)
 
     suspend fun deleteSessionEntitiesByMethodCycle(methodCycle: Int)

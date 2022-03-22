@@ -4,15 +4,15 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kr.valor.juggernaut.ui.session.record.RecordUiState
 
-@BindingAdapter("recordItems")
-fun RecyclerView.bindRecordItem(uiState: RecordUiState) {
+@BindingAdapter("recordItems", "repetitions")
+fun RecyclerView.bindRecordItem(uiState: RecordUiState, repetitions: Int) {
     bindUiStateWhenAmrapSession(uiState) { amrapSession ->
         val adapter = adapter as AmrapSessionAdapter
         val session = amrapSession.currentSession
         val warmupRoutineItems = session.warmupRoutines!!.map { routine ->
             AmrapSessionRecordItem.WarmupRoutineItem(routine = routine)
         }
-        val amrapRoutineItem = AmrapSessionRecordItem.AmrapRoutineItem(session.amrapRoutine!!)
+        val amrapRoutineItem = AmrapSessionRecordItem.AmrapRoutineItem(session.amrapRoutine!!, repetitions)
         val routineItems = warmupRoutineItems + amrapRoutineItem + AmrapSessionRecordItem.Footer
 
         adapter.submitList(routineItems)
