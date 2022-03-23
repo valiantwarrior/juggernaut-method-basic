@@ -1,6 +1,7 @@
 package kr.valor.juggernaut.domain.progression.model
 
 import kr.valor.juggernaut.common.*
+import kr.valor.juggernaut.common.Phase.Companion.TOTAL_PHASE_COUNT
 import kr.valor.juggernaut.data.session.entity.SessionEntity
 import kr.valor.juggernaut.domain.session.model.Progression
 
@@ -21,10 +22,10 @@ data class UserProgression(
     
     val currentMethodMilestone: Int
         get() {
-            val phaseMilestone = phase.ordinal + 1
+            val phaseMilestone = phase.ordinal * TOTAL_PHASE_COUNT
             val microCycleMilestone = microCycle.ordinal + 1
 
-            return phaseMilestone * microCycleMilestone
+            return phaseMilestone + microCycleMilestone
         }
 
     fun toSessionProgression() = Progression(

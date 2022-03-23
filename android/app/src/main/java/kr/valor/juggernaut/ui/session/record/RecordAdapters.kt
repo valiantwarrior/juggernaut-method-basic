@@ -1,7 +1,9 @@
-package kr.valor.juggernaut.ui.session.record.amrap
+package kr.valor.juggernaut.ui.session.record
 
 import android.view.ViewGroup
 import kr.valor.juggernaut.ui.session.*
+
+class DeloadRoutineAdapter(submitAction: () -> Unit): SessionRoutineAdapter(submitAction)
 
 class AmrapRoutineAdapter(
     private val plusRepsAction: () -> Unit,

@@ -22,6 +22,7 @@ enum class Phase(val baseAmrapRepetitions: Int) {
     REP3(Phase.REP3_AMRAP_REPETITIONS);
 
     companion object {
+        const val TOTAL_PHASE_COUNT = 4
         val INITIAL = REP10
         val FINAL = REP3
 

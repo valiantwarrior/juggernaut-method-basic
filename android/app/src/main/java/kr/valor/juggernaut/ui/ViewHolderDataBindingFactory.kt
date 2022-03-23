@@ -11,11 +11,7 @@ open class ViewHolderDataBindingFactory {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = DataBindingUtil.inflate<VB>(layoutInflater, layoutId, parent, false)
 
-        if (binding is VB) {
-            return binding
-        } else {
-            throw IllegalArgumentException("Illegal layoutId for ${VB::class.java}")
-        }
+        return if (binding is VB) binding else throw IllegalArgumentException("Illegal layoutId for ${VB::class.java}")
     }
 
 }
