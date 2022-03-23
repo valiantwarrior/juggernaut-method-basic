@@ -37,9 +37,6 @@ class PreviewFragment : NavigationFragment() {
                 is PreviewUiEvent.StartSession -> {
                     navigate(PreviewFragmentDirections.actionPreviewDestToRecordFragment(event.sessionId, event.baseAmrapRepetitions))
                 }
-                PreviewUiEvent.Back -> {
-                    navigate(PreviewFragmentDirections.actionPreviewDestToHomeDest())
-                }
             }
         }
     }

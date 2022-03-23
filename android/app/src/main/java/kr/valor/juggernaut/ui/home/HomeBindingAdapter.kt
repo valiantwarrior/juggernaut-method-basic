@@ -3,9 +3,11 @@ package kr.valor.juggernaut.ui.home
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import kr.valor.juggernaut.R
 import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.domain.progression.model.UserProgression
+import kr.valor.juggernaut.domain.session.model.Session
 import kr.valor.juggernaut.ui.home.sessionsummary.SessionSummaryAdapter
 
 @BindingAdapter("sessionSummaries")
@@ -15,6 +17,14 @@ fun RecyclerView.bindSessions(uiResult: UiResult) {
         val adapter = adapter as SessionSummaryAdapter
 
         adapter.submitList(sessions)
+    }
+}
+
+// TODO("Renaming, improving features, etc")
+@BindingAdapter("sessionClickable")
+fun MaterialCardView.bindClickable(session: Session?) {
+    session?.let {
+        isEnabled = !it.isCompleted
     }
 }
 

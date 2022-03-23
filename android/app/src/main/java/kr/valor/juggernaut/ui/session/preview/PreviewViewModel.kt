@@ -49,5 +49,4 @@ sealed class PreviewUiEvent {
         val sessionId: Long,
         val baseAmrapRepetitions: Int
     ): PreviewUiEvent()
-    object Back: PreviewUiEvent()
 }

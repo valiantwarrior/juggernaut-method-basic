@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_home_dest_to_empty_dest"
-            app:destination="@id/empty_dest" />
+            app:destination="@id/empty_dest"
+            app:popUpTo="@id/home_dest"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_home_dest_to_preview_dest"
             app:destination="@id/preview_dest" />
@@ -24,7 +26,9 @@
         tools:layout="@layout/fragment_empty" >
         <action
             android:id="@+id/action_empty_dest_to_onboarding_dest"
-            app:destination="@id/onboarding_dest" />
+            app:destination="@id/onboarding_dest"
+            app:popUpTo="@id/empty_dest"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/onboarding_dest"
@@ -33,7 +37,9 @@
         tools:layout="@layout/fragment_onboarding" >
         <action
             android:id="@+id/action_onboarding_dest_to_home_dest"
-            app:destination="@id/home_dest" />
+            app:destination="@id/home_dest"
+            app:popUpTo="@id/onboarding_dest"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/preview_dest"
@@ -43,9 +49,6 @@
         <argument
             android:name="sessionId"
             app:argType="long" />
-        <action
-            android:id="@+id/action_preview_dest_to_home_dest"
-            app:destination="@id/home_dest" />
         <action
             android:id="@+id/action_preview_dest_to_recordFragment"
             app:destination="@id/record_dest" />
@@ -63,6 +66,18 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_record_dest_to_home_dest"
-            app:destination="@id/home_dest" />
+            app:destination="@id/home_dest"
+            app:popUpTo="@id/home_dest"
+            app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/statistic_dest"
+        android:name="kr.valor.juggernaut.ui.statistic.StatisticFragment"
+        android:label="fragment_statistic"
+        tools:layout="@layout/fragment_statistic" />
+    <fragment
+        android:id="@+id/overall_dest"
+        android:name="kr.valor.juggernaut.ui.overall.OverallFragment"
+        android:label="fragment_overall"
+        tools:layout="@layout/fragment_overall" />
 </navigation>

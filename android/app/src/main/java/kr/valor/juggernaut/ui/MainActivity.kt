@@ -2,17 +2,16 @@ package kr.valor.juggernaut.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import kr.valor.juggernaut.R
 import kr.valor.juggernaut.databinding.ActivityMainBinding
 
@@ -23,24 +22,28 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var navController: NavController
-
-    private lateinit var navHostFragment: NavHostFragment
-
-    private lateinit var navGraph: NavGraph
+    private val appBarConfiguration: AppBarConfiguration = AppBarConfiguration(
+        setOf(R.id.home_dest, R.id.overall_dest, R.id.statistic_dest)
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupNavGraphWithConditionalStartDestination()
+        val navController = setupNavGraphWithConditionalStartDestination()
+        binding.setupActionBar(navController)
+        binding.setupBottomNavigationMenu(navController)
     }
 
-    private fun setupNavGraphWithConditionalStartDestination() {
-        navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.navController
-        navGraph = navController.navInflater.inflate(R.navigation.main_navigation)
+    override fun onSupportNavigateUp(): Boolean {
+        return findNavController(R.id.nav_host_fragment).navigateUp(appBarConfiguration)
+    }
+
+    private fun setupNavGraphWithConditionalStartDestination(): NavController {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        val navGraph = navController.navInflater.inflate(R.navigation.main_navigation)
 
         viewModel.navigationEventLiveData.observe(this) { navigationEvent ->
             val destinationId = when(navigationEvent) {
@@ -50,6 +53,43 @@ class MainActivity : AppCompatActivity() {
             navGraph.setStartDestination(destinationId)
             navController.graph = navGraph
         }
+
+        return navController
+    }
+
+    private fun ActivityMainBinding.setupActionBar(navController: NavController) {
+        setSupportActionBar(toolbar)
+        setupActionBarWithNavController(navController, appBarConfiguration)
+    }
+
+    private fun ActivityMainBinding.setupBottomNavigationMenu(navController: NavController) {
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when(destination.id) {
+                R.id.empty_dest -> {
+                    toolbar.visibility = View.GONE
+                    bottomNavigationView.visibility = View.GONE
+                }
+
+                R.id.preview_dest -> {
+                    bottomNavigationView.visibility = View.GONE
+                }
+
+                R.id.record_dest -> {
+                    bottomNavigationView.visibility = View.GONE
+                }
+
+                R.id.onboarding_dest -> {
+                    toolbar.visibility = View.GONE
+                    bottomNavigationView.visibility = View.GONE
+                }
+
+                else -> {
+                    toolbar.visibility = View.VISIBLE
+                    bottomNavigationView.visibility = View.VISIBLE
+                }
+            }
+        }
+        bottomNavigationView.setupWithNavController(navController)
     }
 
 }
