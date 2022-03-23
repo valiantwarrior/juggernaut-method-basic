@@ -13,7 +13,7 @@ import kr.valor.juggernaut.databinding.FragmentRecordBinding
 import kr.valor.juggernaut.domain.session.model.Session.Progression.Companion.DELOAD_SESSION_INDICATOR
 import kr.valor.juggernaut.ui.NavigationFragment
 import kr.valor.juggernaut.ui.observeFlowEvent
-import kr.valor.juggernaut.ui.session.record.amrap.AmrapSessionAdapter
+import kr.valor.juggernaut.ui.session.record.amrap.AmrapRoutineAdapter
 
 @AndroidEntryPoint
 class RecordFragment : NavigationFragment() {
@@ -45,7 +45,7 @@ class RecordFragment : NavigationFragment() {
     }
 
     private fun FragmentRecordBinding.bindAmrapSession() {
-        val adapter = AmrapSessionAdapter(
+        val adapter = AmrapRoutineAdapter(
             plusRepsAction = { recordViewModel.accept(RecordUiAction.Plus) },
             minusRepsAction = { recordViewModel.accept(RecordUiAction.Minus) },
             submitAction = { recordViewModel.accept(RecordUiAction.Submit) }
