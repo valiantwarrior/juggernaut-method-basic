@@ -2,7 +2,6 @@ package kr.valor.juggernaut.domain.progression.model
 
 import kr.valor.juggernaut.common.*
 import kr.valor.juggernaut.common.Phase.Companion.TOTAL_PHASE_COUNT
-import kr.valor.juggernaut.data.session.entity.SessionEntity
 import kr.valor.juggernaut.domain.session.model.Progression
 
 sealed class ProgressionState {
