@@ -43,5 +43,9 @@
         <!-- Customize -->
         <item name="android:statusBarColor">@color/md_theme_light_background</item>
         <item name="android:windowLightStatusBar">true</item>
+
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="materialCardViewStyle">?attr/materialCardViewElevatedStyle</item>
     </style>
 </resources>

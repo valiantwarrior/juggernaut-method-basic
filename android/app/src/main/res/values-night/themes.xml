@@ -42,5 +42,8 @@
 
         <!-- Customize -->
         <item name="android:statusBarColor">@color/md_theme_dark_background</item>
+
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="fontFamily">sans-serif-medium</item>
     </style>
 </resources>

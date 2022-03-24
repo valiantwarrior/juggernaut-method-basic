@@ -1,11 +1,15 @@
 package kr.valor.juggernaut.ui.home
 
+import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import kr.valor.juggernaut.R
 import kr.valor.juggernaut.common.LiftCategory
+import kr.valor.juggernaut.common.LiftCategory.*
+import kr.valor.juggernaut.databinding.ItemHomeSessionSummaryBinding
 import kr.valor.juggernaut.domain.progression.model.UserProgression
 import kr.valor.juggernaut.domain.session.model.Session
 import kr.valor.juggernaut.ui.home.sessionsummary.SessionSummaryAdapter
@@ -21,11 +25,23 @@ fun RecyclerView.bindSessions(uiResult: UiResult) {
 }
 
 // TODO("Renaming, improving features, etc")
-@BindingAdapter("sessionClickable")
-fun MaterialCardView.bindClickable(session: Session?) {
-    session?.let {
-        isEnabled = !it.isCompleted
+@BindingAdapter("sessionSummary")
+fun MaterialCardView.bindSessionSummary(session: Session?) {
+    if (session == null) return
+
+    val binding =
+        DataBindingUtil.findBinding<ItemHomeSessionSummaryBinding>(this) ?: return
+
+    val imageResource = when(session.category) {
+        BENCHPRESS -> R.drawable.bg_img_bp
+        SQUAT -> R.drawable.bg_img_sq_max
+        OVERHEADPRESS -> R.drawable.bg_img_ohp_dmitry
+        DEADLIFT -> R.drawable.bg_img_dl_clarence
     }
+
+    binding.thumbnailImg.setImageResource(imageResource)
+    binding.liftCategoryText.text = session.category.name
+    binding.sessionSummaryInfoCardView.isEnabled = !session.isCompleted
 }
 
 @BindingAdapter("currentPhase")
