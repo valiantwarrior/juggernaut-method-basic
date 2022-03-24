@@ -1,17 +1,15 @@
 package kr.valor.juggernaut.ui.session
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import kr.valor.juggernaut.R
 import kr.valor.juggernaut.databinding.ItemSessionAmrapRoutineBinding
 import kr.valor.juggernaut.databinding.ItemSessionFooterBinding
 import kr.valor.juggernaut.databinding.ItemSessionRoutineBinding
 import kr.valor.juggernaut.ui.ViewHolderDataBindingFactory
 
-sealed class SessionRoutineViewHolder(binding: ViewBinding): RecyclerView.ViewHolder(binding.root)
+sealed class SessionRoutineViewHolder(binding: ViewDataBinding): RecyclerView.ViewHolder(binding.root)
 
 open class RoutineViewHolder(
     private val binding: ViewDataBinding
@@ -38,18 +36,25 @@ open class RoutineViewHolder(
 
 
 class FooterViewHolder private constructor(
-    binding: ItemSessionFooterBinding
+    private val binding: ItemSessionFooterBinding
 ): SessionRoutineViewHolder(binding) {
 
-    companion object {
-        fun create(parent: ViewGroup, submitAction: () -> Unit): SessionRoutineViewHolder {
-            val layoutInflater = LayoutInflater.from(parent.context)
-            val binding = ItemSessionFooterBinding.inflate(layoutInflater, parent, false)
-                .apply {
-                    submitButton.setOnClickListener {
-                        submitAction()
+    fun bind(item: FooterItem) {
+        binding.apply {
+            footerItem = item
+            executePendingBindings()
+        }
+    }
+
+    companion object: ViewHolderDataBindingFactory() {
+        fun create(parent: ViewGroup, footerAction: () -> Unit): SessionRoutineViewHolder {
+            val binding =
+                provideDataBinding<ItemSessionFooterBinding>(parent, R.layout.item_session_footer)
+                    .apply {
+                        footerActionButton.setOnClickListener {
+                            footerAction()
+                        }
                     }
-                }
 
             return FooterViewHolder(binding)
         }

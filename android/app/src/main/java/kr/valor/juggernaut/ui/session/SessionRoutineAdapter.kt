@@ -5,13 +5,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 
 open class SessionRoutineAdapter(
-    private val submitAction: () -> Unit
+    private val footerAction: () -> Unit
 ): ListAdapter<SessionRoutineItem, SessionRoutineViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SessionRoutineViewHolder {
         return when(viewType) {
             ITEM_VIEW_TYPE_ROUTINE -> RoutineViewHolder.create(parent)
-            ITEM_VIEW_TYPE_FOOTER -> FooterViewHolder.create(parent, submitAction)
+            ITEM_VIEW_TYPE_FOOTER -> FooterViewHolder.create(parent, footerAction)
             else -> throw IllegalArgumentException()
         }
     }
@@ -26,7 +26,7 @@ open class SessionRoutineAdapter(
     final override fun onBindViewHolder(holder: SessionRoutineViewHolder, position: Int) {
         when(val item = getItem(position)) {
             is RoutineItem -> (holder as RoutineViewHolder).bind(item)
-            is FooterItem -> return
+            is FooterItem -> (holder as FooterViewHolder).bind(item)
         }
     }
 

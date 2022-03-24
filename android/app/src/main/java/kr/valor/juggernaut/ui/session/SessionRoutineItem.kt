@@ -15,7 +15,7 @@ open class RoutineItem(open val routine: Routine): SessionRoutineItem() {
 
 }
 
-object FooterItem: SessionRoutineItem() {
+data class FooterItem(val buttonText: String): SessionRoutineItem() {
 
     override val itemId: Long
         get() = Long.MIN_VALUE

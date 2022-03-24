@@ -29,6 +29,7 @@ class PreviewFragment : NavigationFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initEventObserver()
+        binding.initAdapter()
     }
 
     private fun initEventObserver() {
@@ -38,6 +39,12 @@ class PreviewFragment : NavigationFragment() {
                     navigate(PreviewFragmentDirections.actionPreviewDestToRecordFragment(event.sessionId, event.baseAmrapRepetitions))
                 }
             }
+        }
+    }
+
+    private fun FragmentPreviewBinding.initAdapter() {
+        previewRoutinesList.adapter = PreviewAdapter {
+            previewViewModel.onClickStart()
         }
     }
 

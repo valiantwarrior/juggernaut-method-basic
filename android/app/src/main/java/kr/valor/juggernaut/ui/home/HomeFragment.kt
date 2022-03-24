@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import kr.valor.juggernaut.R
 import kr.valor.juggernaut.databinding.FragmentHomeBinding
 import kr.valor.juggernaut.ui.NavigationFragment
 import kr.valor.juggernaut.ui.home.sessionsummary.SessionSummaryAdapter
@@ -43,6 +43,8 @@ class HomeFragment : NavigationFragment() {
                     navigate(HomeFragmentDirections.actionHomeDestToEmptyDest())
                 }
                 is HomeUiEvent.NavigateSessionPreview -> {
+                    // prevent visual flickering
+                    rootLayout.isVisible = false
                     navigate(HomeFragmentDirections.actionHomeDestToPreviewDest(event.sessionId))
                 }
             }

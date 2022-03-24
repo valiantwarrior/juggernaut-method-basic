@@ -14,20 +14,16 @@
         android:layout_height="match_parent"
         tools:context=".ui.session.preview.PreviewFragment">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@{String.valueOf(viewModel.uiState)}" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/start_session_button"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/preview_routines_list"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="start"
-            android:onClick="@{() -> viewModel.onClickStart()}"
-            app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintEnd_toEndOf="@id/end_guideline"
-            app:layout_constraintBottom_toBottomOf="@id/bottom_guideline" />
+            android:layout_height="0dp"
+            app:previewRoutineItems="@{viewModel.uiState}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/start_guideline"
