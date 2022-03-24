@@ -6,12 +6,7 @@ data class RoutineIntensity(
 )
 
 inline fun RoutineIntensity.toRoutineModel(tmWeights: Int, actualRepetitions: Int? = null, transform: (Double) -> Int) =
-    actualRepetitions?.let { actualReps ->
-        Routine(
-            weights = transform(tmWeights * intensityPercentage),
-            reps = actualReps
-        )
-    } ?: Routine(
+    RoutineFactory.create(
         weights = transform(tmWeights * intensityPercentage),
-        reps = repetitions
+        reps = actualRepetitions ?: repetitions
     )
