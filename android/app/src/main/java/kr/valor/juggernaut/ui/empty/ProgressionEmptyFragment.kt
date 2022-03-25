@@ -1,4 +1,4 @@
-package kr.valor.juggernaut.ui.home
+package kr.valor.juggernaut.ui.empty
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

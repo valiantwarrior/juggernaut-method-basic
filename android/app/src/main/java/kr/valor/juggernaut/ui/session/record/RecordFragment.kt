@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.SimpleItemAnimator
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.juggernaut.R
@@ -41,6 +43,9 @@ class RecordFragment : NavigationFragment() {
                 else -> bindAmrapSession()
             }
         }
+        val toolbar = binding.toolbar
+        val navController = findNavController()
+        NavigationUI.setupWithNavController(toolbar, navController)
     }
 
     private fun FragmentRecordBinding.bindAmrapSession() {

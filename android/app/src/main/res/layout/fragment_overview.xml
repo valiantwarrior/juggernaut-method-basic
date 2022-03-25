@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="kr.valor.juggernaut.ui.home.overview.OverviewViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/root_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.home.HomeFragment">
+
+            <TextView
+                android:id="@+id/user_progression_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/home_user_progression_title_text"
+                android:textAppearance="@style/TextAppearance.App.Title"
+                app:layout_constraintStart_toStartOf="@id/start_guideline"
+                app:layout_constraintTop_toTopOf="@id/top_guideline"
+                app:layout_constraintEnd_toEndOf="@id/end_guideline" />
+
+            <include
+                layout="@layout/layout_user_progression_card"
+                android:id="@+id/phase_layout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="@dimen/margin_dp_default_single_side"
+                android:layout_marginTop="@dimen/margin_dp_default"
+                bind:uiResult="@{viewModel.overviewUiModel}"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="@id/start_guideline"
+                app:layout_constraintEnd_toEndOf="@id/vertical_guideline"
+                app:layout_constraintTop_toBottomOf="@id/user_progression_title" />
+
+            <include
+                layout="@layout/layout_user_progression_card"
+                android:id="@+id/microcycle_layout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/margin_dp_default_single_side"
+                bind:uiResult="@{viewModel.overviewUiModel}"
+                app:layout_constraintStart_toStartOf="@id/vertical_guideline"
+                app:layout_constraintEnd_toEndOf="@id/end_guideline"
+                app:layout_constraintBottom_toBottomOf="@id/phase_layout"
+                app:layout_constraintTop_toTopOf="@id/phase_layout" />
+
+            <TextView
+                android:id="@+id/weekly_achievement_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_dp_default"
+                android:textAppearance="@style/TextAppearance.App.Title"
+                app:weeklyAchievement="@{viewModel.overviewUiModel}"
+                app:layout_constraintTop_toBottomOf="@id/phase_layout"
+                app:layout_constraintStart_toStartOf="@id/start_guideline"
+                app:layout_constraintEnd_toEndOf="@id/end_guideline"
+                app:layout_constraintBottom_toTopOf="@id/sessions_summary_info_list_wrapper"
+                tools:text="Weekly progress : 1 / 4"/>
+
+            <kr.valor.juggernaut.ui.NestedScrollableHost
+                android:id="@+id/sessions_summary_info_list_wrapper"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/weekly_achievement_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/sessions_summary_info_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/recyclerview_container_padding_horizontal_default"
+                    android:clipToPadding="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:sessionSummaries="@{viewModel.overviewUiModel}"
+                    tools:listitem="@layout/item_home_session_summary" />
+
+            </kr.valor.juggernaut.ui.NestedScrollableHost>
+
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/vertical_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.4" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/start_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/guideline_margin_dp_default" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/end_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/guideline_margin_dp_default" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/top_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="@dimen/guideline_margin_dp_default" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/bottom_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_end="@dimen/guideline_margin_dp_default" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</layout>

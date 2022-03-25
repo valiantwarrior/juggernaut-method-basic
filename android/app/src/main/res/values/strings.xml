@@ -1,7 +1,13 @@
 <resources>
     <string name="app_name">Juggernaut Method Basic</string>
 
-    <string name="milestone_text_format">%1$d / %2$d</string>
+    <string name="home_user_progression_title_text">Current progress</string>
+
+    <string name="home_user_progression_phase_title_text_format">Phase %1$d</string>
+
+    <string name="home_user_progression_microcycle_title_text_format">Cycle %1$d</string>
+
+    <string name="home_milestone_text_format">Weekly progress : %1$d / %2$d</string>
 
     <string name="session_footer_button_text_record">Submit</string>
     <string name="session_footer_button_text_preview">Start</string>

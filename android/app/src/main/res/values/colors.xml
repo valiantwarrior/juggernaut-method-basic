@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_primary">#1a73e8</color>
-    <color name="color_primary_variant">#574ddd</color>
+    <color name="color_primary">#2C2F42</color>
+    <color name="color_primary_variant">#2C2F42</color>
     <color name="color_on_secondary">@color/white</color>
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+
+    <!-- group 1 -->
+    <color name="color_primary_light">#2C2F42</color>
+    <color name="color_on_primary_variant">#F8F8FA</color>
+    <color name="color_secondary">#FEBB53</color>
+
 </resources>

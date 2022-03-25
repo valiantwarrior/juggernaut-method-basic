@@ -3,10 +3,12 @@ package kr.valor.juggernaut.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.navOptions
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -32,8 +34,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navController = setupNavGraphWithConditionalStartDestination()
-        binding.setupActionBar(navController)
         binding.setupBottomNavigationMenu(navController)
+//        binding.setupActionBar(navController)
+//        binding.setupBottomNavigationMenu(navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -57,39 +60,23 @@ class MainActivity : AppCompatActivity() {
         return navController
     }
 
-    private fun ActivityMainBinding.setupActionBar(navController: NavController) {
-        setSupportActionBar(toolbar)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-    }
+//    private fun ActivityMainBinding.setupActionBar(navController: NavController) {
+//        setSupportActionBar(toolbar)
+//        setupActionBarWithNavController(navController, appBarConfiguration)
+//    }
 
     private fun ActivityMainBinding.setupBottomNavigationMenu(navController: NavController) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when(destination.id) {
-                R.id.empty_dest -> {
-                    toolbar.visibility = View.GONE
+                R.id.empty_dest, R.id.preview_dest, R.id.record_dest, R.id.onboarding_dest -> {
                     bottomNavigationView.visibility = View.GONE
                 }
-
-                R.id.preview_dest -> {
-                    bottomNavigationView.visibility = View.GONE
-                }
-
-                R.id.record_dest -> {
-                    bottomNavigationView.visibility = View.GONE
-                }
-
-                R.id.onboarding_dest -> {
-                    toolbar.visibility = View.GONE
-                    bottomNavigationView.visibility = View.GONE
-                }
-
                 else -> {
-                    toolbar.visibility = View.VISIBLE
+//                    toolbar.visibility = View.VISIBLE
                     bottomNavigationView.visibility = View.VISIBLE
                 }
             }
         }
         bottomNavigationView.setupWithNavController(navController)
     }
-
 }

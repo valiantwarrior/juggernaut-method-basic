@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.juggernaut.databinding.FragmentPreviewBinding
 import kr.valor.juggernaut.ui.NavigationFragment
@@ -30,6 +32,10 @@ class PreviewFragment : NavigationFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initEventObserver()
         binding.initAdapter()
+
+        val toolbar = binding.toolbar
+        val navController = findNavController()
+        NavigationUI.setupWithNavController(toolbar, navController)
     }
 
     private fun initEventObserver() {

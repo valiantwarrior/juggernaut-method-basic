@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import kr.valor.juggernaut.domain.session.model.Session
-import kr.valor.juggernaut.ui.home.NavigateClickListener
+import kr.valor.juggernaut.ui.home.overview.NavigateClickListener
 
 class SessionSummaryAdapter(
     private val navigateClickListener: NavigateClickListener

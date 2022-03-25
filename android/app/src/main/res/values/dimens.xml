@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="guideline_margin_dp_default">8dp</dimen>
-    <dimen name="padding_dp_default">8dp</dimen>
-    <dimen name="margin_dp_default">8dp</dimen>
-    <dimen name="recyclerview_item_margin_horizontal_default">4dp</dimen>
-    <dimen name="recyclerview_container_padding_horizontal_default">4dp</dimen>
+    <dimen name="guideline_margin_dp_default">16dp</dimen>
+    <dimen name="guideline_margin_dp_small">8dp</dimen>
+    <dimen name="padding_dp_default">16dp</dimen>
+    <dimen name="margin_dp_default">16dp</dimen>
+    <dimen name="margin_dp_default_single_side">8dp</dimen>
+    <dimen name="margin_dp_small">8dp</dimen>
+
+    <dimen name="recyclerview_item_margin_horizontal_default">8dp</dimen>
+    <dimen name="recyclerview_container_padding_horizontal_default">8dp</dimen>
     <dimen name="item_session_summary_width">280dp</dimen>
     <dimen name="item_session_summary_height">200dp</dimen>
+
+    <dimen name="app_cardview_corner_radius">16dp</dimen>
 </resources>
