@@ -24,7 +24,7 @@
                 android:id="@+id/user_progression_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/home_user_progression_title_text"
+                android:text="@string/overview_user_progression_title_text"
                 android:textAppearance="@style/TextAppearance.App.Title"
                 app:layout_constraintStart_toStartOf="@id/start_guideline"
                 app:layout_constraintTop_toTopOf="@id/top_guideline"
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_dp_extreme_large"
                 android:textAppearance="@style/TextAppearance.App.Title"
-                android:text="@string/home_session_list_title_text"
+                android:text="@string/overview_session_list_title_text"
                 app:layout_constraintTop_toBottomOf="@id/phase_layout"
                 app:layout_constraintStart_toStartOf="@id/start_guideline"
                 app:layout_constraintEnd_toEndOf="@id/end_guideline"
@@ -85,7 +85,7 @@
                     android:clipToPadding="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:sessionSummaries="@{viewModel.overviewUiModel}"
-                    tools:listitem="@layout/item_home_session_summary" />
+                    tools:listitem="@layout/item_overview_session_summary" />
 
             </kr.valor.juggernaut.ui.NestedScrollableHost>
 
@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_dp_extreme_large"
                 android:textAppearance="@style/TextAppearance.App.Title"
-                android:text="@string/home_user_progression_milestones_title_text"
+                android:text="@string/overview_user_progression_milestones_title_text"
                 app:layout_constraintStart_toStartOf="@id/start_guideline"
                 app:layout_constraintEnd_toEndOf="@id/end_guideline"
                 app:layout_constraintTop_toBottomOf="@id/sessions_summary_info_list_wrapper" />

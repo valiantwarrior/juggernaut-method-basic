@@ -1,32 +1,37 @@
 package kr.valor.juggernaut.ui.home.detail
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.juggernaut.R
+import kr.valor.juggernaut.databinding.FragmentDetailBinding
 
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = DetailFragment()
+    private val detailViewModel: DetailViewModel by viewModels()
+
+    private lateinit var binding: FragmentDetailBinding
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = FragmentDetailBinding.inflate(inflater, container, false)
+            .apply {
+                viewModel = detailViewModel
+                lifecycleOwner = viewLifecycleOwner
+            }
+
+        return binding.root
     }
 
-    private lateinit var viewModel: DetailViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_detail, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.initAdapter()
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
-        // TODO: Use the ViewModel
+    private fun FragmentDetailBinding.initAdapter() {
+        sessionsDetailList.adapter = DetailAdapter()
     }
-
 }

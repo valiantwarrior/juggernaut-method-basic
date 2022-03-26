@@ -1,6 +1,7 @@
 package kr.valor.juggernaut.domain.progression.model
 
 import kr.valor.juggernaut.common.*
+import kr.valor.juggernaut.common.LiftCategory.Companion.TOTAL_LIFT_CATEGORY_COUNT
 import kr.valor.juggernaut.common.MicroCycle.Companion.TOTAL_MICROCYCLE_COUNT
 import kr.valor.juggernaut.common.Phase.Companion.TOTAL_PHASE_COUNT
 import kr.valor.juggernaut.domain.session.model.Progression
@@ -34,5 +35,6 @@ data class UserProgression(
 
     companion object {
         const val OVERALL_METHOD_MILESTONE = TOTAL_PHASE_COUNT * TOTAL_MICROCYCLE_COUNT
+        const val SESSION_COUNT_PER_PHASE = TOTAL_LIFT_CATEGORY_COUNT * TOTAL_MICROCYCLE_COUNT
     }
 }

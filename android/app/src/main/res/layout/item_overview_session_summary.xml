@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="session"
+            type="kr.valor.juggernaut.domain.session.model.Session" />
+
+        <variable
+            name="navigateAction"
+            type="kr.valor.juggernaut.ui.home.overview.NavigateClickListener" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/session_summary_info_card_view"
+        android:layout_width="@dimen/item_session_summary_width"
+        android:layout_height="@dimen/item_session_summary_height"
+        android:layout_marginHorizontal="@dimen/recyclerview_item_margin_horizontal_default"
+        android:onClick="@{() -> navigateAction.onClick(session.sessionId)}"
+        app:overviewSessionSummaryCardViewBackgroundColor="@{session}">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/session_summary_info_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/lift_category_icon"
+                android:layout_width="@dimen/icon_width_default"
+                android:layout_height="@dimen/icon_height_default"
+                android:contentDescription="@string/overview_session_icon_content_description"
+                app:overviewSessionSummaryLiftCategoryIcon="@{session}"
+                app:tint="?attr/colorPrimary"
+                app:layout_constraintStart_toStartOf="@id/start_guideline"
+                app:layout_constraintTop_toTopOf="@id/top_guideline"
+                tools:src="@drawable/ic_lift_category_overheadpress" />
+
+            <TextView
+                android:id="@+id/lift_category_name_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_dp_small"
+                android:textAppearance="@style/TextAppearance.App.SubTitle"
+                app:overviewSessionSummaryLiftCategoryName="@{session}"
+                app:layout_constraintVertical_bias="1.0"
+                app:layout_constraintTop_toTopOf="@id/top_guideline"
+                app:layout_constraintStart_toEndOf="@id/lift_category_icon"
+                app:layout_constraintBottom_toBottomOf="@id/lift_category_icon"
+                tools:text="OVERHEADPRESS" />
+
+            <TextView
+                android:id="@+id/session_amrap_info_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.App.Content"
+                android:visibility="gone"
+                android:drawablePadding="@dimen/padding_dp_small"
+                app:overviewSessionSummaryAmrapInfo="@{session}"
+                app:drawableStartCompat="@drawable/ic_amrap_24"
+                app:drawableTint="@android:color/holo_red_dark"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintVertical_bias="1.0"
+                app:layout_constraintEnd_toEndOf="@id/end_guideline"
+                app:layout_constraintBottom_toTopOf="@id/session_amrap_intensity_text"
+                app:layout_constraintStart_toStartOf="@id/start_guideline"
+                app:layout_constraintTop_toTopOf="@id/top_guideline"
+                tools:visibility="visible"
+                tools:text="Goal : 120kg x 5+" />
+
+            <TextView
+                android:id="@+id/session_amrap_intensity_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:overviewSessionSummaryAmrapIntensityInfo="@{session}"
+                app:layout_constraintStart_toStartOf="@id/session_amrap_info_text"
+                app:layout_constraintEnd_toEndOf="@id/end_guideline"
+                app:layout_constraintTop_toBottomOf="@id/session_amrap_info_text"
+                app:layout_constraintBottom_toBottomOf="@id/action_view_area_guideline"
+                app:layout_constraintHorizontal_bias="1.0"
+                tools:visibility="visible"
+                tools:text="60% x 5+" />
+
+            <TextView
+                android:id="@+id/session_action_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.App.Content"
+                app:overviewSessionSummaryAction="@{session}"
+                app:layout_constraintVertical_bias="1.0"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@id/start_guideline"
+                app:layout_constraintEnd_toEndOf="@id/end_guideline"
+                app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
+                app:layout_constraintTop_toTopOf="@id/action_view_area_guideline"
+                tools:text="START" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/action_view_area_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.75" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/start_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/guideline_margin_dp_default" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/end_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/guideline_margin_dp_default" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/top_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="@dimen/guideline_margin_dp_default" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/bottom_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_end="@dimen/guideline_margin_dp_default" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

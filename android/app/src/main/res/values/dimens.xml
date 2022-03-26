@@ -4,13 +4,23 @@
     <dimen name="guideline_margin_dp_default">16dp</dimen>
     <dimen name="guideline_margin_dp_small">8dp</dimen>
     <dimen name="padding_dp_default">16dp</dimen>
+    <dimen name="padding_dp_small">8dp</dimen>
     <dimen name="margin_dp_extreme_large">32dp</dimen>
     <dimen name="margin_dp_default">16dp</dimen>
     <dimen name="margin_dp_default_single_side">8dp</dimen>
     <dimen name="margin_dp_small">8dp</dimen>
 
+    <dimen name="icon_width_default">48dp</dimen>
+    <dimen name="icon_height_default">48dp</dimen>
+
+    <dimen name="icon_width_medium">36dp</dimen>
+    <dimen name="icon_height_medium">36dp</dimen>
+
     <dimen name="recyclerview_item_margin_horizontal_default">8dp</dimen>
     <dimen name="recyclerview_container_padding_horizontal_default">8dp</dimen>
+    <dimen name="recyclerview_item_margin_vertical_default">8dp</dimen>
+    <dimen name="recyclerview_container_padding_vertical_default">24dp</dimen>
+    
     <dimen name="item_session_summary_width">280dp</dimen>
     <dimen name="item_session_summary_height">200dp</dimen>
 

@@ -1,20 +1,30 @@
 <resources>
     <string name="app_name">Juggernaut Method Basic</string>
 
-    <string name="home_user_progression_title_text">Current progress</string>
+    <string name="overview_user_progression_title_text">Current progress</string>
+    <string name="overview_user_progression_phase_title_text_format">Phase %1$d</string>
+    <string name="overview_user_progression_microcycle_title_text_format">Cycle %1$d</string>
+    <string name="overview_session_list_title_text">Sessions of this week</string>
+    <string name="overview_user_progression_milestones_title_text">Milestones</string>
+    <string name="overview_milestone_text_format">%1$d / %2$d</string>
+    <string name="overview_weekly_progress_title_text">Weekly</string>
+    <string name="overview_total_progress_title_text">Total</string>
+    <string name="overview_total_progress_detailed_title_text">In detail</string>
+    <string name="overview_session_icon_content_description">This is liftcategory icon.</string>
 
-    <string name="home_user_progression_phase_title_text_format">Phase %1$d</string>
+    <string name="session_phase_and_microcycle_text_format">%1$s - %2$s</string>
+    <string name="session_amrap_intensity_info_text_format">%1$d%2$s(%3$s%%) x %4$d+</string> <!-- Usage : 120kg(60%) x 5+ -->
+    <string name="session_amrap_actual_info_text_format">AMRAP RECORD : %1$d%2$s x %3$d</string> <!-- Usage : 120kg x 8 -->
 
-    <string name="home_user_progression_microcycle_title_text_format">Cycle %1$d</string>
+    <string name="overview_session_action_start">START</string>
+    <string name="overview_session_action_done">DONE</string>
 
-    <string name="home_session_list_title_text">Sessions of this week</string>
+    <string name="overview_session_brief_amrap_intensity_info_text_format">%1$s%% x %2$d+</string>
+    <string name="overview_session_brief_amrap_info_text_format">Goal : %1$d%2$s x %3$d+</string> <!-- Usage : 120kg x 5+ -->
 
-    <string name="home_user_progression_milestones_title_text">Milestones</string>
-
-    <string name="home_milestone_text_format">%1$d / %2$d</string>
-    <string name="home_weekly_progress_title_text">Weekly</string>
-    <string name="home_total_progress_title_text">Total</string>
-    <string name="home_total_progress_detailed_title_text">In detail</string>
+    <string name="detail_session_progression_indicator_icon_content_description">This is progression indicator icon.</string>
+    <string name="detail_session_progression_indicator_phase_title_text_format">Phase - %1$s</string>
+    <string name="detail_session_progression_indicator_microcycle_title_text_format">Cycle - %1$s</string>
 
     <string name="session_footer_button_text_record">Submit</string>
     <string name="session_footer_button_text_preview">Start</string>

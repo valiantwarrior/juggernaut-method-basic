@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="session"
+            type="kr.valor.juggernaut.domain.session.model.Session" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_session_summary_height"
+        android:layout_marginVertical="@dimen/recyclerview_item_margin_horizontal_default"
+        android:layout_marginHorizontal="@dimen/recyclerview_item_margin_vertical_default">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/lift_category_icon"
+                android:layout_width="@dimen/icon_width_default"
+                android:layout_height="@dimen/icon_height_default"
+                android:contentDescription="@string/overview_session_icon_content_description"
+                app:userSessionRecordLiftCategoryIcon="@{session}"
+                app:tint="?attr/colorPrimary"
+                app:layout_constraintStart_toStartOf="@id/start_guideline"
+                app:layout_constraintTop_toTopOf="@id/top_guideline"
+                tools:src="@drawable/ic_lift_category_benchpress" />
+
+            <TextView
+                android:id="@+id/lift_category_name_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_dp_small"
+                android:textAppearance="@style/TextAppearance.App.SubTitle"
+                android:text="@{session.category.name()}"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintVertical_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintTop_toTopOf="@id/top_guideline"
+                app:layout_constraintStart_toEndOf="@id/lift_category_icon"
+                app:layout_constraintEnd_toEndOf="@id/end_guideline"
+                app:layout_constraintBottom_toTopOf="@id/phase_and_microcycle_name_text"
+                tools:text="BENCHPRESS" />
+
+            <TextView
+                android:id="@+id/phase_and_microcycle_name_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:userSessionRecordPhaseAndMicroCycle="@{session}"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/lift_category_name_text"
+                app:layout_constraintEnd_toEndOf="@id/end_guideline"
+                app:layout_constraintTop_toBottomOf="@id/lift_category_name_text"
+                app:layout_constraintBottom_toBottomOf="@id/lift_category_icon"
+                tools:text="REP10 - ACCUMULATION" />
+
+
+            <LinearLayout
+                android:id="@+id/amrap_record_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:userSessionAmrapRecordVisibility="@{session}"
+                app:layout_constraintEnd_toEndOf="@id/end_guideline"
+                app:layout_constraintBottom_toBottomOf="@id/bottom_guideline">
+
+                <TextView
+                    android:id="@+id/amrap_record_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.App.Content"
+                    app:userSessionAmrapRecordActual="@{session}"
+                    tools:text="AMRAP RECORD : 120kg x 8" />
+
+                <TextView
+                    android:id="@+id/amrap_goal_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    app:userSessionAmrapRecordGoal="@{session}"
+                    tools:text="120kg(60%) x 5+" />
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/start_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/guideline_margin_dp_default" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/end_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/guideline_margin_dp_default" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/top_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="@dimen/guideline_margin_dp_default" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/bottom_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_end="@dimen/guideline_margin_dp_default" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

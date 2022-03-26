@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="userProgression"
+            type="kr.valor.juggernaut.domain.progression.model.UserProgression" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/recyclerview_item_margin_vertical_default">
+
+        <include
+            android:id="@+id/user_progression_phase_indicator"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_dp_extreme_large"
+            layout="@layout/layout_user_progression_indicator"
+            bind:userProgression="@{userProgression}"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintBottom_toTopOf="@id/user_progression_microcycle_indicator"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <include
+            android:id="@+id/user_progression_microcycle_indicator"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            layout="@layout/layout_user_progression_indicator"
+            bind:userProgression="@{userProgression}"
+            app:layout_constraintTop_toBottomOf="@id/user_progression_phase_indicator"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/start_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/margin_dp_default_single_side" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/end_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/margin_dp_default_single_side" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
