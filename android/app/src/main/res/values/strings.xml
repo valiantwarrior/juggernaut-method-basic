@@ -7,7 +7,14 @@
 
     <string name="home_user_progression_microcycle_title_text_format">Cycle %1$d</string>
 
-    <string name="home_milestone_text_format">Weekly progress : %1$d / %2$d</string>
+    <string name="home_session_list_title_text">Sessions of this week</string>
+
+    <string name="home_user_progression_milestones_title_text">Milestones</string>
+
+    <string name="home_milestone_text_format">%1$d / %2$d</string>
+    <string name="home_weekly_progress_title_text">Weekly</string>
+    <string name="home_total_progress_title_text">Total</string>
+    <string name="home_total_progress_detailed_title_text">In detail</string>
 
     <string name="session_footer_button_text_record">Submit</string>
     <string name="session_footer_button_text_preview">Start</string>

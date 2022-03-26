@@ -59,19 +59,19 @@
                 android:id="@+id/weekly_achievement_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_dp_default"
+                android:layout_marginTop="@dimen/margin_dp_extreme_large"
                 android:textAppearance="@style/TextAppearance.App.Title"
-                app:weeklyAchievement="@{viewModel.overviewUiModel}"
+                android:text="@string/home_session_list_title_text"
                 app:layout_constraintTop_toBottomOf="@id/phase_layout"
                 app:layout_constraintStart_toStartOf="@id/start_guideline"
                 app:layout_constraintEnd_toEndOf="@id/end_guideline"
-                app:layout_constraintBottom_toTopOf="@id/sessions_summary_info_list_wrapper"
-                tools:text="Weekly progress : 1 / 4"/>
+                app:layout_constraintBottom_toTopOf="@id/sessions_summary_info_list_wrapper" />
 
             <kr.valor.juggernaut.ui.NestedScrollableHost
                 android:id="@+id/sessions_summary_info_list_wrapper"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_dp_default"
                 app:layout_constraintTop_toBottomOf="@id/weekly_achievement_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
@@ -89,6 +89,57 @@
 
             </kr.valor.juggernaut.ui.NestedScrollableHost>
 
+            <TextView
+                android:id="@+id/milestones_title_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_dp_extreme_large"
+                android:textAppearance="@style/TextAppearance.App.Title"
+                android:text="@string/home_user_progression_milestones_title_text"
+                app:layout_constraintStart_toStartOf="@id/start_guideline"
+                app:layout_constraintEnd_toEndOf="@id/end_guideline"
+                app:layout_constraintTop_toBottomOf="@id/sessions_summary_info_list_wrapper" />
+
+            <include
+                layout="@layout/layout_user_progression_card"
+                android:id="@+id/weekly_achievement_layout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/margin_dp_default"
+                android:layout_marginEnd="@dimen/margin_dp_default_single_side"
+                android:layout_marginBottom="@dimen/guideline_margin_dp_extreme_large"
+                bind:uiResult="@{viewModel.overviewUiModel}"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="@id/start_guideline"
+                app:layout_constraintEnd_toStartOf="@id/total_milestone_layout"
+                app:layout_constraintTop_toBottomOf="@id/milestones_title_text"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <include
+                layout="@layout/layout_user_progression_card"
+                android:id="@+id/total_milestone_layout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="@dimen/margin_dp_default_single_side"
+                bind:uiResult="@{viewModel.overviewUiModel}"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toEndOf="@id/weekly_achievement_layout"
+                app:layout_constraintEnd_toStartOf="@id/detailed_milestone_layout"
+                app:layout_constraintTop_toTopOf="@id/weekly_achievement_layout"
+                app:layout_constraintBottom_toBottomOf="@id/weekly_achievement_layout" />
+
+            <include
+                layout="@layout/layout_user_progression_card"
+                android:id="@+id/detailed_milestone_layout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/margin_dp_default_single_side"
+                bind:uiResult="@{viewModel.overviewUiModel}"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toEndOf="@id/total_milestone_layout"
+                app:layout_constraintEnd_toEndOf="@id/end_guideline"
+                app:layout_constraintTop_toTopOf="@id/weekly_achievement_layout"
+                app:layout_constraintBottom_toBottomOf="@id/weekly_achievement_layout" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/vertical_guideline"
@@ -116,7 +167,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="@dimen/guideline_margin_dp_default" />
+                app:layout_constraintGuide_begin="@dimen/guideline_margin_dp_extreme_large" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/bottom_guideline"

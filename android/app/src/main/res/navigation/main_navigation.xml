@@ -21,7 +21,6 @@
     <fragment
         android:id="@+id/empty_dest"
         android:name="kr.valor.juggernaut.ui.empty.ProgressionEmptyFragment"
-        android:label="fragment_empty"
         tools:layout="@layout/fragment_empty" >
         <action
             android:id="@+id/action_empty_dest_to_onboarding_dest"
@@ -32,7 +31,6 @@
     <fragment
         android:id="@+id/onboarding_dest"
         android:name="kr.valor.juggernaut.ui.onboarding.OnboardingFragment"
-        android:label="fragment_onboarding"
         tools:layout="@layout/fragment_onboarding" >
         <action
             android:id="@+id/action_onboarding_dest_to_home_dest"
@@ -72,11 +70,9 @@
     <fragment
         android:id="@+id/statistic_dest"
         android:name="kr.valor.juggernaut.ui.statistic.StatisticFragment"
-        android:label="fragment_statistic"
         tools:layout="@layout/fragment_statistic" />
     <fragment
         android:id="@+id/overall_dest"
         android:name="kr.valor.juggernaut.ui.overall.OverallFragment"
-        android:label="fragment_overall"
         tools:layout="@layout/fragment_overall" />
 </navigation>

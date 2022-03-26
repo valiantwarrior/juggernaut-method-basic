@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="guideline_margin_dp_extreme_large">32dp</dimen>
     <dimen name="guideline_margin_dp_default">16dp</dimen>
     <dimen name="guideline_margin_dp_small">8dp</dimen>
     <dimen name="padding_dp_default">16dp</dimen>
+    <dimen name="margin_dp_extreme_large">32dp</dimen>
     <dimen name="margin_dp_default">16dp</dimen>
     <dimen name="margin_dp_default_single_side">8dp</dimen>
     <dimen name="margin_dp_small">8dp</dimen>

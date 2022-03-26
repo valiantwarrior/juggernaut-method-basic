@@ -37,6 +37,7 @@ enum class MicroCycle {
     ACCUMULATION, INTENSIFICATION, REALIZATION, DELOAD;
 
     companion object {
+        const val  TOTAL_MICROCYCLE_COUNT = 4
         val INITIAL = ACCUMULATION
         val FINAL = DELOAD
     }

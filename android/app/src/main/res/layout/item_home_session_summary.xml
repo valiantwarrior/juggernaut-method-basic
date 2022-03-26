@@ -17,7 +17,6 @@
         android:id="@+id/session_summary_info_card_view"
         android:layout_width="@dimen/item_session_summary_width"
         android:layout_height="@dimen/item_session_summary_height"
-        android:layout_marginVertical="@dimen/margin_dp_default"
         android:layout_marginHorizontal="@dimen/recyclerview_item_margin_horizontal_default"
         android:onClick="@{() -> navigateAction.onClick(session.sessionId)}"
         app:sessionSummary="@{session}">

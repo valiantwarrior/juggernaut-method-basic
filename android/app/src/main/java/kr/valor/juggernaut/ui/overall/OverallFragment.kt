@@ -33,6 +33,7 @@ class OverallFragment : Fragment() {
         val appBarConfiguration = AppBarConfiguration(
             setOf(R.id.home_dest, R.id.statistic_dest, R.id.overall_dest)
         )
+        binding.toolbar.title = "Overall"
         NavigationUI.setupWithNavController(toolbar, findNavController(), appBarConfiguration)
     }
 }

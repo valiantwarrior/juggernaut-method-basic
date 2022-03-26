@@ -30,6 +30,7 @@ class StatisticFragment : Fragment() {
         val appBarConfiguration = AppBarConfiguration(
             setOf(R.id.home_dest, R.id.statistic_dest, R.id.overall_dest)
         )
+        toolbar.title = "Statistic"
         NavigationUI.setupWithNavController(toolbar, findNavController(), appBarConfiguration)
     }
 
