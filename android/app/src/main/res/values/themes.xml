@@ -9,14 +9,11 @@
         <item name="colorOnSecondary">@color/color_on_secondary</item>
 
         <!-- Customize -->
-<!--        <item name="android:statusBarColor">@color/white</item>-->
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">?attr/colorSurface</item>
-        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:fontFamily">@font/open_sans_semibold</item>
         <item name="fontFamily">@font/open_sans_semibold</item>
 
-        <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
     </style>
 

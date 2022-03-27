@@ -16,4 +16,9 @@
     <style name="TextAppearance.App.Content" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:textColor">@color/color_primary</item>
     </style>
+
+    <style name="TextAppearance.App.CollapsingToolbar.Expanded" parent="TextAppearance.Design.CollapsingToolbar.Expanded">
+        <item name="android:textColor">@android:color/transparent</item>
+        <item name="android:textSize">0sp</item>
+    </style>
 </resources>

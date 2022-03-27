@@ -1,49 +1,50 @@
 package kr.valor.juggernaut.ui.onboarding
 
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import kr.valor.juggernaut.databinding.FragmentOnboardingBinding
-import kr.valor.juggernaut.ui.NavigationFragment
+import kr.valor.juggernaut.databinding.ActivityOnboardingBinding
+import kr.valor.juggernaut.ui.MainActivity
 import kr.valor.juggernaut.ui.observeFlowEvent
-import kr.valor.juggernaut.ui.onboarding.OnboardingPagerAdapter.Companion.FOOTER_PAGE_POSITION
 
 @AndroidEntryPoint
-class OnboardingFragment : NavigationFragment() {
+class OnboardingActivity : AppCompatActivity() {
 
     private val onboardingViewModel: OnboardingViewModel by viewModels()
 
-    private lateinit var binding: FragmentOnboardingBinding
+    private lateinit var binding: ActivityOnboardingBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return FragmentOnboardingBinding.inflate(inflater, container, false)
-            .also { binding = it }
-            .root
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = ActivityOnboardingBinding.inflate(layoutInflater)
+            .apply {
+                initViewPager()
+                initEventObserver()
+            }
+
+        setContentView(binding.root)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.apply {
-            initViewPager()
-            initEventObserver()
-        }
-    }
-
-    private fun FragmentOnboardingBinding.initViewPager() {
+    private fun ActivityOnboardingBinding.initViewPager() {
         val viewPagerAdapter = with(onboardingViewModel) {
             OnboardingPagerAdapter(
                 this,
-                viewLifecycleOwner,
+                lifecycleOwner = this@OnboardingActivity,
+                startAction = {
+                    onboardingPager.currentItem += 1
+                },
                 submitClickListener = SubmitClickListener { pagePosition ->
                     when(pagePosition) {
-                        FOOTER_PAGE_POSITION -> onClickComplete()
+                        OnboardingPagerAdapter.FOOTER_PAGE_POSITION -> onClickComplete()
                         else -> onClickSubmit(pagePosition)
                     }
                 },
                 backClickListener = BackClickListener { pagePosition ->
-                    onClickBack(pagePosition - 1)
+                    val previousPagePosition = pagePosition - 1
+                    onClickBack(previousPagePosition)
                 }
             )
         }
@@ -52,12 +53,14 @@ class OnboardingFragment : NavigationFragment() {
         onboardingPager.adapter = viewPagerAdapter
     }
 
-    private fun FragmentOnboardingBinding.initEventObserver() {
+    private fun ActivityOnboardingBinding.initEventObserver() {
         observeFlowEvent(onboardingViewModel.uiEventFlow) { event ->
             when(event) {
                 is OnboardingUiEvent.Next -> onboardingPager.currentItem = event.nextPagePosition
                 is OnboardingUiEvent.Previous -> onboardingPager.currentItem = event.previousPagePosition
-                OnboardingUiEvent.Done -> navigate(OnboardingFragmentDirections.actionOnboardingDestToHomeDest())
+                OnboardingUiEvent.Done -> startActivity(
+                    Intent(this@OnboardingActivity, MainActivity::class.java)
+                ).also { finish() }
             }
         }
     }

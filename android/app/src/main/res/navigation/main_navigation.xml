@@ -10,33 +10,12 @@
         android:name="kr.valor.juggernaut.ui.home.HomeFragment"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_home_dest_to_empty_dest"
-            app:destination="@id/empty_dest"
-            app:popUpTo="@id/home_dest"
-            app:popUpToInclusive="true" />
-        <action
             android:id="@+id/action_home_dest_to_preview_dest"
-            app:destination="@id/preview_dest" />
-    </fragment>
-    <fragment
-        android:id="@+id/empty_dest"
-        android:name="kr.valor.juggernaut.ui.empty.ProgressionEmptyFragment"
-        tools:layout="@layout/fragment_empty" >
-        <action
-            android:id="@+id/action_empty_dest_to_onboarding_dest"
-            app:destination="@id/onboarding_dest"
-            app:popUpTo="@id/empty_dest"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/onboarding_dest"
-        android:name="kr.valor.juggernaut.ui.onboarding.OnboardingFragment"
-        tools:layout="@layout/fragment_onboarding" >
-        <action
-            android:id="@+id/action_onboarding_dest_to_home_dest"
-            app:destination="@id/home_dest"
-            app:popUpTo="@id/onboarding_dest"
-            app:popUpToInclusive="true" />
+            app:destination="@id/preview_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/preview_dest"
@@ -48,7 +27,11 @@
             app:argType="long" />
         <action
             android:id="@+id/action_preview_dest_to_recordFragment"
-            app:destination="@id/record_dest" />
+            app:destination="@id/record_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/record_dest"
@@ -65,7 +48,11 @@
             android:id="@+id/action_record_dest_to_home_dest"
             app:destination="@id/home_dest"
             app:popUpTo="@id/home_dest"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/statistic_dest"

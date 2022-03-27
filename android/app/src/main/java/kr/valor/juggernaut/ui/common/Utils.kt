@@ -1,6 +1,7 @@
 package kr.valor.juggernaut.ui.common
 
 import androidx.annotation.DrawableRes
+import com.google.android.material.appbar.AppBarLayout
 import kr.valor.juggernaut.R
 import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.common.LiftCategory.*

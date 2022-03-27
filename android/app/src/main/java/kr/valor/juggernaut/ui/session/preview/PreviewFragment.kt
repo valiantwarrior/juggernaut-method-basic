@@ -1,5 +1,7 @@
 package kr.valor.juggernaut.ui.session.preview
 
+import android.animation.ObjectAnimator
+import android.animation.StateListAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +27,9 @@ class PreviewFragment : NavigationFragment() {
                 viewModel = previewViewModel
                 lifecycleOwner = viewLifecycleOwner
             }
+        binding.appbarLayout.stateListAnimator = StateListAnimator().apply {
+            addState(IntArray(0), ObjectAnimator.ofFloat(binding.appbarLayout, "elevation", 0f))
+        }
 
         return binding.root
     }

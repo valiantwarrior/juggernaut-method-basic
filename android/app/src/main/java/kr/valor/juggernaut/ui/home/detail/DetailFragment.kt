@@ -1,5 +1,6 @@
 package kr.valor.juggernaut.ui.home.detail
 
+import android.animation.AnimatorInflater
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater

@@ -3,26 +3,26 @@ package kr.valor.juggernaut.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.navOptions
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kr.valor.juggernaut.R
 import kr.valor.juggernaut.databinding.ActivityMainBinding
+import kr.valor.juggernaut.ui.home.HomeFragmentDirections
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: MainActivityViewModel by viewModels()
-
     private lateinit var binding: ActivityMainBinding
+
+    private lateinit var navController: NavController
 
     private val appBarConfiguration: AppBarConfiguration = AppBarConfiguration(
         setOf(R.id.home_dest, R.id.overall_dest, R.id.statistic_dest)
@@ -31,12 +31,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        val navController = setupNavGraphWithConditionalStartDestination()
+        navController = setupNavGraphWithConditionalStartDestination()
         binding.setupBottomNavigationMenu(navController)
-//        binding.setupActionBar(navController)
-//        binding.setupBottomNavigationMenu(navController)
+        setContentView(binding.root)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -46,37 +43,22 @@ class MainActivity : AppCompatActivity() {
     private fun setupNavGraphWithConditionalStartDestination(): NavController {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        val navGraph = navController.navInflater.inflate(R.navigation.main_navigation)
-
-        viewModel.navigationEventLiveData.observe(this) { navigationEvent ->
-            val destinationId = when(navigationEvent) {
-                is NavigationEvent.NavigateToHome -> R.id.home_dest
-                is NavigationEvent.NavigateToEmpty -> R.id.empty_dest
-            }
-            navGraph.setStartDestination(destinationId)
-            navController.graph = navGraph
-        }
 
         return navController
     }
 
-//    private fun ActivityMainBinding.setupActionBar(navController: NavController) {
-//        setSupportActionBar(toolbar)
-//        setupActionBarWithNavController(navController, appBarConfiguration)
-//    }
-
     private fun ActivityMainBinding.setupBottomNavigationMenu(navController: NavController) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when(destination.id) {
-                R.id.empty_dest, R.id.preview_dest, R.id.record_dest, R.id.onboarding_dest -> {
+                R.id.preview_dest, R.id.record_dest -> {
                     bottomNavigationView.visibility = View.GONE
                 }
                 else -> {
-//                    toolbar.visibility = View.VISIBLE
                     bottomNavigationView.visibility = View.VISIBLE
                 }
             }
         }
         bottomNavigationView.setupWithNavController(navController)
     }
+
 }

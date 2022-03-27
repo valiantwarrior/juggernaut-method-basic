@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.home.HomeFragment">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinator_layout"
@@ -8,17 +10,18 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <kr.valor.juggernaut.ui.NoElevationAppBarLayout
             android:id="@+id/appbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            app:elevation="1dp">
+            android:fitsSystemWindows="true">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fitsSystemWindows="true"
+                android:background="?attr/colorSurface"
                 app:contentScrim="?attr/colorSurface"
                 app:statusBarScrim="?attr/colorSurface"
                 app:layout_scrollFlags="scroll|snap"
@@ -46,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"/>
 
-        </com.google.android.material.appbar.AppBarLayout>
+        </kr.valor.juggernaut.ui.NoElevationAppBarLayout>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/view_pager"

@@ -36,9 +36,9 @@ class OnboardingViewModel @Inject constructor(
     val uiEventFlow: Flow<OnboardingUiEvent>
         get() = _eventChannel.receiveAsFlow()
 
-    private val _uiModel: MutableStateFlow<Map<LiftCategory, OnboardingUiModel>> = MutableStateFlow(mapOf())
-    val uiModel: StateFlow<Map<LiftCategory, OnboardingUiModel>>
-        get() = _uiModel
+    private val _userInputModelState: MutableStateFlow<Map<LiftCategory, OnboardingUiModel>> = MutableStateFlow(mapOf())
+    val userInputModelState: StateFlow<Map<LiftCategory, OnboardingUiModel>>
+        get() = _userInputModelState
 
     val inputWeightsFieldState = MutableStateFlow(INITIAL_INPUT_WEIGHTS_TEXT)
 
@@ -46,54 +46,33 @@ class OnboardingViewModel @Inject constructor(
 
     fun onClickSubmit(currentPagePosition: Int) {
         viewModelScope.launch {
-            val inputWeightsValue = inputWeightsFieldState.value.toDouble()
-            val inputRepetitionsValue = inputRepetitionsFieldState.value.toInt()
-            val estimatedOneRepMax = calculateOneRepMaxUseCase(inputWeightsValue, inputRepetitionsValue)
-            val estimatedTrainingMax = calculateTrainingMaxWeightsUseCase(estimatedOneRepMax)
-            val correspondingLiftCategory = getCorrespondingLiftCategoryByPagePosition(currentPagePosition)
-            val uiModelState = _uiModel.value.toMutableMap()
-
-            uiModelState[correspondingLiftCategory] = OnboardingUiModel(
-                estimatedOneRepMax = estimatedOneRepMax,
-                estimatedTrainingMax = estimatedTrainingMax,
-                inputModel = InputModel(
-                    inputWeights = inputWeightsValue,
-                    inputRepetitions = inputRepetitionsValue
-                )
-            )
-
-            _uiModel.value = uiModelState.toMap()
+            saveCurrentPageUserInputState(currentPagePosition)
+            prepareNextPageState(currentPagePosition + 1)
             _eventChannel.send(OnboardingUiEvent.Next(currentPagePosition + 1))
-
-            if (currentPagePosition == OnboardingPagePosition.values().size - 1) {
-                return@launch
-            } else {
-                prepareNextPageState(currentPagePosition + 1)
-            }
         }
     }
 
     fun onClickBack(previousPagePosition: Int) {
-        if (previousPagePosition < 0) {
-            return
-        } else {
-            viewModelScope.launch {
+        viewModelScope.launch {
+            if (previousPagePosition > 0) {
+                val currentPagePosition = previousPagePosition + 1
+                saveCurrentPageUserInputState(currentPagePosition)
+
                 val correspondingLiftCategory = getCorrespondingLiftCategoryByPagePosition(previousPagePosition)
-                val correspondingInputModel = uiModel.value[correspondingLiftCategory]?.inputModel
+                val correspondingInputModel = userInputModelState.value[correspondingLiftCategory]?.inputModel
 
                 inputWeightsFieldState.value = correspondingInputModel?.inputWeights?.toString()
                     ?: INITIAL_INPUT_WEIGHTS_TEXT
                 inputRepetitionsFieldState.value = correspondingInputModel?.inputRepetitions?.toString()
                     ?: INITIAL_INPUT_REPETITIONS_TEXT
-
-                _eventChannel.send(OnboardingUiEvent.Previous(previousPagePosition))
             }
+            _eventChannel.send(OnboardingUiEvent.Previous(previousPagePosition))
         }
     }
 
     fun onClickComplete() {
         viewModelScope.launch {
-            val liftCategoryWeightsMap = uiModel.value.mapValues { (_, onboardingModel) ->
+            val liftCategoryWeightsMap = userInputModelState.value.mapValues { (_, onboardingModel) ->
                 onboardingModel.estimatedTrainingMax
             }
             startMethodSetupContract(liftCategoryWeightsMap)
@@ -101,9 +80,33 @@ class OnboardingViewModel @Inject constructor(
         }
     }
 
+    private fun saveCurrentPageUserInputState(pagePosition: Int) {
+        val inputWeightsValue = inputWeightsFieldState.value.toDouble()
+        val inputRepetitionsValue = inputRepetitionsFieldState.value.toInt()
+        val estimatedOneRepMax = calculateOneRepMaxUseCase(inputWeightsValue, inputRepetitionsValue)
+        val estimatedTrainingMax = calculateTrainingMaxWeightsUseCase(estimatedOneRepMax)
+        val correspondingLiftCategory = getCorrespondingLiftCategoryByPagePosition(pagePosition)
+        val uiModelState = _userInputModelState.value.toMutableMap()
+
+        correspondingLiftCategory ?: return // which means that current page is FOOTER
+
+        uiModelState[correspondingLiftCategory] = OnboardingUiModel(
+            estimatedOneRepMax = estimatedOneRepMax,
+            estimatedTrainingMax = estimatedTrainingMax,
+            inputModel = InputModel(
+                inputWeights = inputWeightsValue,
+                inputRepetitions = inputRepetitionsValue
+            )
+        )
+
+        _userInputModelState.value = uiModelState.toMap()
+    }
+
     private fun prepareNextPageState(nextPagePosition: Int) {
         val correspondingLiftCategory = getCorrespondingLiftCategoryByPagePosition(nextPagePosition)
-        val uiModelState = uiModel.value
+        val uiModelState = userInputModelState.value
+
+        correspondingLiftCategory ?: return // which means that current page is FOOTER
 
         uiModelState[correspondingLiftCategory]?.let { uiModel ->
             val inputModel = uiModel.inputModel
@@ -139,9 +142,11 @@ data class OnboardingUiModel(
 
 }
 
-enum class OnboardingPagePosition(val correspondingLiftCategory: LiftCategory) {
+enum class OnboardingPagePosition(val correspondingLiftCategory: LiftCategory?) {
+    HEADER(null),
     BP(LiftCategory.BENCHPRESS),
     SQ(LiftCategory.SQUAT),
     OHP(LiftCategory.OVERHEADPRESS),
-    DL(LiftCategory.DEADLIFT)
+    DL(LiftCategory.DEADLIFT),
+    FOOTER(null)
 }
