@@ -18,15 +18,12 @@ class LauncherActivity : AppCompatActivity() {
 
         val viewModel: LauncherViewModel by viewModels()
 
-        lifecycleScope.launch {
-            viewModel.navigateEvent.flowWithLifecycle(lifecycle = lifecycle)
-                .collect { action ->
-                    when(action) {
-                        is LaunchNavigationAction.Loading -> { /* do nothing */}
-                        is LaunchNavigationAction.NavigateOnboarding -> startActivity(MainActivity::class.java)
-                        is LaunchNavigationAction.NavigateMain -> startActivity(OnboardingActivity::class.java)
-                    }
-                }
+        observeFlowEvent(viewModel.navigateEvent) { action ->
+            when(action) {
+                is LaunchNavigationAction.Loading -> { /* do nothing */}
+                is LaunchNavigationAction.NavigateMain -> startActivity(MainActivity::class.java)
+                is LaunchNavigationAction.NavigateOnboarding -> startActivity(OnboardingActivity::class.java)
+            }
         }
     }
 

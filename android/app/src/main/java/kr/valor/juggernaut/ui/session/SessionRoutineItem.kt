@@ -8,13 +8,19 @@ sealed class SessionRoutineItem {
 
 }
 
-open class RoutineItem(open val routine: Routine): SessionRoutineItem() {
+open class RoutineItem(
+    open val routineOrdinal: Int,
+    open val routine: Routine,
+    open val isDeloadRoutine: Boolean
+): SessionRoutineItem() {
 
     override val itemId: Long
         get() = routine.routineId
 
     override fun equals(other: Any?): Boolean =
-        (other as RoutineItem).routine == this.routine
+        (other as RoutineItem).routine == this.routine &&
+                other.routineOrdinal == this.routineOrdinal &&
+                other.isDeloadRoutine == this.isDeloadRoutine
 
     override fun hashCode(): Int {
         return routine.hashCode()
@@ -29,9 +35,14 @@ data class FooterItem(val buttonText: String): SessionRoutineItem() {
 
 }
 
-data class AmrapRoutineItem(override val routine: Routine, val repetitions: Int): RoutineItem(routine) {
+data class AmrapRoutineItem(
+    override val routineOrdinal: Int,
+    override val routine: Routine,
+    override val isDeloadRoutine: Boolean,
+    val repetitions: Int
+): RoutineItem(routineOrdinal, routine, isDeloadRoutine) {
 
     override val itemId: Long
-        get() = Long.MAX_VALUE
+        get() = -1L
 
 }

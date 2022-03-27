@@ -1,7 +1,5 @@
 package kr.valor.juggernaut.ui.session.preview
 
-import android.animation.ObjectAnimator
-import android.animation.StateListAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,15 +25,12 @@ class PreviewFragment : NavigationFragment() {
                 viewModel = previewViewModel
                 lifecycleOwner = viewLifecycleOwner
             }
-        binding.appbarLayout.stateListAnimator = StateListAnimator().apply {
-            addState(IntArray(0), ObjectAnimator.ofFloat(binding.appbarLayout, "elevation", 0f))
-        }
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initEventObserver()
+        binding.initEventObserver()
         binding.initAdapter()
 
         val toolbar = binding.toolbar
@@ -43,11 +38,12 @@ class PreviewFragment : NavigationFragment() {
         NavigationUI.setupWithNavController(toolbar, navController)
     }
 
-    private fun initEventObserver() {
+    private fun FragmentPreviewBinding.initEventObserver() {
         observeFlowEvent(previewViewModel.uiEventFlow) { event ->
             when(event) {
                 is PreviewUiEvent.StartSession -> {
-                    navigate(PreviewFragmentDirections.actionPreviewDestToRecordFragment(event.sessionId, event.baseAmrapRepetitions))
+                    val toolbarTitle = toolbar.title.toString()
+                    navigate(PreviewFragmentDirections.actionPreviewDestToRecordFragment(event.sessionId, event.baseAmrapRepetitions, toolbarTitle))
                 }
             }
         }

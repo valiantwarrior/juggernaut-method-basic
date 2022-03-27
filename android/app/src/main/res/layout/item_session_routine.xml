@@ -5,23 +5,91 @@
 
     <data>
         <variable
-            name="routine"
-            type="kr.valor.juggernaut.domain.session.model.Routine" />
+            name="routineItem"
+            type="kr.valor.juggernaut.ui.session.RoutineItem" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/item_session_routine_height"
+        android:layout_marginVertical="@dimen/recyclerview_item_margin_horizontal_default"
+        android:layout_marginHorizontal="@dimen/recyclerview_item_margin_vertical_default">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@{String.valueOf(routine)}"
-            android:textSize="48sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/routine_ordinal_text"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:textColor="?attr/colorSurface"
+                android:textSize="24dp"
+                app:previewRoutineItemOrdinal="@{routineItem}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/vertical_guideline"
+                tools:background="@android:color/holo_blue_light"
+                tools:text="1" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/routine_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.App.Title"
+                app:previewRoutineItemTitle="@{routineItem}"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintEnd_toEndOf="@id/horizontal_separator"
+                app:layout_constraintStart_toStartOf="@id/horizontal_separator"
+                app:layout_constraintBottom_toBottomOf="@id/horizontal_separator"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Warm Up #1" />
+
+            <TextView
+                android:id="@+id/routine_content_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.App.SubTitle"
+                app:previewRoutineItemContent="@{routineItem}"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/horizontal_separator"
+                app:layout_constraintEnd_toEndOf="@id/horizontal_separator"
+                app:layout_constraintTop_toTopOf="@id/horizontal_separator"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="120kg x 5 (60% x 5)" />
+
+            <!-- TODO("Tracking RoutineId for testing") -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(routineItem.itemId)}"
+                app:layout_constraintEnd_toEndOf="@id/horizontal_separator"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="@id/horizontal_separator"
+                tools:text="1" />
+
+            <View
+                android:id="@+id/horizontal_separator"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="@dimen/margin_dp_default"
+                android:background="#D1CECE"
+                app:layout_constraintStart_toStartOf="@id/vertical_guideline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/vertical_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.10" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
 </layout>

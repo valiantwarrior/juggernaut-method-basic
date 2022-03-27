@@ -9,7 +9,7 @@
         <item name="colorOnSecondary">@color/color_on_secondary</item>
 
         <!-- Customize -->
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">?attr/colorSurface</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="fontFamily">sans-serif-medium</item>
     </style>

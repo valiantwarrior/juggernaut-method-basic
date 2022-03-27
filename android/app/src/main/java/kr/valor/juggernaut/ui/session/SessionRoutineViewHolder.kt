@@ -18,7 +18,7 @@ open class RoutineViewHolder(
     open fun bind(item: RoutineItem) {
         (binding as ItemSessionRoutineBinding)
             .apply {
-                routine = item.routine
+                routineItem = item
                 executePendingBindings()
             }
     }
@@ -69,8 +69,8 @@ class AmrapRoutineViewHolder private constructor(
     override fun bind(item: RoutineItem) {
         item as AmrapRoutineItem
         with(binding) {
-            routine = item.routine
-            repetitions = item.repetitions
+            amrapRoutineItem = item
+
             executePendingBindings()
         }
     }

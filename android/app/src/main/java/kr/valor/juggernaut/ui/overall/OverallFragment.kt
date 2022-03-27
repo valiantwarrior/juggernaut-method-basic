@@ -12,7 +12,6 @@ import androidx.navigation.ui.NavigationUI
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.juggernaut.R
 import kr.valor.juggernaut.databinding.FragmentOverallBinding
-import kr.valor.juggernaut.databinding.FragmentOverviewBinding
 
 @AndroidEntryPoint
 class OverallFragment : Fragment() {

@@ -72,6 +72,7 @@
                     android:id="@+id/amrap_record_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_dp_small"
                     android:textAppearance="@style/TextAppearance.App.Content"
                     app:userSessionAmrapRecordActual="@{session}"
                     tools:text="AMRAP RECORD : 120kg x 8" />

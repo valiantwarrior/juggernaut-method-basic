@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -9,19 +8,20 @@
             type="kr.valor.juggernaut.ui.session.FooterItem" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/footer_action_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/footer_action_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        android:layout_height="@dimen/item_session_routine_footer_height"
+        android:layout_marginVertical="@dimen/recyclerview_item_margin_horizontal_default"
+        android:layout_marginHorizontal="@dimen/recyclerview_item_margin_vertical_default">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="@{footerItem.buttonText}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.App.Title"
+            tools:text="Submit" />
 
+    </com.google.android.material.card.MaterialCardView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

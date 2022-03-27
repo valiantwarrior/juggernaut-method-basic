@@ -1,34 +1,51 @@
 <resources>
     <string name="app_name">Juggernaut Method Basic</string>
 
+    <string name="bottom_nav_menu_item_home_title">Home</string>
+    <string name="bottom_nav_menu_item_statistic_title">Statistic</string>
+    <string name="bottom_nav_menu_item_overall_title">All</string>
+
     <string name="overview_user_progression_title_text">Current progress</string>
     <string name="overview_user_progression_phase_title_text_format">Phase %1$d</string>
     <string name="overview_user_progression_microcycle_title_text_format">Cycle %1$d</string>
     <string name="overview_session_list_title_text">Sessions of this week</string>
     <string name="overview_user_progression_milestones_title_text">Milestones</string>
-    <string name="overview_milestone_text_format">%1$d / %2$d</string>
+    <string name="overview_milestone_text_format">%1$d / %2$d</string> <!-- Usage :  3 / 16 -->
     <string name="overview_weekly_progress_title_text">Weekly</string>
     <string name="overview_total_progress_title_text">Total</string>
     <string name="overview_total_progress_detailed_title_text">In detail</string>
     <string name="overview_session_icon_content_description">This is liftcategory icon.</string>
 
-    <string name="session_phase_and_microcycle_text_format">%1$s - %2$s</string>
+    <string name="session_phase_and_microcycle_text_format">%1$s - %2$s</string> <!-- Usage : REP10 - ACCUMULATION -->
     <string name="session_amrap_intensity_info_text_format">%1$d%2$s(%3$s%%) x %4$d+</string> <!-- Usage : 120kg(60%) x 5+ -->
     <string name="session_amrap_actual_info_text_format">AMRAP RECORD : %1$d%2$s x %3$d</string> <!-- Usage : 120kg x 8 -->
 
     <string name="overview_session_action_start">START</string>
     <string name="overview_session_action_done">DONE</string>
 
-    <string name="overview_session_brief_amrap_intensity_info_text_format">%1$s%% x %2$d+</string>
+    <string name="overview_session_brief_amrap_intensity_info_text_format">%1$s%% x %2$d+</string> <!-- Usage : 60% x 5+ -->
     <string name="overview_session_brief_amrap_info_text_format">Goal : %1$d%2$s x %3$d+</string> <!-- Usage : 120kg x 5+ -->
 
     <string name="detail_session_progression_indicator_icon_content_description">This is progression indicator icon.</string>
     <string name="detail_session_progression_indicator_phase_title_text_format">Phase - %1$s</string>
     <string name="detail_session_progression_indicator_microcycle_title_text_format">Cycle - %1$s</string>
 
+    <string name="session_routine_item_amrap_routine_title_text">AMRAP</string>
+
+    <string name="session_routine_item_warmup_routine_title_text_format">Warm Up #%1$d</string>
+
+    <string name="session_routine_item_deload_routine_title_text_format">Deload #%1$d</string>
+
+    <string name="session_routine_item_warmup_and_deload_routine_info_text_format">%1$d%4$s x %2$d (%3$s%% x %2$d)</string> <!-- Usage : 120kg x 5 (60% x 5) -->
+
+    <string name="session_routine_item_amrap_routine_info_text_format">%1$d%4$s x %2$d+ (%3$s%% x %2$d+)</string> <!-- Usage : 120kg x 5+ (60% x 5+) -->
+
+    <string name="session_record_amrap_plus_reps_button_content_description">This is plus-reps button.</string>
+    <string name="session_record_amrap_minus_reps_button_content_description">This is minus-reps button.</string>
+
+    <string name="session_routine_collapsing_toolbar_title_text_format">W%1$dD%2$d (%3$s)</string> <!-- Usage : W3D1 (BP) -->
+
     <string name="session_footer_button_text_record">Submit</string>
     <string name="session_footer_button_text_preview">Start</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

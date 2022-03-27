@@ -3,6 +3,11 @@
     <dimen name="guideline_margin_dp_extreme_large">32dp</dimen>
     <dimen name="guideline_margin_dp_default">16dp</dimen>
     <dimen name="guideline_margin_dp_small">8dp</dimen>
+    <dimen name="guideline_collapsing_toolbar_expanded_margin_start_dp">72dp</dimen> <!-- https://material.io/components/app-bars-top#specs -->
+    <dimen name="guideline_collapsing_toolbar_expanded_margin_end_dp">@dimen/guideline_margin_dp_default</dimen>
+    <dimen name="guideline_collapsing_toolbar_with_fab_expanded_margin_bottom_dp">36dp</dimen> <!-- Regular FAB size is 56dp, 8dp margin https://material.io/components/buttons-floating-action-button#specs -->
+
+
     <dimen name="padding_dp_default">16dp</dimen>
     <dimen name="padding_dp_small">8dp</dimen>
     <dimen name="margin_dp_extreme_large">32dp</dimen>
@@ -10,9 +15,10 @@
     <dimen name="margin_dp_default_single_side">8dp</dimen>
     <dimen name="margin_dp_small">8dp</dimen>
 
+    <dimen name="icon_width_large">60dp</dimen>
+    <dimen name="icon_height_large">60dp</dimen>
     <dimen name="icon_width_default">48dp</dimen>
     <dimen name="icon_height_default">48dp</dimen>
-
     <dimen name="icon_width_medium">36dp</dimen>
     <dimen name="icon_height_medium">36dp</dimen>
 
@@ -24,5 +30,12 @@
     <dimen name="item_session_summary_width">280dp</dimen>
     <dimen name="item_session_summary_height">200dp</dimen>
 
+    <dimen name="item_session_routine_height">120dp</dimen>
+    <dimen name="item_session_routine_footer_height">60dp</dimen>
+
     <dimen name="app_cardview_corner_radius">16dp</dimen>
+    <dimen name="icon_button_width_default">36dp</dimen>
+    <dimen name="icon_button_height_default">36dp</dimen>
+
+    <dimen name="collapsing_toolbar_height_default">256dp</dimen>
 </resources>

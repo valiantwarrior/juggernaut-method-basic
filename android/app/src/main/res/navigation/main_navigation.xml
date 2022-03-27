@@ -20,7 +20,6 @@
     <fragment
         android:id="@+id/preview_dest"
         android:name="kr.valor.juggernaut.ui.session.preview.PreviewFragment"
-        android:label="fragment_preview"
         tools:layout="@layout/fragment_preview" >
         <argument
             android:name="sessionId"
@@ -36,8 +35,7 @@
     <fragment
         android:id="@+id/record_dest"
         android:name="kr.valor.juggernaut.ui.session.record.RecordFragment"
-        android:label="fragment_record"
-        tools:layout="@layout/fragment_record" >
+        tools:layout="@layout/fragment_record">
         <argument
             android:name="sessionId"
             app:argType="long" />
@@ -47,12 +45,15 @@
         <action
             android:id="@+id/action_record_dest_to_home_dest"
             app:destination="@id/home_dest"
-            app:popUpTo="@id/home_dest"
-            app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/home_dest"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="toolbarTitle"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/statistic_dest"

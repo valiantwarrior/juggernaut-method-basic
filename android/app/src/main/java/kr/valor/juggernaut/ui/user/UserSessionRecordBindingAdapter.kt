@@ -10,7 +10,6 @@ import androidx.databinding.BindingAdapter
 import kr.valor.juggernaut.R
 import kr.valor.juggernaut.domain.session.model.Session
 import kr.valor.juggernaut.ui.common.getLiftCategoryIcon
-import kr.valor.juggernaut.ui.common.optimizedPrecisionPercentageString
 
 @BindingAdapter("userSessionRecordLiftCategoryIcon")
 fun ImageView.bindLiftCategoryIcon(session: Session?) {
@@ -63,8 +62,8 @@ fun TextView.bindAmrapGoal(session: Session?) {
 
     @StringRes val stringFormatId = R.string.session_amrap_intensity_info_text_format
     val amrapWeights = amrapSession.weights
-    val amrapIntensityPercentage = amrapSession.baseIntensity.intensityPercentage * 100
+    val amrapIntensityPercentage = amrapSession.baseIntensity.approximationIntensityPercentageValue.toString()
     val amrapBaseRepetitions = amrapSession.baseIntensity.repetitions
 
-    text = resources.getString(stringFormatId, amrapWeights, "kg", amrapIntensityPercentage.optimizedPrecisionPercentageString, amrapBaseRepetitions)
+    text = resources.getString(stringFormatId, amrapWeights, "kg", amrapIntensityPercentage, amrapBaseRepetitions)
 }

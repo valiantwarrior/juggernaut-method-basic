@@ -15,12 +15,3 @@ fun getLiftCategoryIcon(liftCategory: LiftCategory): Int =
         OVERHEADPRESS -> R.drawable.ic_lift_category_overheadpress
         DEADLIFT -> R.drawable.ic_lift_category_deadlift
     }
-
-
-val Double.optimizedPrecisionPercentageString: String
-    get() {
-        return when(this % 1.0) {
-            0.0 -> this.toInt().toString()
-            else -> this.toString()
-        }
-    }

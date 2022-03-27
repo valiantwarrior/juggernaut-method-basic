@@ -42,7 +42,9 @@ class RecordFragment : NavigationFragment() {
                 DELOAD_SESSION_INDICATOR -> bindDeloadSession()
                 else -> bindAmrapSession()
             }
+            toolbar.title = navArgs.toolbarTitle
         }
+
         val toolbar = binding.toolbar
         val navController = findNavController()
         NavigationUI.setupWithNavController(toolbar, navController)

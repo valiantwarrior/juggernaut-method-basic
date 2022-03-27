@@ -19,7 +19,6 @@ import kr.valor.juggernaut.domain.progression.model.UserProgression.Companion.OV
 import kr.valor.juggernaut.domain.progression.model.UserProgression.Companion.SESSION_COUNT_PER_PHASE
 import kr.valor.juggernaut.domain.session.model.Session
 import kr.valor.juggernaut.ui.common.getLiftCategoryIcon
-import kr.valor.juggernaut.ui.common.optimizedPrecisionPercentageString
 import kr.valor.juggernaut.ui.home.sessionsummary.SessionSummaryAdapter
 
 @BindingAdapter("sessionSummaries")
@@ -78,11 +77,11 @@ fun TextView.bindAmrapIntensityInfo(session: Session?) {
     session.amrapRoutine?.let { amrapRoutine ->
         @ColorInt val textColor = getColors(!session.isCompleted)
         @StringRes val stringFormatId = R.string.overview_session_brief_amrap_intensity_info_text_format
-        val amrapIntensityPercentage = amrapRoutine.baseIntensity.intensityPercentage * 100
+        val amrapIntensityPercentage = amrapRoutine.baseIntensity.approximationIntensityPercentageValue.toString()
         val amrapBaseRepetitions = amrapRoutine.baseIntensity.repetitions
 
         setTextColor(textColor)
-        text = resources.getString(stringFormatId, amrapIntensityPercentage.optimizedPrecisionPercentageString, amrapBaseRepetitions)
+        text = resources.getString(stringFormatId, amrapIntensityPercentage ,amrapBaseRepetitions)
         visibility = View.VISIBLE
     } ?: run {
         visibility = View.GONE
@@ -111,6 +110,14 @@ fun MaterialCardView.bindBackgroundColor(session: Session?) {
     @ColorInt val cardBackgroundColor = getColors(session.isCompleted)
 
     setCardBackgroundColor(cardBackgroundColor)
+    isClickable = !session.isCompleted
+}
+
+@BindingAdapter("overviewSessionSummaryCardViewClickable")
+fun MaterialCardView.bindCardClickable(session: Session?) {
+    session ?: return
+
+    isEnabled = !session.isCompleted
 }
 
 @BindingAdapter("currentUserProgression")

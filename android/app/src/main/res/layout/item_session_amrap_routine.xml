@@ -5,41 +5,129 @@
 
     <data>
         <variable
-            name="routine"
-            type="kr.valor.juggernaut.domain.session.model.Routine" />
-        <variable
-            name="repetitions"
-            type="Integer" />
+            name="amrapRoutineItem"
+            type="kr.valor.juggernaut.ui.session.AmrapRoutineItem" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/item_session_routine_height"
+        android:layout_marginHorizontal="@dimen/recyclerview_item_margin_vertical_default"
+        android:layout_marginVertical="@dimen/recyclerview_item_margin_horizontal_default">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@{String.valueOf(routine) + String.valueOf(repetitions)}"
-            android:textSize="48sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/plus_reps_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="plus"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            <TextView
+                android:id="@+id/routine_ordinal_text"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@android:color/holo_red_light"
+                android:gravity="center"
+                android:text="@{String.valueOf(amrapRoutineItem.routineOrdinal + 1)}"
+                android:textColor="?attr/colorSurface"
+                android:textSize="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/vertical_guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="5" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/minus_reps_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="minus"
-            app:layout_constraintEnd_toStartOf="@id/plus_reps_button"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            <TextView
+                android:id="@+id/routine_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/padding_dp_small"
+                android:text="@string/session_routine_item_amrap_routine_title_text"
+                android:textAppearance="@style/TextAppearance.App.Title"
+                app:drawableStartCompat="@drawable/ic_amrap_24"
+                app:drawableTint="@android:color/holo_red_dark"
+                app:layout_constraintBottom_toBottomOf="@id/horizontal_separator"
+                app:layout_constraintEnd_toEndOf="@id/horizontal_separator"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/horizontal_separator"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="AMRAP" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/routine_content_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.App.SubTitle"
+                app:amrapRoutineBaseInformation="@{amrapRoutineItem}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/horizontal_separator"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/horizontal_separator"
+                app:layout_constraintTop_toTopOf="@id/horizontal_separator"
+                tools:text="120kg x 5+ (60% x 5)" />
+
+            <TextView
+                android:id="@+id/amrap_repetitions_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(amrapRoutineItem.repetitions)}"
+                android:textAppearance="@style/TextAppearance.App.Title"
+                app:drawableStartCompat="@drawable/ic_amrap_24"
+                app:drawableTint="@android:color/holo_red_dark"
+                app:layout_constraintBottom_toBottomOf="@id/horizontal_separator"
+                app:layout_constraintEnd_toEndOf="@id/horizontal_separator"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@id/horizontal_separator"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="10" />
+
+            <ImageButton
+                android:id="@+id/plus_reps_button"
+                android:layout_width="@dimen/icon_button_width_default"
+                android:layout_height="@dimen/icon_button_height_default"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_plus_24"
+                android:contentDescription="@string/session_record_amrap_plus_reps_button_content_description"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/horizontal_separator"
+                app:layout_constraintStart_toEndOf="@id/minus_reps_button"
+                app:layout_constraintTop_toTopOf="@id/horizontal_separator"
+                app:tint="?attr/colorPrimary" />
+
+            <ImageButton
+                android:id="@+id/minus_reps_button"
+                android:layout_width="@dimen/icon_button_width_default"
+                android:layout_height="@dimen/icon_button_height_default"
+                android:layout_marginEnd="@dimen/margin_dp_default"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_minus_24"
+                android:contentDescription="@string/session_record_amrap_minus_reps_button_content_description"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/plus_reps_button"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="@id/horizontal_separator"
+                app:layout_constraintTop_toTopOf="@id/horizontal_separator"
+                app:tint="?attr/colorPrimary" />
+
+
+            <View
+                android:id="@+id/horizontal_separator"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="@dimen/margin_dp_default"
+                android:background="#D1CECE"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/vertical_guideline"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/vertical_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.10" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
 </layout>

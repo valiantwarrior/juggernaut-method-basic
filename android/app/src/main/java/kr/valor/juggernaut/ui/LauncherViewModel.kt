@@ -17,8 +17,8 @@ class LauncherViewModel @Inject constructor(
 
     val navigateEvent = loadProgressionStateUseCase().map { progressionState ->
         when(progressionState) {
-            is ProgressionState.None -> LaunchNavigationAction.NavigateMain
-            else -> LaunchNavigationAction.NavigateOnboarding
+            is ProgressionState.None -> LaunchNavigationAction.NavigateOnboarding
+            else -> LaunchNavigationAction.NavigateMain
         }
     }.stateIn(viewModelScope, SharingStarted.Eagerly, LaunchNavigationAction.Loading)
 }

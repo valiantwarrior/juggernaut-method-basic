@@ -7,11 +7,11 @@ fun List<SessionRoutineItem>.withFooterItem(footerButtonText: String): List<Sess
     this + FooterItem(footerButtonText)
 
 
-fun List<Routine>.toSessionRoutineItems(): List<SessionRoutineItem> =
-    map { routine -> RoutineItem(routine = routine) }
+fun List<Routine>.toSessionRoutineItems(isDeloadRoutine: Boolean): List<SessionRoutineItem> =
+    mapIndexed { routineOrdinal, routine -> RoutineItem(routineOrdinal, routine, isDeloadRoutine) }
 
-fun Session.getSessionRoutineItems(addFooterItem: Boolean = true, footerButtonText: String): List<SessionRoutineItem> {
-    val sessionRoutineItems = routines.toSessionRoutineItems()
+fun Session.getSessionRoutineItems(addFooterItem: Boolean = true, footerButtonText: String, isDeloadRoutine: Boolean): List<SessionRoutineItem> {
+    val sessionRoutineItems = routines.toSessionRoutineItems(isDeloadRoutine)
 
     return if (addFooterItem) sessionRoutineItems.withFooterItem(footerButtonText) else sessionRoutineItems
 }

@@ -7,25 +7,64 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kr.valor.juggernaut.domain.progression.model.ProgressionState
+import kr.valor.juggernaut.domain.progression.usecase.usecase.LoadProgressionStateUseCase
 import kr.valor.juggernaut.domain.session.model.Session
-import kr.valor.juggernaut.domain.session.usecase.usecase.FindSessionOneShotUseCase
 import kr.valor.juggernaut.domain.session.usecase.usecase.FindSessionUseCase
+import kr.valor.juggernaut.domain.session.usecase.usecase.LoadSessionsUseCase
 import kr.valor.juggernaut.ui.NAV_ARGS_SESSION_ID_KEY
 import javax.inject.Inject
+
+/**
+ * TODO("Implementation change")
+ *
+ * Considering pass [Session] rather than passing sessionId
+ *
+ * (Dirty [Routine] objects are created.
+ *
+ * @see [DefaultSessionEntityMapper]
+ *
+ * @see [BasicMethodRoutineProviderDelegate]
+ */
 
 @HiltViewModel
 class PreviewViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    findSessionUseCase: FindSessionUseCase
+    findSessionUseCase: FindSessionUseCase,
+    loadSessionsUseCase: LoadSessionsUseCase,
+    loadProgressionStateUseCase: LoadProgressionStateUseCase
 ): ViewModel() {
 
     private val _eventChannel: Channel<PreviewUiEvent> = Channel()
     val uiEventFlow: Flow<PreviewUiEvent>
         get() = _eventChannel.receiveAsFlow()
 
-    val uiState = findSessionUseCase(sessionId = savedStateHandle[NAV_ARGS_SESSION_ID_KEY]!!)
-        .map { session -> PreviewUiState.Result(session) }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L), PreviewUiState.Loading)
+    val uiState: StateFlow<PreviewUiState>
+
+    init {
+        val totalCompletedSessionsCountFlow: Flow<Int> =
+            combine(
+                loadSessionsUseCase(),
+                loadProgressionStateUseCase(),
+            ) { sessions, progressionState ->
+                val userProgression = when(progressionState) {
+                    is ProgressionState.OnGoing -> progressionState.currentUserProgression
+                    else -> throw IllegalStateException()
+                }
+
+                return@combine sessions.filter { session ->
+                    session.progression == userProgression.toSessionProgression() && session.isCompleted
+                }.size
+            }
+
+        uiState = combine(
+            findSessionUseCase(sessionId = savedStateHandle[NAV_ARGS_SESSION_ID_KEY]!!),
+            totalCompletedSessionsCountFlow,
+            ::Pair
+        ).map { (session, totalCompletedSessionsCount) ->
+            return@map PreviewUiState.Result(session, totalCompletedSessionsCount)
+        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L), PreviewUiState.Loading)
+    }
 
     fun onClickStart() {
         viewModelScope.launch {
@@ -41,7 +80,7 @@ class PreviewViewModel @Inject constructor(
 
 sealed class PreviewUiState {
     object Loading: PreviewUiState()
-    data class Result(val session: Session): PreviewUiState()
+    data class Result(val session: Session, val totalCompletedSessionsCount: Int): PreviewUiState()
 }
 
 sealed class PreviewUiEvent {
