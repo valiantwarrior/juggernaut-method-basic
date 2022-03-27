@@ -45,6 +45,7 @@ class OverviewFragment : NavigationFragment() {
         observeFlowEvent(overviewViewModel.uiEventFlow) { event ->
             when(event) {
                 is OverviewUiEvent.HaltMethod -> {
+                    (requireParentFragment().requireView()).visibility = View.GONE
                     val activity = requireActivity() as MainActivity
                     activity.startActivity(
                         Intent(activity, OnboardingActivity::class.java)

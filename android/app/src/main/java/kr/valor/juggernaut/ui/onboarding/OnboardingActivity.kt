@@ -3,6 +3,7 @@ package kr.valor.juggernaut.ui.onboarding
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.juggernaut.databinding.ActivityOnboardingBinding
@@ -58,9 +59,12 @@ class OnboardingActivity : AppCompatActivity() {
             when(event) {
                 is OnboardingUiEvent.Next -> onboardingPager.currentItem = event.nextPagePosition
                 is OnboardingUiEvent.Previous -> onboardingPager.currentItem = event.previousPagePosition
-                OnboardingUiEvent.Done -> startActivity(
-                    Intent(this@OnboardingActivity, MainActivity::class.java)
-                ).also { finish() }
+                OnboardingUiEvent.Done -> {
+                    root.visibility = View.GONE
+                    startActivity(
+                        Intent(this@OnboardingActivity, MainActivity::class.java)
+                    ).also { finish() }
+                }
             }
         }
     }
