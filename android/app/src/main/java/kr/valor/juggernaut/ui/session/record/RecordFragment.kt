@@ -70,7 +70,9 @@ class RecordFragment : NavigationFragment() {
     private fun initEventObserver() {
         observeFlowEvent(recordViewModel.eventFlow) { recordEvent ->
             when(recordEvent) {
-                RecordEvent.Done -> navigate(R.id.action_record_dest_to_home_dest)
+                is RecordEvent.Done -> navigate(
+                    RecordFragmentDirections.actionRecordDestToAccomplishmentFragment(recordEvent.sessionId)
+                )
             }
         }
     }

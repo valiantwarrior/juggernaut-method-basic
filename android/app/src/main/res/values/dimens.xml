@@ -3,8 +3,9 @@
     <dimen name="guideline_margin_dp_extreme_large">32dp</dimen>
     <dimen name="guideline_margin_dp_default">16dp</dimen>
     <dimen name="guideline_margin_dp_small">8dp</dimen>
-    <dimen name="guideline_collapsing_toolbar_expanded_margin_start_dp">72dp</dimen> <!-- https://material.io/components/app-bars-top#specs -->
-    <dimen name="guideline_collapsing_toolbar_expanded_margin_end_dp">@dimen/guideline_margin_dp_default</dimen>
+    <dimen name="guideline_collapsing_toolbar_expanded_nav_icon_margin_start_dp">72dp</dimen> <!-- https://material.io/components/app-bars-top#specs -->
+    <dimen name="guideline_collapsing_toolbar_expanded_no_nav_icon_margin_start_dp">@dimen/guideline_margin_dp_default</dimen> <!-- https://material.io/components/app-bars-top#specs -->
+    <dimen name="guideline_collapsing_toolbar_expanded_margin_end_dp">@dimen/guideline_margin_dp_default</dimen> <!-- https://material.io/components/app-bars-top#specs -->
     <dimen name="guideline_collapsing_toolbar_with_fab_expanded_margin_bottom_dp">36dp</dimen> <!-- Regular FAB size is 56dp, 8dp margin https://material.io/components/buttons-floating-action-button#specs -->
 
 
@@ -26,7 +27,8 @@
     <dimen name="recyclerview_container_padding_horizontal_default">8dp</dimen>
     <dimen name="recyclerview_item_margin_vertical_default">8dp</dimen>
     <dimen name="recyclerview_container_padding_vertical_default">24dp</dimen>
-    
+    <dimen name="recyclerview_container_padding_bottom_including_extended_fab">80dp</dimen> <!-- extended fab height = 48dp https://material.io/components/buttons-floating-action-button#specs -->
+    <dimen name="container_padding_bottom_including_extended_fab">80dp</dimen> <!-- extended fab height = 48dp https://material.io/components/buttons-floating-action-button#specs -->
     <dimen name="item_session_summary_width">280dp</dimen>
     <dimen name="item_session_summary_height">200dp</dimen>
 

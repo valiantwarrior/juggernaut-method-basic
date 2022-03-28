@@ -4,9 +4,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import kr.valor.juggernaut.ui.home.NavigationClickListener
 import kr.valor.juggernaut.ui.user.ItemUserSessionRecordViewHolder
 
-class DetailAdapter: ListAdapter<DetailViewHolderItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
+class DetailAdapter(
+    private val navigateClickListener: NavigationClickListener
+): ListAdapter<DetailViewHolderItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
     override fun getItemViewType(position: Int): Int =
         when(getItem(position)) {
@@ -17,7 +20,7 @@ class DetailAdapter: ListAdapter<DetailViewHolderItem, RecyclerView.ViewHolder>(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType) {
             ITEM_VIEW_TYPE_HEADER -> DetailHeaderViewHolder.create(parent)
-            ITEM_VIEW_TYPE_CONTENT -> DetailContentViewHolder.create(parent)
+            ITEM_VIEW_TYPE_CONTENT -> DetailContentViewHolder.create(parent, navigateClickListener)
             else -> throw IllegalArgumentException()
         }
     }

@@ -6,7 +6,7 @@ import kr.valor.juggernaut.R
 import kr.valor.juggernaut.databinding.ItemOverviewSessionSummaryBinding
 import kr.valor.juggernaut.domain.session.model.Session
 import kr.valor.juggernaut.ui.ViewHolderDataBindingFactory
-import kr.valor.juggernaut.ui.home.overview.NavigateClickListener
+import kr.valor.juggernaut.ui.home.NavigationClickListener
 
 class SessionSummaryViewHolder private constructor(
     private val binding: ItemOverviewSessionSummaryBinding
@@ -20,7 +20,7 @@ class SessionSummaryViewHolder private constructor(
     }
 
     companion object: ViewHolderDataBindingFactory() {
-        fun create(parent: ViewGroup, navigateClickListener: NavigateClickListener): SessionSummaryViewHolder {
+        fun create(parent: ViewGroup, navigateClickListener: NavigationClickListener): SessionSummaryViewHolder {
             val binding =
                 provideDataBinding<ItemOverviewSessionSummaryBinding>(parent, R.layout.item_overview_session_summary)
                     .apply { navigateAction = navigateClickListener }

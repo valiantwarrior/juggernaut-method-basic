@@ -3,7 +3,6 @@ package kr.valor.juggernaut.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -38,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when(destination.id) {
-                R.id.preview_dest, R.id.record_dest -> {
+                R.id.preview_dest, R.id.record_dest, R.id.accomplishment_dest -> {
                     bottomNavigationView.visibility = View.GONE
                 }
                 else -> {

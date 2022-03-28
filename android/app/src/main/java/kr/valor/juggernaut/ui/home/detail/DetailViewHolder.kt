@@ -7,6 +7,7 @@ import kr.valor.juggernaut.databinding.ItemDetailSessionHeaderBinding
 import kr.valor.juggernaut.databinding.ItemSessionAchievementInfoBinding
 import kr.valor.juggernaut.domain.progression.model.UserProgression
 import kr.valor.juggernaut.ui.ViewHolderDataBindingFactory
+import kr.valor.juggernaut.ui.home.NavigationClickListener
 import kr.valor.juggernaut.ui.user.ItemUserSessionRecordViewHolder
 
 class DetailContentViewHolder(
@@ -14,8 +15,8 @@ class DetailContentViewHolder(
 ): ItemUserSessionRecordViewHolder(binding) {
 
     companion object {
-        fun create(parent: ViewGroup): ItemUserSessionRecordViewHolder =
-            ItemUserSessionRecordViewHolder.create(parent)
+        fun create(parent: ViewGroup, navigateClickListener: NavigationClickListener): ItemUserSessionRecordViewHolder =
+            ItemUserSessionRecordViewHolder.create(parent, navigateClickListener)
     }
 
 }

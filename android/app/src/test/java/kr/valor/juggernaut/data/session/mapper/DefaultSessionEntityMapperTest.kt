@@ -48,7 +48,7 @@ class DefaultSessionEntityMapperTest {
 
         val userCompleteTimeMillisRecord = System.currentTimeMillis()
         val userRepetitionsRecord = 16
-        val userSessionRecord = SessionRecord(userRepetitionsRecord, userCompleteTimeMillisRecord)
+        val userSessionRecord = SessionRecord(userRepetitionsRecord, userCompleteTimeMillisRecord, 1)
 
         val entityFromModel = mapper.mapModel(model, userSessionRecord)
 
@@ -79,7 +79,7 @@ class DefaultSessionEntityMapperTest {
         val model = mapper.mapEntity(entity)
 
         val userCompleteTimeMillisRecord = System.currentTimeMillis()
-        val userSessionRecord = SessionRecord(null, userCompleteTimeMillisRecord)
+        val userSessionRecord = SessionRecord(null, userCompleteTimeMillisRecord, 1)
 
         val entityFromModel = mapper.mapModel(model, userSessionRecord)
 

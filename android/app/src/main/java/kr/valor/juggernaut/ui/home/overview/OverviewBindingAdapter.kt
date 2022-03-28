@@ -109,16 +109,7 @@ fun MaterialCardView.bindBackgroundColor(session: Session?) {
 
     @ColorInt val cardBackgroundColor = getColors(session.isCompleted)
 
-    setCardBackgroundColor(cardBackgroundColor)
-    isClickable = !session.isCompleted
-}
-
-@BindingAdapter("overviewSessionSummaryCardViewClickable")
-fun MaterialCardView.bindCardClickable(session: Session?) {
-    session ?: return
-
-    isEnabled = !session.isCompleted
-}
+    setCardBackgroundColor(cardBackgroundColor) }
 
 @BindingAdapter("currentUserProgression")
 fun MaterialCardView.bindUserProgression(uiResult: UiResult) {

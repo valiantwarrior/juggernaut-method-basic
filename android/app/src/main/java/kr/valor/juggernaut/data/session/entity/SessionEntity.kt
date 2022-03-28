@@ -28,5 +28,8 @@ data class SessionEntity(
     val amrapRepetitions: Int? = null,
 
     @ColumnInfo(name = "complete_date")
-    val completeDateMillis: Long? = null
+    val completeDateMillis: Long? = null,
+
+    @ColumnInfo(name = "session_ordinal_of_week")
+    val sessionOrdinal: Int? = null
 )

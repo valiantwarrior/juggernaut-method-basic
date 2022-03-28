@@ -9,7 +9,7 @@ data class RoutineIntensity(
         get() {
             val approximation = intensityPercentage * 100
             return when(approximation % 1.0) {
-                in 0.0 .. 1.0 -> approximation.toInt()
+                in 0.0 .. 0.1 -> approximation.toInt()
                 else -> approximation
             }
         }

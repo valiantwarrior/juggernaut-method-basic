@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import kr.valor.juggernaut.R
+import kr.valor.juggernaut.databinding.ItemSessionAmrapAchievementBinding
 import kr.valor.juggernaut.databinding.ItemSessionAmrapRoutineBinding
 import kr.valor.juggernaut.databinding.ItemSessionFooterBinding
 import kr.valor.juggernaut.databinding.ItemSessionRoutineBinding
@@ -70,7 +71,6 @@ class AmrapRoutineViewHolder private constructor(
         item as AmrapRoutineItem
         with(binding) {
             amrapRoutineItem = item
-
             executePendingBindings()
         }
     }
@@ -93,4 +93,26 @@ class AmrapRoutineViewHolder private constructor(
         }
     }
 
+}
+
+class AmrapRoutineAchievementViewHolder private constructor(
+    private val binding: ItemSessionAmrapAchievementBinding
+): RoutineViewHolder(binding) {
+
+    override fun bind(item: RoutineItem) {
+        item as AmrapRoutineItem
+        with(binding) {
+            amrapRoutineItem = item
+            executePendingBindings()
+        }
+    }
+
+    companion object: ViewHolderDataBindingFactory() {
+        fun create(parent: ViewGroup): RoutineViewHolder {
+            val binding =
+                provideDataBinding<ItemSessionAmrapAchievementBinding>(parent, R.layout.item_session_amrap_achievement)
+
+            return AmrapRoutineAchievementViewHolder(binding)
+        }
+    }
 }

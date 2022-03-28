@@ -7,13 +7,18 @@
         <variable
             name="session"
             type="kr.valor.juggernaut.domain.session.model.Session" />
+        <variable
+            name="navigateAction"
+            type="kr.valor.juggernaut.ui.home.NavigationClickListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/session_achievement_info_card_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_session_summary_height"
         android:layout_marginVertical="@dimen/recyclerview_item_margin_horizontal_default"
-        android:layout_marginHorizontal="@dimen/recyclerview_item_margin_vertical_default">
+        android:layout_marginHorizontal="@dimen/recyclerview_item_margin_vertical_default"
+        android:onClick="@{() -> navigateAction.onClick(session.sessionId)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -58,6 +63,16 @@
                 app:layout_constraintBottom_toBottomOf="@id/lift_category_icon"
                 tools:text="REP10 - ACCUMULATION" />
 
+            <TextView
+                android:id="@+id/complete_date_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:userSessionRecordDateTime="@{session}"
+                app:layout_constraintStart_toStartOf="@id/phase_and_microcycle_name_text"
+                app:layout_constraintEnd_toEndOf="@id/phase_and_microcycle_name_text"
+                app:layout_constraintTop_toBottomOf="@id/phase_and_microcycle_name_text"
+                app:layout_constraintHorizontal_bias="0.0"
+                tools:text="2021-03-28 19:24" />
 
             <LinearLayout
                 android:id="@+id/amrap_record_layout"

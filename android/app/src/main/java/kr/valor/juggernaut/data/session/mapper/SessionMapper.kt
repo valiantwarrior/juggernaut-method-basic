@@ -5,6 +5,10 @@ import kr.valor.juggernaut.data.common.mapper.EntityMapper
 import kr.valor.juggernaut.data.session.mapper.delegate.routine.RoutineProviderDelegate
 import kr.valor.juggernaut.data.session.entity.SessionEntity
 import kr.valor.juggernaut.domain.session.model.*
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import kr.valor.juggernaut.domain.session.model.Session.Progression as Progression
 
@@ -34,6 +38,8 @@ class DefaultSessionEntityMapper @Inject constructor(
                 tmWeights = baseWeights,
                 progression = progression,
                 isCompleted = entity.completeDateMillis != null,
+                completedLocalDateTime = completeDateMillis?.toLocalDateTime(),
+                sessionOrdinal = sessionOrdinal,
                 routines = sessionRoutine
             )
         }
@@ -49,8 +55,14 @@ class DefaultSessionEntityMapper @Inject constructor(
                 liftCategoryName = category.name,
                 baseWeights = tmWeights,
                 amrapRepetitions = params?.repetitionsRecord,
-                completeDateMillis = params?.completeTimeMillisRecord
+                completeDateMillis = params?.completeTimeMillisRecord,
+                sessionOrdinal = params?.sessionOrdinal
             )
+        }
+
+    private fun Long.toLocalDateTime() =
+        Instant.ofEpochMilli(this).let { instant ->
+            LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
         }
 
 }

@@ -3,7 +3,7 @@
     <style name="Theme.AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Light Mode -->
         <item name="colorPrimary">@color/color_primary</item>
-        <item name="colorPrimaryVariant">@color/color_primary</item>
+        <item name="colorPrimaryVariant">@color/color_primary_dark</item>
         <item name="colorSecondary">?attr/colorPrimary</item>
         <item name="colorOnPrimary">?attr/colorOnSecondary</item>
         <item name="colorOnSecondary">@color/color_on_secondary</item>

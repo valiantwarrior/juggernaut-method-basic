@@ -1,11 +1,11 @@
 package kr.valor.juggernaut.ui.common
 
 import androidx.annotation.DrawableRes
-import com.google.android.material.appbar.AppBarLayout
 import kr.valor.juggernaut.R
 import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.common.LiftCategory.*
-import kotlin.String as String
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @DrawableRes
 fun getLiftCategoryIcon(liftCategory: LiftCategory): Int =
@@ -15,3 +15,6 @@ fun getLiftCategoryIcon(liftCategory: LiftCategory): Int =
         OVERHEADPRESS -> R.drawable.ic_lift_category_overheadpress
         DEADLIFT -> R.drawable.ic_lift_category_deadlift
     }
+
+fun LocalDateTime.toFormattedString(): String =
+    format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))

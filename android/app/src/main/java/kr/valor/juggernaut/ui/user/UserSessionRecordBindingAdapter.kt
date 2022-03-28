@@ -10,6 +10,7 @@ import androidx.databinding.BindingAdapter
 import kr.valor.juggernaut.R
 import kr.valor.juggernaut.domain.session.model.Session
 import kr.valor.juggernaut.ui.common.getLiftCategoryIcon
+import kr.valor.juggernaut.ui.common.toFormattedString
 
 @BindingAdapter("userSessionRecordLiftCategoryIcon")
 fun ImageView.bindLiftCategoryIcon(session: Session?) {
@@ -30,6 +31,15 @@ fun TextView.bindPhaseAndMicrocycle(session: Session?) {
     }
 
     text = resources.getString(stringFormatId, phaseName, microcycleName)
+}
+
+@BindingAdapter("userSessionRecordDateTime")
+fun TextView.bindDateTime(session: Session?) {
+    session ?: return
+
+    val completedDateTime = session.completedLocalDateTime!!
+
+    text = completedDateTime.toFormattedString()
 }
 
 @BindingAdapter("userSessionAmrapRecordVisibility")

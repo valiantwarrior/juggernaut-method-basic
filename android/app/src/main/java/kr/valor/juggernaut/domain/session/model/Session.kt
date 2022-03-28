@@ -4,6 +4,8 @@ import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.common.MicroCycle
 import kr.valor.juggernaut.common.Phase
+import kr.valor.juggernaut.common.Phase.Companion.TOTAL_PHASE_COUNT
+import java.time.LocalDateTime
 
 typealias Progression = Session.Progression
 
@@ -13,6 +15,8 @@ data class Session(
     val tmWeights: Int,
     val progression: Progression,
     val isCompleted: Boolean,
+    val completedLocalDateTime: LocalDateTime?,
+    val sessionOrdinal: Int?,
     val routines: List<Routine>,
 ) {
 
@@ -47,6 +51,14 @@ data class Session(
                 } else {
                     DELOAD_SESSION_INDICATOR
                 }
+            }
+
+        val weekOrdinal: Int
+            get() {
+                val basePhaseWeekOrdinal = phase.ordinal * TOTAL_PHASE_COUNT
+                val baseMicrocycleWeekOrdinal = microCycle.ordinal + 1
+
+                return basePhaseWeekOrdinal + baseMicrocycleWeekOrdinal
             }
 
         companion object {

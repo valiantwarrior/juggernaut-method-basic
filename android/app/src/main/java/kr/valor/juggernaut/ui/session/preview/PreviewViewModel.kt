@@ -71,8 +71,8 @@ class PreviewViewModel @Inject constructor(
             val session = (uiState.value as PreviewUiState.Result).session
             val sessionId = session.sessionId
             val baseAmrapRepetitions = session.progression.baseAmrapRepetitions
-
-            _eventChannel.send(PreviewUiEvent.StartSession(sessionId, baseAmrapRepetitions))
+            val sessionOrdinal =  (uiState.value as PreviewUiState.Result).totalCompletedSessionsCount + 1
+            _eventChannel.send(PreviewUiEvent.StartSession(sessionId, baseAmrapRepetitions, sessionOrdinal))
         }
     }
 
@@ -86,6 +86,7 @@ sealed class PreviewUiState {
 sealed class PreviewUiEvent {
     data class StartSession(
         val sessionId: Long,
-        val baseAmrapRepetitions: Int
+        val baseAmrapRepetitions: Int,
+        val sessionOrdinal: Int
     ): PreviewUiEvent()
 }

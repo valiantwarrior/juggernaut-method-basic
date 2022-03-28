@@ -3,9 +3,9 @@ package kr.valor.juggernaut.ui.home.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import kr.valor.juggernaut.domain.progression.model.ProgressionState
 import kr.valor.juggernaut.domain.progression.model.UserProgression
 import kr.valor.juggernaut.domain.progression.usecase.usecase.LoadProgressionStateUseCase
@@ -13,11 +13,19 @@ import kr.valor.juggernaut.domain.session.model.Session
 import kr.valor.juggernaut.domain.session.usecase.usecase.LoadSessionsUseCase
 import javax.inject.Inject
 
+sealed class DetailUiEvent {
+    data class NavigateAccomplishment(val sessionId: Long): DetailUiEvent()
+}
+
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     loadSessionsUseCase: LoadSessionsUseCase,
     loadProgressionStateUseCase: LoadProgressionStateUseCase
 ) : ViewModel() {
+
+    private val _eventChannel: Channel<DetailUiEvent> = Channel()
+    val uiEventFlow: Flow<DetailUiEvent>
+        get() = _eventChannel.receiveAsFlow()
 
     val detailUiModel = combine(
         loadSessionsUseCase(),
@@ -36,6 +44,12 @@ class DetailViewModel @Inject constructor(
             }.sortedWith(compareBy { it.category.ordinal })
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L), DetailUiState.Loading)
+
+    fun onClickItem(sessionId: Long) {
+        viewModelScope.launch {
+            _eventChannel.send(DetailUiEvent.NavigateAccomplishment(sessionId))
+        }
+    }
 
 }
 

@@ -43,7 +43,8 @@ class PreviewFragment : NavigationFragment() {
             when(event) {
                 is PreviewUiEvent.StartSession -> {
                     val toolbarTitle = toolbar.title.toString()
-                    navigate(PreviewFragmentDirections.actionPreviewDestToRecordFragment(event.sessionId, event.baseAmrapRepetitions, toolbarTitle))
+
+                    navigate(PreviewFragmentDirections.actionPreviewDestToRecordFragment(event.sessionId, event.baseAmrapRepetitions, toolbarTitle, event.sessionOrdinal))
                 }
             }
         }

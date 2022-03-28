@@ -1,5 +1,6 @@
 package kr.valor.juggernaut.ui.home.overview
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,6 +19,7 @@ import javax.inject.Inject
 sealed class OverviewUiEvent {
     object HaltMethod: OverviewUiEvent()
     data class NavigatePreview(val sessionId: Long): OverviewUiEvent()
+    data class NavigateAccomplishment(val sessionId: Long): OverviewUiEvent()
 }
 
 @HiltViewModel
@@ -32,7 +34,7 @@ class OverviewViewModel @Inject constructor(
     val uiEventFlow: Flow<OverviewUiEvent>
         get() = _eventChannel.receiveAsFlow()
 
-    val overviewUiModel = combine(
+    val uiState = combine(
         loadSessionsUseCase(),
         loadProgressionStateUseCase()
     ) { sessions: List<Session>, progressionState: ProgressionState ->
@@ -55,11 +57,27 @@ class OverviewViewModel @Inject constructor(
         viewModelScope.launch {
             synchronizeSessionsContract()
         }
+        Log.d("Overview", "${uiState.value}")
     }
 
     fun onClickSessionItem(sessionId: Long) {
         viewModelScope.launch {
-            _eventChannel.send(OverviewUiEvent.NavigatePreview(sessionId))
+            val isCompletedSession = when(val uiResult = uiState.value) {
+                is UiResult.Success -> {
+                    val session = uiResult.sessions.find { session ->
+                        session.sessionId == sessionId
+                    }!!
+
+                    session.isCompleted
+                }
+                else -> return@launch
+            }
+
+            if (isCompletedSession) {
+                _eventChannel.send(OverviewUiEvent.NavigateAccomplishment(sessionId))
+            } else {
+                _eventChannel.send(OverviewUiEvent.NavigatePreview(sessionId))
+            }
         }
     }
 

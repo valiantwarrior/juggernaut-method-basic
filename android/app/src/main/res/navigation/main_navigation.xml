@@ -16,6 +16,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_home_dest_to_accomplishmentFragment"
+            app:destination="@id/accomplishment_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/preview_dest"
@@ -42,18 +49,21 @@
         <argument
             android:name="baseAmrapRepetitions"
             app:argType="integer" />
+        <argument
+            android:name="toolbarTitle"
+            app:argType="string" />
         <action
-            android:id="@+id/action_record_dest_to_home_dest"
-            app:destination="@id/home_dest"
+            android:id="@+id/action_record_dest_to_accomplishmentFragment"
+            app:destination="@id/accomplishment_dest"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/home_dest"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
         <argument
-            android:name="toolbarTitle"
-            app:argType="string" />
+            android:name="sessionOrdinal"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/statistic_dest"
@@ -63,4 +73,21 @@
         android:id="@+id/overall_dest"
         android:name="kr.valor.juggernaut.ui.overall.OverallFragment"
         tools:layout="@layout/fragment_overall" />
+    <fragment
+        android:id="@+id/accomplishment_dest"
+        android:name="kr.valor.juggernaut.ui.session.accomplishment.AccomplishmentFragment"
+        tools:layout="@layout/fragment_accomplishment" >
+        <argument
+            android:name="sessionId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_accomplishment_dest_to_home_dest"
+            app:destination="@id/home_dest"
+            app:popUpTo="@id/home_dest"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 </navigation>

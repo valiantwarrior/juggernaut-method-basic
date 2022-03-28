@@ -12,7 +12,9 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/container_padding_bottom_including_extended_fab"
+        android:clipToPadding="false">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/root_layout"
@@ -37,7 +39,7 @@
                 android:layout_height="0dp"
                 android:layout_marginEnd="@dimen/margin_dp_default_single_side"
                 android:layout_marginTop="@dimen/margin_dp_default"
-                bind:uiResult="@{viewModel.overviewUiModel}"
+                bind:uiResult="@{viewModel.uiState}"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintStart_toStartOf="@id/start_guideline"
                 app:layout_constraintEnd_toEndOf="@id/vertical_guideline"
@@ -49,7 +51,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="@dimen/margin_dp_default_single_side"
-                bind:uiResult="@{viewModel.overviewUiModel}"
+                bind:uiResult="@{viewModel.uiState}"
                 app:layout_constraintStart_toStartOf="@id/vertical_guideline"
                 app:layout_constraintEnd_toEndOf="@id/end_guideline"
                 app:layout_constraintBottom_toBottomOf="@id/phase_layout"
@@ -84,7 +86,7 @@
                     android:paddingHorizontal="@dimen/recyclerview_container_padding_horizontal_default"
                     android:clipToPadding="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:sessionSummaries="@{viewModel.overviewUiModel}"
+                    app:sessionSummaries="@{viewModel.uiState}"
                     tools:listitem="@layout/item_overview_session_summary" />
 
             </kr.valor.juggernaut.ui.NestedScrollableHost>
@@ -108,7 +110,7 @@
                 android:layout_marginTop="@dimen/margin_dp_default"
                 android:layout_marginEnd="@dimen/margin_dp_default_single_side"
                 android:layout_marginBottom="@dimen/guideline_margin_dp_extreme_large"
-                bind:uiResult="@{viewModel.overviewUiModel}"
+                bind:uiResult="@{viewModel.uiState}"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintStart_toStartOf="@id/start_guideline"
                 app:layout_constraintEnd_toStartOf="@id/total_milestone_layout"
@@ -121,7 +123,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginHorizontal="@dimen/margin_dp_default_single_side"
-                bind:uiResult="@{viewModel.overviewUiModel}"
+                bind:uiResult="@{viewModel.uiState}"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintStart_toEndOf="@id/weekly_achievement_layout"
                 app:layout_constraintEnd_toStartOf="@id/detailed_milestone_layout"
@@ -134,7 +136,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="@dimen/margin_dp_default_single_side"
-                bind:uiResult="@{viewModel.overviewUiModel}"
+                bind:uiResult="@{viewModel.uiState}"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintStart_toEndOf="@id/total_milestone_layout"
                 app:layout_constraintEnd_toEndOf="@id/end_guideline"

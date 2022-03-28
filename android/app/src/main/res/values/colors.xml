@@ -2,6 +2,7 @@
 <resources>
     <color name="color_primary">#2C2F42</color>
     <color name="color_primary_variant">#2C2F42</color>
+    <color name="color_primary_dark">#03051c</color>
     <color name="color_on_secondary">@color/white</color>
 
     <color name="white">#FFFFFF</color>

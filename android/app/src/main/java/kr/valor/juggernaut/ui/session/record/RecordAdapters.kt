@@ -28,7 +28,7 @@ class AmrapRoutineAdapter(
     }
 
     companion object {
-        const val ITEM_VIEW_TYPE_AMRAP_ROUTINE = ITEM_VIEW_TYPE_ROUTINE + 1
+        private const val ITEM_VIEW_TYPE_AMRAP_ROUTINE = ITEM_VIEW_TYPE_ROUTINE + 1
     }
 
 }

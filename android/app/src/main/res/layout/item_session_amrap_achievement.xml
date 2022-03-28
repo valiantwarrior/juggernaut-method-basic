@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="amrapRoutineItem"
+            type="kr.valor.juggernaut.ui.session.AmrapRoutineItem" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_session_routine_height"
+        android:layout_marginHorizontal="@dimen/recyclerview_item_margin_vertical_default"
+        android:layout_marginVertical="@dimen/recyclerview_item_margin_horizontal_default">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/routine_ordinal_text"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@android:color/holo_red_light"
+                android:gravity="center"
+                android:text="@{String.valueOf(amrapRoutineItem.routineOrdinal + 1)}"
+                android:textColor="?attr/colorSurface"
+                android:textSize="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/vertical_guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="5" />
+
+            <TextView
+                android:id="@+id/routine_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/padding_dp_small"
+                android:text="@string/session_routine_item_amrap_routine_title_text"
+                android:textAppearance="@style/TextAppearance.App.Title"
+                app:drawableStartCompat="@drawable/ic_amrap_24"
+                app:drawableTint="@android:color/holo_red_dark"
+                app:layout_constraintBottom_toBottomOf="@id/horizontal_separator"
+                app:layout_constraintEnd_toEndOf="@id/horizontal_separator"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/horizontal_separator"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="AMRAP" />
+
+            <TextView
+                android:id="@+id/routine_content_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.App.SubTitle"
+                app:amrapRoutineBaseInformation="@{amrapRoutineItem}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/horizontal_separator"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/horizontal_separator"
+                app:layout_constraintTop_toTopOf="@id/horizontal_separator"
+                tools:text="120kg x 5+ (60% x 5)" />
+
+            <TextView
+                android:id="@+id/amrap_repetitions_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(amrapRoutineItem.repetitions)}"
+                android:textAppearance="@style/TextAppearance.App.Title"
+                app:drawableStartCompat="@drawable/ic_amrap_24"
+                app:drawableTint="@android:color/holo_red_dark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/horizontal_separator"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@id/horizontal_separator"
+                app:layout_constraintTop_toTopOf="@id/horizontal_separator"
+                tools:text="10" />
+
+
+            <View
+                android:id="@+id/horizontal_separator"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="@dimen/margin_dp_default"
+                android:background="#D1CECE"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/vertical_guideline"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/vertical_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.10" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>
