@@ -76,12 +76,16 @@ class AccomplishmentFragment : Fragment() {
         }
 
         sessionAccomplishmentList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0 && backExtendedFab.isExtended) {
-                    backExtendedFab.shrink()
-                }
-                if (dy < 0 && !backExtendedFab.isExtended) {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE
+                    && !backExtendedFab.isExtended
+                    && recyclerView.computeVerticalScrollOffset() == 0) {
                     backExtendedFab.extend()
+                }
+            }
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy != 0 && backExtendedFab.isExtended) {
+                    backExtendedFab.shrink()
                 }
             }
         })

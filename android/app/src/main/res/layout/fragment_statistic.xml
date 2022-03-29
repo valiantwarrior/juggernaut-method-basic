@@ -40,12 +40,17 @@
 
         </kr.valor.juggernaut.ui.NoElevationAppBarLayout>
 
-        <TextView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/user_training_max_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="sans-serif-medium"
-            android:gravity="center"
-            android:text="Statistic" />
+            android:paddingVertical="@dimen/recyclerview_container_padding_vertical_default"
+            android:paddingHorizontal="@dimen/recyclerview_container_padding_horizontal_default"
+            android:clipToPadding="false"
+            app:statisticUserTrainingMaxItems="@{viewModel.uiState}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            tools:listitem="@layout/item_statistic_training_max" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

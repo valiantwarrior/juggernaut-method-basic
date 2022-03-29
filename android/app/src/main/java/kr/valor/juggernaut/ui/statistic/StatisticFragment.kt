@@ -12,6 +12,7 @@ import androidx.navigation.ui.NavigationUI
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.juggernaut.R
 import kr.valor.juggernaut.databinding.FragmentStatisticBinding
+import kr.valor.juggernaut.ui.statistic.trainingmax.TrainingMaxAdapter
 
 @AndroidEntryPoint
 class StatisticFragment : Fragment() {
@@ -22,6 +23,10 @@ class StatisticFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentStatisticBinding.inflate(inflater, container, false)
+            .apply {
+                viewModel = statisticViewModel
+                lifecycleOwner = viewLifecycleOwner
+            }
         return binding.root
     }
 
@@ -30,8 +35,13 @@ class StatisticFragment : Fragment() {
         val appBarConfiguration = AppBarConfiguration(
             setOf(R.id.home_dest, R.id.statistic_dest, R.id.overall_dest)
         )
-        toolbar.title = "Statistic"
         NavigationUI.setupWithNavController(toolbar, findNavController(), appBarConfiguration)
+
+        binding.initAdapter()
+    }
+
+    private fun FragmentStatisticBinding.initAdapter() {
+        userTrainingMaxList.adapter = TrainingMaxAdapter()
     }
 
 }

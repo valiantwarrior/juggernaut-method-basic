@@ -30,7 +30,7 @@
                 android:layout_height="@dimen/icon_height_default"
                 android:contentDescription="@string/overview_session_icon_content_description"
                 app:userSessionRecordLiftCategoryIcon="@{session}"
-                app:tint="?attr/colorPrimary"
+                app:tint="?attr/colorPrimaryVariant"
                 app:layout_constraintStart_toStartOf="@id/start_guideline"
                 app:layout_constraintTop_toTopOf="@id/top_guideline"
                 tools:src="@drawable/ic_lift_category_benchpress" />

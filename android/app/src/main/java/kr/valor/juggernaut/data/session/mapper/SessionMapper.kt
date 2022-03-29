@@ -5,6 +5,7 @@ import kr.valor.juggernaut.data.common.mapper.EntityMapper
 import kr.valor.juggernaut.data.session.mapper.delegate.routine.RoutineProviderDelegate
 import kr.valor.juggernaut.data.session.entity.SessionEntity
 import kr.valor.juggernaut.domain.session.model.*
+import kr.valor.juggernaut.ui.common.toLocalDateTime
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -58,11 +59,6 @@ class DefaultSessionEntityMapper @Inject constructor(
                 completeDateMillis = params?.completeTimeMillisRecord,
                 sessionOrdinal = params?.sessionOrdinal
             )
-        }
-
-    private fun Long.toLocalDateTime() =
-        Instant.ofEpochMilli(this).let { instant ->
-            LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
         }
 
 }

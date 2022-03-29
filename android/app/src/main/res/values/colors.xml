@@ -13,4 +13,12 @@
     <color name="color_on_primary_variant">#F8F8FA</color>
     <color name="color_secondary">#FEBB53</color>
 
+
+    <color name="separator_color">#D1CECE</color>
+
+    <color name="lift_category_bp_identity_color">#FF898A</color>
+    <color name="lift_category_sq_identity_color">#62CE9D</color>
+    <color name="lift_category_ohp_identity_color">#5482FF</color>
+    <color name="lift_category_dl_identity_color">#A167E6</color>
+
 </resources>

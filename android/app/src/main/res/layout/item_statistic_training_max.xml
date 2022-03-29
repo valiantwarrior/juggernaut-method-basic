@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="trainingMax"
+            type="kr.valor.juggernaut.domain.trainingmax.model.TrainingMax" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_trainingmax_height"
+        android:layout_marginHorizontal="@dimen/recyclerview_item_margin_horizontal_default"
+        android:layout_marginVertical="@dimen/recyclerview_item_margin_vertical_default">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/lift_category_icon"
+                android:layout_width="@dimen/icon_width_default"
+                android:layout_height="@dimen/icon_height_default"
+                app:statisticUserTrainingMaxLiftCategoryIcon="@{trainingMax}"
+                app:tint="?attr/colorPrimaryVariant"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/horizontal_separator"
+                app:layout_constraintEnd_toEndOf="@id/horizontal_separator"
+                app:layout_constraintBottom_toTopOf="@id/horizontal_separator"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_lift_category_overheadpress" />
+
+            <TextView
+                android:id="@+id/lift_category_name_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_dp_small"
+                android:textAppearance="@style/TextAppearance.App.SubTitle"
+                android:text="@{trainingMax.liftCategory.name()}"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintVertical_bias="1.0"
+                app:layout_constraintStart_toEndOf="@id/lift_category_icon"
+                app:layout_constraintEnd_toEndOf="@id/horizontal_separator"
+                app:layout_constraintBottom_toBottomOf="@id/lift_category_icon"
+                app:layout_constraintTop_toTopOf="@id/lift_category_icon"
+                tools:text="OVERHEADPRESS" />
+
+            <TextView
+                android:id="@+id/training_max_weights"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.App.Title"
+                android:drawablePadding="@dimen/padding_dp_small"
+                app:statisticUserTrainingMaxWeights="@{trainingMax}"
+                app:drawableStartCompat="@drawable/ic_amrap_24"
+                app:drawableTint="@android:color/holo_red_dark"
+                app:layout_constraintVertical_bias="1.0"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintEnd_toEndOf="@id/horizontal_separator"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/lift_category_name_text"
+                tools:text="120 kg" />
+
+            <TextView
+                android:id="@+id/training_max_base_record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_dp_small"
+                app:statisticUserTrainingMaxBaseRecord="@{trainingMax}"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="@id/horizontal_separator"
+                app:layout_constraintEnd_toEndOf="@id/horizontal_separator"
+                app:layout_constraintBottom_toTopOf="@id/training_max_achieved_date"
+                app:layout_constraintTop_toTopOf="@id/horizontal_separator"
+                tools:text="Base record : 110kg x 5" />
+
+            <TextView
+                android:id="@+id/training_max_achieved_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:statisticUserTrainingMaxAchievedDate="@{trainingMax}"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintEnd_toEndOf="@id/training_max_base_record"
+                app:layout_constraintStart_toStartOf="@id/training_max_base_record"
+                app:layout_constraintTop_toBottomOf="@id/training_max_base_record"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="2021-03-28 19:24" />
+
+            <View
+                android:id="@+id/lift_category_identity_color"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:statisticUserTrainingMaxLiftCategoryIdentityColor="@{trainingMax}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/vertical_guideline"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:background="@color/lift_category_ohp_identity_color"/>
+
+            <View
+                android:id="@+id/horizontal_separator"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="@dimen/margin_dp_default"
+                android:background="@color/separator_color"
+                app:layout_constraintStart_toStartOf="@id/vertical_guideline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/vertical_guideline"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.10" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>
