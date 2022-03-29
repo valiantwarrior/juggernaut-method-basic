@@ -1,30 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".ui.statistic.StatisticFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <kr.valor.juggernaut.ui.NoElevationAppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+    <data>
+        <variable
+            name="viewModel"
+            type="kr.valor.juggernaut.ui.statistic.StatisticViewModel" />
+    </data>
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:fitsSystemWindows="true"
-            style="@style/Widget.App.Toolbar"/>
-
-    </kr.valor.juggernaut.ui.NoElevationAppBarLayout>
-
-    <TextView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fontFamily="sans-serif-medium"
-        android:gravity="center"
-        android:text="Statistic" />
+        android:fitsSystemWindows="true"
+        tools:context=".ui.statistic.StatisticFragment">
 
-</FrameLayout>
+        <kr.valor.juggernaut.ui.NoElevationAppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:background="?attr/colorSurface">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true"
+                android:background="?attr/colorSurface"
+                app:contentScrim="?attr/colorSurface"
+                app:statusBarScrim="?attr/colorSurface"
+                app:layout_scrollFlags="scroll|snap"
+                app:titleEnabled="false">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize" />
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </kr.valor.juggernaut.ui.NoElevationAppBarLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:text="Statistic" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
