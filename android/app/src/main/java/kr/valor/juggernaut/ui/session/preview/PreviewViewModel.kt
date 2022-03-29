@@ -13,6 +13,7 @@ import kr.valor.juggernaut.domain.session.model.Session
 import kr.valor.juggernaut.domain.session.usecase.usecase.FindSessionUseCase
 import kr.valor.juggernaut.domain.session.usecase.usecase.LoadSessionsUseCase
 import kr.valor.juggernaut.ui.NAV_ARGS_SESSION_ID_KEY
+import java.lang.IllegalStateException
 import javax.inject.Inject
 
 /**
@@ -42,20 +43,20 @@ class PreviewViewModel @Inject constructor(
     val uiState: StateFlow<PreviewUiState>
 
     init {
-        val totalCompletedSessionsCountFlow: Flow<Int> =
-            combine(
-                loadSessionsUseCase(),
-                loadProgressionStateUseCase(),
-            ) { sessions, progressionState ->
-                val userProgression = when(progressionState) {
-                    is ProgressionState.OnGoing -> progressionState.currentUserProgression
-                    else -> throw IllegalStateException()
-                }
+        val totalCompletedSessionsCountFlow: Flow<Int> = flow {
+            val userProgression = when(val progressionState = loadProgressionStateUseCase().first()) {
+                is ProgressionState.OnGoing -> progressionState.currentUserProgression
+                else -> throw IllegalStateException()
+            }
 
-                return@combine sessions.filter { session ->
+            val completedSessionsCount = loadSessionsUseCase().map { sessions ->
+                sessions.filter { session ->
                     session.progression == userProgression.toSessionProgression() && session.isCompleted
                 }.size
-            }
+            }.first()
+
+            emit(completedSessionsCount)
+        }
 
         uiState = combine(
             findSessionUseCase(sessionId = savedStateHandle[NAV_ARGS_SESSION_ID_KEY]!!),

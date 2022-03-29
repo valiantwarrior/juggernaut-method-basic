@@ -8,7 +8,14 @@
     <string name="bottom_nav_menu_item_home_title">Home</string>
     <string name="bottom_nav_menu_item_statistic_title">Statistic</string>
     <string name="bottom_nav_menu_item_overall_title">All</string>
-    <string name="extended_fab_navigate_back">back</string>
+    <string name="accomplishment_extended_fab_navigate_back">back</string>
+    <string name="home_snackbar_text">You\'ve done.\nClick start button to begin new cycle.</string>
+    <string name="home_snackbar_action_label">START</string>
+    <string name="home_dialog_title">Previous records are stored on this device.</string>
+    <string name="home_dialog_message">You can start a new cycle based on a saved record or a new one.\n\nWhat\'s it gonna be?</string>
+    <string name="home_dialog_decision_using_previous_record_label">use previous record</string>
+    <string name="home_dialog_decision_start_with_new_label">start with new</string>
+    <string name="home_dialog_decision_later">remind me later</string>
 
     <string name="overview_user_progression_title_text">Current progress</string>
     <string name="overview_user_progression_phase_title_text_format">Phase %1$d</string>

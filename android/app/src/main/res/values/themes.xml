@@ -15,6 +15,7 @@
         <item name="fontFamily">@font/open_sans_semibold</item>
 
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
+        <item name="snackbarButtonStyle">@style/Widget.App.SnackbarButton</item>
     </style>
 
     <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
@@ -37,4 +38,9 @@
         <item name="colorSurface">#F8F8FA</item>
         <item name="colorOnSurface">@color/color_primary</item>
     </style>
+
+    <style name="Widget.App.SnackbarButton" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
+        <item name="android:textColor">?attr/colorSurface</item>
+    </style>
+
 </resources>

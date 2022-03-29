@@ -107,7 +107,7 @@ fun ExtendedFloatingActionButton.bindAccomplishmentExtendedFabIconAndTitle(uiSta
             else -> R.drawable.ic_bottom_nav_icon_home_24
         }
 
-        text = resources.getString(R.string.extended_fab_navigate_back)
+        text = resources.getString(R.string.accomplishment_extended_fab_navigate_back)
         setIconResource(extendedFabIconResId)
     }
 }

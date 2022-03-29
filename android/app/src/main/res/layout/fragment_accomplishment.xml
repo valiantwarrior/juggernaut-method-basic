@@ -157,7 +157,7 @@
             app:layout_anchorGravity="bottom|end"
             app:layout_anchor="@id/session_accomplishment_list"
             tools:icon="@drawable/ic_bottom_nav_icon_home_24"
-            tools:text="@string/extended_fab_navigate_to_home_text"/>
+            tools:text="@string/accomplishment_extended_fab_navigate_back"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/session_accomplishment_list"
