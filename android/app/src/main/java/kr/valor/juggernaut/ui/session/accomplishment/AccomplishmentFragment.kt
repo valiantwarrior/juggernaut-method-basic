@@ -8,15 +8,28 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.juggernaut.databinding.FragmentAccomplishmentBinding
+
+/**
+ * [NONE] is defaultValue. When token is [NONE], back destination is same as [FROM_HOME]
+ *
+ * @see [main_navigation.xml]
+ */
+enum class AccomplishmentDestinationToken {
+    FROM_HOME, FROM_OVERALL, NONE
+}
 
 @AndroidEntryPoint
 class AccomplishmentFragment : Fragment() {
 
     private val accomplishmentViewModel: AccomplishmentViewModel by viewModels()
+
+    private val navArgs: AccomplishmentFragmentArgs by navArgs()
 
     private lateinit var binding: FragmentAccomplishmentBinding
 
@@ -26,9 +39,7 @@ class AccomplishmentFragment : Fragment() {
         super.onAttach(context)
         navigateToHomeWhenSystemBackButtonClicked = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(
-                    AccomplishmentFragmentDirections.actionAccomplishmentDestToHomeDest()
-                )
+                findNavController().navigate(getNavDirections())
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, navigateToHomeWhenSystemBackButtonClicked)
@@ -46,7 +57,7 @@ class AccomplishmentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.initAdapter()
-        binding.initFabAction()
+        binding.initExtendedFab()
     }
 
     override fun onDetach() {
@@ -58,11 +69,10 @@ class AccomplishmentFragment : Fragment() {
         sessionAccomplishmentList.adapter = AccomplishmentAdapter()
     }
 
-    private fun FragmentAccomplishmentBinding.initFabAction() {
+    private fun FragmentAccomplishmentBinding.initExtendedFab() {
         backExtendedFab.setOnClickListener {
-            findNavController().navigate(
-                AccomplishmentFragmentDirections.actionAccomplishmentDestToHomeDest()
-            )
+            root.visibility = View.GONE
+            findNavController().navigate(getNavDirections())
         }
 
         sessionAccomplishmentList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -77,4 +87,9 @@ class AccomplishmentFragment : Fragment() {
         })
     }
 
+    private fun getNavDirections(): NavDirections =
+        when(navArgs.backDestination) {
+            AccomplishmentDestinationToken.FROM_OVERALL -> AccomplishmentFragmentDirections.actionAccomplishmentDestToOverallDest()
+            else -> AccomplishmentFragmentDirections.actionAccomplishmentDestToHomeDest()
+        }
 }

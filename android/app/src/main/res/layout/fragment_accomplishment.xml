@@ -150,13 +150,14 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_dp_default"
             android:layout_marginBottom="@dimen/margin_dp_default"
-            android:text="@string/extended_fab_navigate_to_home_text"
             android:gravity="center"
-            app:icon="@drawable/ic_bottom_nav_icon_home_24"
+            app:accomplishmentExtendedFabIconAndTitle="@{viewModel.uiState}"
             app:iconTint="?attr/colorOnPrimary"
             app:backgroundTint="?attr/colorOnSurface"
             app:layout_anchorGravity="bottom|end"
-            app:layout_anchor="@id/session_accomplishment_list" />
+            app:layout_anchor="@id/session_accomplishment_list"
+            tools:icon="@drawable/ic_bottom_nav_icon_home_24"
+            tools:text="@string/extended_fab_navigate_to_home_text"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/session_accomplishment_list"

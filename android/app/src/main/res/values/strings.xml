@@ -1,10 +1,14 @@
 <resources>
     <string name="app_name">Juggernaut Method Basic</string>
 
+    <string name="app_bar_title_home">@string/app_name</string>
+    <string name="app_bar_title_overall">Overall</string>
+    <string name="app_bar_title_statistic">Statistic</string>
+
     <string name="bottom_nav_menu_item_home_title">Home</string>
     <string name="bottom_nav_menu_item_statistic_title">Statistic</string>
     <string name="bottom_nav_menu_item_overall_title">All</string>
-    <string name="extended_fab_navigate_to_home_text">back to home</string>
+    <string name="extended_fab_navigate_back">back</string>
 
     <string name="overview_user_progression_title_text">Current progress</string>
     <string name="overview_user_progression_phase_title_text_format">Phase %1$d</string>

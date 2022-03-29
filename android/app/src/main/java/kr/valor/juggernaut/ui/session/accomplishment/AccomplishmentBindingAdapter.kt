@@ -7,71 +7,72 @@ import androidx.annotation.StringRes
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import kr.valor.juggernaut.R
-import kr.valor.juggernaut.domain.session.model.Session
 import kr.valor.juggernaut.ui.common.getLiftCategoryIcon
 import kr.valor.juggernaut.ui.common.toFormattedString
 import kr.valor.juggernaut.ui.session.AmrapRoutineItem
 import kr.valor.juggernaut.ui.session.getSessionRoutineItems
-import kr.valor.juggernaut.ui.session.record.RecordUiState
 import kr.valor.juggernaut.ui.session.toSessionRoutineItems
 
 @BindingAdapter("accomplishmentRoutineItems")
 fun RecyclerView.bindAccomplishmentState(uiState: AccomplishmentUiState) {
-    if (uiState is AccomplishmentUiState.Loading) {
-        return
-    }
+    bindUiState(uiState) { result ->
+        val session = result.session
 
-    val session = (uiState as AccomplishmentUiState.Result).session
+        val sessionRoutineItems = when (session.progression.isAmrapSession) {
+            false -> {
+                session.getSessionRoutineItems(
+                    addFooterItem = false,
+                    footerButtonText = null,
+                    isDeloadRoutine = false
+                )
+            }
+            true -> {
+                val warmupRoutines = session.warmupRoutines!!
+                val amrapRoutine = session.amrapRoutine!!
 
-    val sessionRoutineItems = when(session.progression.isAmrapSession) {
-        false -> {
-            session.getSessionRoutineItems(addFooterItem = false, footerButtonText = null, isDeloadRoutine = false)
+                val warmupRoutineItems = warmupRoutines.toSessionRoutineItems(false)
+                val amrapRoutineItem = AmrapRoutineItem(
+                    routineOrdinal = warmupRoutineItems.size,
+                    routine = amrapRoutine,
+                    repetitions = amrapRoutine.reps,
+                    isDeloadRoutine = false
+                )
+
+                warmupRoutineItems + amrapRoutineItem
+            }
         }
-        true -> {
-            val warmupRoutines = session.warmupRoutines!!
-            val amrapRoutine = session.amrapRoutine!!
 
-            val warmupRoutineItems = warmupRoutines.toSessionRoutineItems(false)
-            val amrapRoutineItem = AmrapRoutineItem(
-                routineOrdinal = warmupRoutineItems.size,
-                routine = amrapRoutine,
-                repetitions = amrapRoutine.reps,
-                isDeloadRoutine = false
-            )
-
-            warmupRoutineItems + amrapRoutineItem
-        }
+        (adapter as AccomplishmentAdapter).submitList(sessionRoutineItems)
     }
-
-    (adapter as AccomplishmentAdapter).submitList(sessionRoutineItems)
 }
 
 @BindingAdapter("accomplishmentAppBarPhaseText")
 fun TextView.bindAccomplishmentAppBarPhaseText(uiState: AccomplishmentUiState) {
-    bindUiStateSession(uiState) { session ->
-        text = session.progression.phase.name
+    bindUiState(uiState) { result ->
+        text = result.session.progression.phase.name
     }
 }
 
 @BindingAdapter("accomplishmentAppBarMicrocycleText")
 fun TextView.bindAccomplishmentAppBarMicrocycleText(uiState: AccomplishmentUiState) {
-    bindUiStateSession(uiState) { session ->
-        text = session.progression.microCycle.name
+    bindUiState(uiState) { result ->
+        text = result.session.progression.microCycle.name
     }
 }
 
 @BindingAdapter("accomplishmentAppBarLiftCategoryNameText")
 fun TextView.bindAccomplishmentAppBarLiftCategoryNameText(uiState: AccomplishmentUiState) {
-    bindUiStateSession(uiState) { session ->
-        text = session.category.name
+    bindUiState(uiState) { result ->
+        text = result.session.category.name
     }
 }
 
 @BindingAdapter("accomplishmentAppBarLiftCategoryIcon")
 fun ImageView.bindAccomplishmentAppBarLiftCategoryIcon(uiState: AccomplishmentUiState) {
-    bindUiStateSession(uiState) { session ->
-        @DrawableRes val iconResId = getLiftCategoryIcon(session.category)
+    bindUiState(uiState) { result ->
+        @DrawableRes val iconResId = getLiftCategoryIcon(result.session.category)
 
         setImageResource(iconResId)
     }
@@ -79,8 +80,8 @@ fun ImageView.bindAccomplishmentAppBarLiftCategoryIcon(uiState: AccomplishmentUi
 
 @BindingAdapter("accomplishmentAppBarCompleteDateTime")
 fun TextView.bindAccomplishmentAppBarCompleteDateTime(uiState: AccomplishmentUiState) {
-    bindUiStateSession(uiState) { session ->
-        val completedDateTime = session.completedLocalDateTime!!
+    bindUiState(uiState) { result ->
+        val completedDateTime = result.session.completedLocalDateTime!!
 
         text = completedDateTime.toFormattedString()
     }
@@ -88,7 +89,8 @@ fun TextView.bindAccomplishmentAppBarCompleteDateTime(uiState: AccomplishmentUiS
 
 @BindingAdapter("accomplishmentAppBarTitle")
 fun MaterialToolbar.bindAccomplishmentAppBarTitle(uiState: AccomplishmentUiState) {
-    bindUiStateSession(uiState) { session ->
+    bindUiState(uiState) { result ->
+        val session = result.session
         val sessionOrdinal = session.sessionOrdinal!!
         val sessionWeekOrdinal = session.progression.weekOrdinal
         @StringRes val titleFormatId = R.string.session_routine_collapsing_toolbar_title_text_format
@@ -97,14 +99,22 @@ fun MaterialToolbar.bindAccomplishmentAppBarTitle(uiState: AccomplishmentUiState
     }
 }
 
+@BindingAdapter("accomplishmentExtendedFabIconAndTitle")
+fun ExtendedFloatingActionButton.bindAccomplishmentExtendedFabIconAndTitle(uiState: AccomplishmentUiState) {
+    bindUiState(uiState) { result ->
+        @DrawableRes val extendedFabIconResId = when(result.destinationToken) {
+            AccomplishmentDestinationToken.FROM_OVERALL -> R.drawable.ic_bottom_nav_icon_overall_24
+            else -> R.drawable.ic_bottom_nav_icon_home_24
+        }
 
-private inline fun bindUiStateSession(uiState: AccomplishmentUiState, block: (Session) -> Unit) {
-    val session = when(uiState) {
-        is AccomplishmentUiState.Loading -> return
-        is AccomplishmentUiState.Result -> uiState.session
+        text = resources.getString(R.string.extended_fab_navigate_back)
+        setIconResource(extendedFabIconResId)
     }
-    block(session)
 }
 
-
-
+private inline fun bindUiState(uiState: AccomplishmentUiState, block: (AccomplishmentUiState.Result) -> Unit) {
+    if (uiState !is AccomplishmentUiState.Result) {
+        return
+    }
+    block(uiState)
+}

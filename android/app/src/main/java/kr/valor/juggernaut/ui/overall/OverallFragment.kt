@@ -12,6 +12,10 @@ import androidx.navigation.ui.NavigationUI
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.juggernaut.R
 import kr.valor.juggernaut.databinding.FragmentOverallBinding
+import kr.valor.juggernaut.ui.home.NavigationClickListener
+import kr.valor.juggernaut.ui.home.detail.DetailAdapter
+import kr.valor.juggernaut.ui.observeFlowEvent
+import kr.valor.juggernaut.ui.session.accomplishment.AccomplishmentDestinationToken
 
 @AndroidEntryPoint
 class OverallFragment : Fragment() {
@@ -22,7 +26,10 @@ class OverallFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentOverallBinding.inflate(inflater, container, false)
-
+            .apply {
+                viewModel = overallViewModel
+                lifecycleOwner = viewLifecycleOwner
+            }
 
         return binding.root
     }
@@ -32,7 +39,34 @@ class OverallFragment : Fragment() {
         val appBarConfiguration = AppBarConfiguration(
             setOf(R.id.home_dest, R.id.statistic_dest, R.id.overall_dest)
         )
-        binding.toolbar.title = "Overall"
         NavigationUI.setupWithNavController(toolbar, findNavController(), appBarConfiguration)
+
+        binding.initAdapter()
+        binding.initEventObserver()
+    }
+
+    private fun FragmentOverallBinding.initAdapter() {
+        userCompletedSessionList.adapter = DetailAdapter(
+            NavigationClickListener { sessionId ->
+                overallViewModel.onClickItem(sessionId)
+            }
+        )
+    }
+
+    private fun FragmentOverallBinding.initEventObserver() {
+        observeFlowEvent(overallViewModel.uiEventFlow) { event ->
+            when(event) {
+                is OverallUiEvent.NavigateAccomplishment -> {
+                    root.visibility = View.GONE
+                    findNavController().navigate(
+                        OverallFragmentDirections
+                            .actionOverallDestToAccomplishmentDest(
+                                event.sessionId,
+                                backDestination = AccomplishmentDestinationToken.FROM_OVERALL
+                            )
+                    )
+                }
+            }
+        }
     }
 }

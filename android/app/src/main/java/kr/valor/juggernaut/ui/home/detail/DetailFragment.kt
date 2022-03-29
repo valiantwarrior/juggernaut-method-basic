@@ -12,6 +12,7 @@ import kr.valor.juggernaut.databinding.FragmentDetailBinding
 import kr.valor.juggernaut.ui.home.HomeFragmentDirections
 import kr.valor.juggernaut.ui.home.NavigationClickListener
 import kr.valor.juggernaut.ui.observeFlowEvent
+import kr.valor.juggernaut.ui.session.accomplishment.AccomplishmentDestinationToken
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
@@ -48,7 +49,11 @@ class DetailFragment : Fragment() {
             when(event) {
                 is DetailUiEvent.NavigateAccomplishment -> {
                     findNavController().navigate(
-                        HomeFragmentDirections.actionHomeDestToAccomplishmentFragment(event.sessionId)
+                        HomeFragmentDirections
+                            .actionHomeDestToAccomplishmentFragment(
+                                event.sessionId,
+                                backDestination = AccomplishmentDestinationToken.FROM_HOME
+                            )
                     )
                 }
             }

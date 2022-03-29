@@ -8,6 +8,7 @@
     <fragment
         android:id="@+id/home_dest"
         android:name="kr.valor.juggernaut.ui.home.HomeFragment"
+        android:label="@string/app_bar_title_home"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_home_dest_to_preview_dest"
@@ -68,11 +69,21 @@
     <fragment
         android:id="@+id/statistic_dest"
         android:name="kr.valor.juggernaut.ui.statistic.StatisticFragment"
+        android:label="@string/app_bar_title_statistic"
         tools:layout="@layout/fragment_statistic" />
     <fragment
         android:id="@+id/overall_dest"
         android:name="kr.valor.juggernaut.ui.overall.OverallFragment"
-        tools:layout="@layout/fragment_overall" />
+        android:label="@string/app_bar_title_overall"
+        tools:layout="@layout/fragment_overall" >
+        <action
+            android:id="@+id/action_overall_dest_to_accomplishment_dest"
+            app:destination="@id/accomplishment_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/accomplishment_dest"
         android:name="kr.valor.juggernaut.ui.session.accomplishment.AccomplishmentFragment"
@@ -89,5 +100,16 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_accomplishment_dest_to_overall_dest"
+            app:destination="@id/overall_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="backDestination"
+            app:argType="kr.valor.juggernaut.ui.session.accomplishment.AccomplishmentDestinationToken"
+            android:defaultValue="NONE" />
     </fragment>
 </navigation>

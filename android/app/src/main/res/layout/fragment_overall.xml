@@ -1,29 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.overall.OverallFragment">
 
-    <kr.valor.juggernaut.ui.NoElevationAppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+    <data>
+        <variable
+            name="viewModel"
+            type="kr.valor.juggernaut.ui.overall.OverallViewModel" />
+    </data>
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:fitsSystemWindows="true"
-            style="@style/Widget.App.Toolbar"/>
-
-    </kr.valor.juggernaut.ui.NoElevationAppBarLayout>
-
-    <TextView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Overall" />
+        android:fitsSystemWindows="true">
 
-</FrameLayout>
+        <kr.valor.juggernaut.ui.NoElevationAppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:background="?attr/colorSurface">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true"
+                android:background="?attr/colorSurface"
+                app:titleEnabled="false"
+                app:contentScrim="?attr/colorSurface"
+                app:statusBarScrim="?attr/colorSurface"
+                app:layout_scrollFlags="scroll|snap">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize" />
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </kr.valor.juggernaut.ui.NoElevationAppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/user_completed_session_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="@dimen/recyclerview_container_padding_horizontal_default"
+            android:paddingVertical="@dimen/recyclerview_container_padding_vertical_default"
+            android:clipToPadding="false"
+            app:overallSessions="@{viewModel.uiState}"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_session_achievement_info" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
