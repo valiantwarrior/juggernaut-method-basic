@@ -21,6 +21,12 @@ data class TrainingMaxEntity(
     @ColumnInfo(name = "training_max_weights")
     val trainingMaxWeights: Int,
 
+    @ColumnInfo(name = "base_weights")
+    val baseWeights: Double,
+
+    @ColumnInfo(name = "base_repetitions")
+    val baseRepetitions: Int,
+
     @ColumnInfo(name = "last_updated_at")
     val lastUpdatedAt: Long
 )

@@ -11,6 +11,7 @@ import kr.valor.juggernaut.domain.common.IllegalProgressionStateSetupException.C
 import kr.valor.juggernaut.domain.progression.usecase.contract.UpdateUserProgressionNewCycleContract
 import kr.valor.juggernaut.domain.progression.usecase.usecase.LoadProgressionStateUseCase
 import kr.valor.juggernaut.domain.progression.usecase.usecase.UpdateMethodProgressStateUseCase
+import kr.valor.juggernaut.domain.trainingmax.model.CorrespondingBaseRecord
 import kr.valor.juggernaut.domain.trainingmax.usecase.DeleteTrainingMaxesUseCase
 import kr.valor.juggernaut.domain.trainingmax.usecase.InitTrainingMaxUseCase
 import javax.inject.Inject
@@ -23,12 +24,15 @@ class StartMethodSetupContract @Inject constructor(
     private val updateMethodProgressStateUseCase: UpdateMethodProgressStateUseCase
 ) {
 
-    suspend operator fun invoke(liftCategoryWeightsMap: Map<LiftCategory, Int>?, usingPreviousRecord: Boolean = false) {
+    suspend operator fun invoke(
+        tmWeightsWithCorrespondingBaseRecordPairMap: Map<LiftCategory, Pair<Int, CorrespondingBaseRecord>>?,
+        usingPreviousRecord: Boolean = false
+    ) {
         when(val previousProgressionState = loadProgressionStateUseCase().first()) {
             is ProgressionState.None -> {
                 updateMethodProgressStateUseCase(MethodProgressState.ONGOING)
                 updateUserProgressionNewCycleContract(MethodCycle.INITIAL)
-                initializeUserTrainingMaxByUpdatedUserProgression(liftCategoryWeightsMap!!)
+                initializeUserTrainingMaxByUpdatedUserProgression(tmWeightsWithCorrespondingBaseRecordPairMap!!)
             }
             is ProgressionState.Done -> {
                 val nextMethodCycleState = previousProgressionState.latestUserProgression.methodCycle + 1
@@ -36,7 +40,7 @@ class StartMethodSetupContract @Inject constructor(
                 updateUserProgressionNewCycleContract(nextMethodCycleState)
                 if (!usingPreviousRecord) {
                     deleteTrainingMaxesUseCase(nextMethodCycleState)
-                    initializeUserTrainingMaxByUpdatedUserProgression(liftCategoryWeightsMap!!)
+                    initializeUserTrainingMaxByUpdatedUserProgression(tmWeightsWithCorrespondingBaseRecordPairMap!!)
                 }
             }
             is ProgressionState.OnGoing -> {
@@ -45,11 +49,16 @@ class StartMethodSetupContract @Inject constructor(
         }
     }
 
-    private suspend fun initializeUserTrainingMaxByUpdatedUserProgression(liftCategoryWeightsMap: Map<LiftCategory, Int>) {
+    private suspend fun initializeUserTrainingMaxByUpdatedUserProgression(
+        tmWeightsWithCorrespondingBaseRecordPairMap: Map<LiftCategory, Pair<Int, CorrespondingBaseRecord>>
+    ) {
         val userProgressionAfterUpdatedInThisContext = getUserProgressionAfterUpdated()
-        val (updatedMethodCycle, updatedPhase, _) = userProgressionAfterUpdatedInThisContext
-        liftCategoryWeightsMap.forEach { (liftCategory, inputWeights) ->
-            initTrainingMaxUseCase(liftCategory, inputWeights, updatedMethodCycle, updatedPhase)
+        val updatedMethodCycleWithUpdatedPhasePair = with(userProgressionAfterUpdatedInThisContext) {
+            methodCycle to phase
+        }
+
+        LiftCategory.values().forEach { liftCategory ->
+            initTrainingMaxUseCase(liftCategory, tmWeightsWithCorrespondingBaseRecordPairMap[liftCategory]!!, updatedMethodCycleWithUpdatedPhasePair)
         }
     }
 

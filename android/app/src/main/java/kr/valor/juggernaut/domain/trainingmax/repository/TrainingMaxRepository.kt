@@ -5,6 +5,7 @@ import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.domain.progression.model.UserProgression
+import kr.valor.juggernaut.domain.trainingmax.model.CorrespondingBaseRecord
 import kr.valor.juggernaut.domain.trainingmax.model.TrainingMax
 
 interface TrainingMaxRepository {
@@ -17,7 +18,11 @@ interface TrainingMaxRepository {
 
     suspend fun insertTrainingMax(trainingMax: TrainingMax): Long
 
-    fun createTrainingMax(liftCategory: LiftCategory, inputWeights: Int, methodCycle: MethodCycle, phase: Phase): TrainingMax
+    fun createTrainingMax(
+        liftCategory: LiftCategory,
+        tmWeightsWithCorrespondingBaseRecordPair: Pair<Int, CorrespondingBaseRecord>,
+        methodCycleWithPhasePair: Pair<MethodCycle, Phase>
+    ): TrainingMax
 
     suspend fun clear()
 

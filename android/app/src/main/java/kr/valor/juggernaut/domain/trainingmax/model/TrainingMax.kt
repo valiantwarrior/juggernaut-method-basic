@@ -10,5 +10,6 @@ data class TrainingMax(
     val phase: Phase,
     val liftCategory: LiftCategory,
     val trainingMaxWeights: Int,
+    val correspondingBaseRecord: CorrespondingBaseRecord,
     val lastUpdatedAt: Long
 )

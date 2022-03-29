@@ -11,6 +11,7 @@ import kr.valor.juggernaut.data.trainingmax.entity.TrainingMaxEntity
 import kr.valor.juggernaut.data.trainingmax.mapper.TrainingMaxMapper
 import kr.valor.juggernaut.data.trainingmax.source.TrainingMaxDataSource
 import kr.valor.juggernaut.domain.progression.model.UserProgression
+import kr.valor.juggernaut.domain.trainingmax.model.CorrespondingBaseRecord
 import kr.valor.juggernaut.domain.trainingmax.model.TrainingMax
 import kr.valor.juggernaut.domain.trainingmax.repository.TrainingMaxRepository
 import javax.inject.Inject
@@ -40,14 +41,23 @@ class DefaultTrainingMaxRepository @Inject constructor(
     override suspend fun insertTrainingMax(trainingMax: TrainingMax): Long =
         trainingMaxDataSource.insertTrainingMaxEntity(trainingMax.toDatabaseModel())
 
-    override fun createTrainingMax(liftCategory: LiftCategory, inputWeights: Int, methodCycle: MethodCycle, phase: Phase): TrainingMax =
-        TrainingMax(
+    override fun createTrainingMax(
+        liftCategory: LiftCategory,
+        tmWeightsWithCorrespondingBaseRecordPair: Pair<Int, CorrespondingBaseRecord>,
+        methodCycleWithPhasePair: Pair<MethodCycle, Phase>
+    ): TrainingMax {
+        val (methodCycle, phase) = methodCycleWithPhasePair
+        val (trainingMaxWeights, correspondingBaseRecord) = tmWeightsWithCorrespondingBaseRecordPair
+
+        return TrainingMax(
             methodCycle = methodCycle,
             phase = phase,
             liftCategory = liftCategory,
-            trainingMaxWeights = inputWeights,
+            trainingMaxWeights = trainingMaxWeights,
+            correspondingBaseRecord = correspondingBaseRecord,
             lastUpdatedAt = System.currentTimeMillis()
         )
+    }
 
     override suspend fun clear() {
         trainingMaxDataSource.clear()

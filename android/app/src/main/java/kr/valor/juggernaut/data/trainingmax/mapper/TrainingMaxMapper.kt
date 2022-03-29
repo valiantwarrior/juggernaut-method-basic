@@ -5,6 +5,7 @@ import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.data.common.mapper.EntityMapper
 import kr.valor.juggernaut.data.trainingmax.entity.TrainingMaxEntity
+import kr.valor.juggernaut.domain.trainingmax.model.CorrespondingBaseRecord
 import kr.valor.juggernaut.domain.trainingmax.model.TrainingMax
 import javax.inject.Inject
 
@@ -23,6 +24,7 @@ class DefaultTrainingMaxMapper @Inject constructor(): TrainingMaxMapper {
             phase = Phase.valueOf(entity.phaseName),
             liftCategory = LiftCategory.valueOf(entity.liftCategoryName),
             trainingMaxWeights = entity.trainingMaxWeights,
+            correspondingBaseRecord = CorrespondingBaseRecord(entity.baseWeights, entity.baseRepetitions),
             lastUpdatedAt = entity.lastUpdatedAt
         )
 
@@ -33,6 +35,8 @@ class DefaultTrainingMaxMapper @Inject constructor(): TrainingMaxMapper {
                 phaseName = phase.name,
                 liftCategoryName = liftCategory.name,
                 trainingMaxWeights = trainingMaxWeights,
+                baseWeights = correspondingBaseRecord.baseWeights,
+                baseRepetitions = correspondingBaseRecord.baseRepetitions,
                 lastUpdatedAt = lastUpdatedAt
             )
         }

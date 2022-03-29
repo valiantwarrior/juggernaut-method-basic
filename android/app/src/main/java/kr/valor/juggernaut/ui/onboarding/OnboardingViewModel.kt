@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.domain.common.StartMethodSetupContract
+import kr.valor.juggernaut.domain.trainingmax.model.CorrespondingBaseRecord
 import kr.valor.juggernaut.domain.trainingmax.usecase.CalculateOneRepMaxUseCase
 import kr.valor.juggernaut.domain.trainingmax.usecase.CalculateTrainingMaxWeightsUseCase
 import kr.valor.juggernaut.ui.onboarding.OnboardingUiModel.InputModel.Companion.INITIAL_INPUT_REPETITIONS_TEXT
@@ -72,10 +73,18 @@ class OnboardingViewModel @Inject constructor(
 
     fun onClickComplete() {
         viewModelScope.launch {
-            val liftCategoryWeightsMap = userInputModelState.value.mapValues { (_, onboardingModel) ->
-                onboardingModel.estimatedTrainingMax
-            }
-            startMethodSetupContract(liftCategoryWeightsMap)
+            val estimatedTrainingMaxAndCorrespondingBaseRecordPairMap =
+                userInputModelState.value.mapValues { (_, onboardingModel) ->
+                    val newTrainingMax = onboardingModel.estimatedTrainingMax
+                    val correspondingBaseRecord = CorrespondingBaseRecord(
+                        baseWeights = onboardingModel.inputModel.inputWeights,
+                        baseRepetitions = onboardingModel.inputModel.inputRepetitions
+                    )
+
+                    newTrainingMax to correspondingBaseRecord
+                }
+
+            startMethodSetupContract(estimatedTrainingMaxAndCorrespondingBaseRecordPairMap)
             _eventChannel.send(OnboardingUiEvent.Done)
         }
     }
