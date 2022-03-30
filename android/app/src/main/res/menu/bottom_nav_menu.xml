@@ -6,14 +6,13 @@
         android:icon="@drawable/ic_bottom_nav_icon_home_24"
         android:title="@string/bottom_nav_menu_item_home_title" />
     <item
-        android:id="@+id/statistic_dest"
-        android:enabled="true"
-        android:icon="@drawable/ic_bottom_nav_icon_statistic_24"
-        android:title="@string/bottom_nav_menu_item_statistic_title" />
-
-    <item
         android:id="@+id/overall_dest"
         android:enabled="true"
         android:icon="@drawable/ic_bottom_nav_icon_overall_24"
         android:title="@string/bottom_nav_menu_item_overall_title" />
+    <item
+        android:id="@+id/statistic_dest"
+        android:enabled="true"
+        android:icon="@drawable/ic_bottom_nav_icon_statistic_24"
+        android:title="@string/bottom_nav_menu_item_statistic_title" />
 </menu>

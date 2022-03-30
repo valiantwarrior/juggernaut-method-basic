@@ -50,7 +50,83 @@
             app:overallSessions="@{viewModel.uiState}"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_session_achievement_info" />
+            tools:listitem="@layout/item_session_achievement_info"
+            tools:visibility="gone" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/empty_session_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:visibility="gone"
+            app:emptySession="@{viewModel.uiState}"
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/empty_session_icon"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/overall_empty_session_icon_content_description"
+                app:srcCompat="@drawable/ic_empty_default"
+                app:tint="?attr/colorPrimaryVariant"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="@id/start_guideline"
+                app:layout_constraintTop_toTopOf="@id/top_guideline"
+                app:layout_constraintEnd_toEndOf="@id/end_guideline" />
+
+            <TextView
+                android:id="@+id/empty_session_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_dp_extreme_large"
+                android:textAppearance="@style/TextAppearance.App.Headline2"
+                android:text="@string/overall_empty_session_list_title_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/vertical_guideline" />
+
+            <TextView
+                android:id="@+id/empty_session_message_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.App.Content"
+                android:layout_marginTop="@dimen/margin_dp_extreme_large"
+                android:text="@string/overall_empty_session_list_message_text"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="@id/empty_session_title_text"
+                app:layout_constraintEnd_toEndOf="@id/empty_session_title_text"
+                app:layout_constraintTop_toBottomOf="@id/empty_session_title_text" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/vertical_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.6" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/start_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/margin_dp_extreme_large" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/end_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/margin_dp_extreme_large" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/top_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="@dimen/margin_dp_extreme_large" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
