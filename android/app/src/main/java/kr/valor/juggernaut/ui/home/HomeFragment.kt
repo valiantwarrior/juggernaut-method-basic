@@ -2,7 +2,6 @@ package kr.valor.juggernaut.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -74,7 +73,7 @@ class HomeFragment : NavigationFragment() {
     }
 
     private fun FragmentHomeBinding.showSnackBar() {
-        val snackbarText = resources.getString(R.string.home_snackbar_text)
+        val snackbarText = resources.getString(R.string.home_snackbar_message)
         val snackbarActionLabelText = resources.getString(R.string.home_snackbar_action_label)
         snackbar = Snackbar.make(root, snackbarText, Snackbar.LENGTH_INDEFINITE)
             .setAction(snackbarActionLabelText) {

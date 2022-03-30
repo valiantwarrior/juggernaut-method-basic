@@ -28,6 +28,7 @@
     <dimen name="recyclerview_container_padding_vertical_default">24dp</dimen>
     <dimen name="recyclerview_container_padding_bottom_including_extended_fab">80dp</dimen> <!-- extended fab height = 48dp https://material.io/components/buttons-floating-action-button#specs -->
     <dimen name="container_padding_bottom_including_extended_fab">80dp</dimen> <!-- extended fab height = 48dp https://material.io/components/buttons-floating-action-button#specs -->
+    <dimen name="item_onboarding_confirmation_height">140dp</dimen>
     <dimen name="item_session_summary_width">280dp</dimen>
     <dimen name="item_session_summary_height">200dp</dimen>
 

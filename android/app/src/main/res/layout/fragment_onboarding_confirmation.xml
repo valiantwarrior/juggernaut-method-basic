@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="kr.valor.juggernaut.ui.onboarding.form.FormPagePosition" />
+        <variable
+            name="viewModel"
+            type="kr.valor.juggernaut.ui.onboarding.confirmation.ConfirmationViewModel" />
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.onboarding.confirmation.ConfirmationFragment">
+
+            <ImageView
+                android:id="@+id/confirmation_title_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/onboarding_title_image_content_description"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="@id/vertical_guideline"
+                app:layout_constraintStart_toStartOf="@id/start_guideline"
+                app:layout_constraintTop_toTopOf="@id/top_guideline"
+                app:srcCompat="@drawable/ic_onboarding_header"
+                app:tint="?attr/colorPrimaryVariant"
+                tools:src="@drawable/ic_lift_category_deadlift" />
+
+            <TextView
+                android:id="@+id/confirmation_header_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/onboarding_confirmation_title_text"
+                android:textAppearance="@style/TextAppearance.App.Headline2"
+                app:layout_constraintStart_toStartOf="@id/start_guideline"
+                app:layout_constraintTop_toBottomOf="@id/confirmation_title_image"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/confirmation_description_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_dp_small"
+                android:layout_marginBottom="@dimen/margin_dp_extreme_large"
+                android:text="@string/onboarding_confirmation_description_text"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintEnd_toEndOf="@id/end_guideline"
+                app:layout_constraintBottom_toTopOf="@id/user_input_benchpress"
+                app:layout_constraintStart_toStartOf="@id/start_guideline"
+                app:layout_constraintTop_toBottomOf="@id/confirmation_header_title" />
+
+            <include
+                layout="@layout/layout_onboarding_confirmation_item"
+                android:id="@+id/user_input_benchpress"
+                android:layout_height="@dimen/item_onboarding_confirmation_height"
+                android:layout_width="0dp"
+                android:layout_marginTop="@dimen/margin_dp_extreme_large"
+                android:layout_marginBottom="@dimen/margin_dp_default"
+                bind:formPageData="@{viewModel.formPageDataMap.get(FormPagePosition.BENCHPRESS)}"
+                bind:pagePosition="@{FormPagePosition.BENCHPRESS}"
+                app:layout_constraintTop_toBottomOf="@id/confirmation_description_text"
+                app:layout_constraintStart_toStartOf="@id/card_start_guideline"
+                app:layout_constraintEnd_toEndOf="@id/card_end_guideline"
+                app:layout_constraintBottom_toTopOf="@id/user_input_squat" />
+
+            <include
+                layout="@layout/layout_onboarding_confirmation_item"
+                android:id="@+id/user_input_squat"
+                android:layout_height="@dimen/item_onboarding_confirmation_height"
+                android:layout_width="0dp"
+                android:layout_marginVertical="@dimen/margin_dp_default"
+                bind:formPageData="@{viewModel.formPageDataMap.get(FormPagePosition.SQUAT)}"
+                bind:pagePosition="@{FormPagePosition.SQUAT}"
+                app:layout_constraintTop_toBottomOf="@id/user_input_benchpress"
+                app:layout_constraintStart_toStartOf="@id/card_start_guideline"
+                app:layout_constraintEnd_toEndOf="@id/card_end_guideline"
+                app:layout_constraintBottom_toBottomOf="@id/user_input_overheadpress" />
+
+            <include
+                layout="@layout/layout_onboarding_confirmation_item"
+                android:id="@+id/user_input_overheadpress"
+                android:layout_height="@dimen/item_onboarding_confirmation_height"
+                android:layout_width="0dp"
+                android:layout_marginVertical="@dimen/margin_dp_default"
+                bind:formPageData="@{viewModel.formPageDataMap.get(FormPagePosition.OVERHEADPRESS)}"
+                bind:pagePosition="@{FormPagePosition.OVERHEADPRESS}"
+                app:layout_constraintTop_toBottomOf="@id/user_input_squat"
+                app:layout_constraintStart_toStartOf="@id/card_start_guideline"
+                app:layout_constraintEnd_toEndOf="@id/card_end_guideline"
+                app:layout_constraintBottom_toTopOf="@id/user_input_deadlift" />
+
+            <include
+                layout="@layout/layout_onboarding_confirmation_item"
+                android:id="@+id/user_input_deadlift"
+                android:layout_height="@dimen/item_onboarding_confirmation_height"
+                android:layout_width="0dp"
+                android:layout_marginVertical="@dimen/margin_dp_default"
+                bind:formPageData="@{viewModel.formPageDataMap.get(FormPagePosition.DEADLIFT)}"
+                bind:pagePosition="@{FormPagePosition.DEADLIFT}"
+                app:layout_constraintTop_toBottomOf="@id/user_input_overheadpress"
+                app:layout_constraintStart_toStartOf="@id/card_start_guideline"
+                app:layout_constraintEnd_toEndOf="@id/card_end_guideline"
+                app:layout_constraintBottom_toTopOf="@id/start_method_button" />
+
+            <Button
+                style="@style/Widget.App.Button.TextButton.SharpButton"
+                android:id="@+id/back_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/onboarding_form_page_back_button_text"
+                android:textAllCaps="false"
+                app:layout_constraintStart_toStartOf="@id/card_start_guideline"
+                app:layout_constraintEnd_toEndOf="@id/vertical_guideline"
+                app:layout_constraintBottom_toBottomOf="@id/bottom_guideline" />
+
+            <Button
+                style="@style/Widget.App.Button.SharpButton"
+                android:id="@+id/start_method_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_dp_extreme_large"
+                android:text="@string/onboarding_confirm_start_method_button_text"
+                android:backgroundTint="?attr/colorPrimaryVariant"
+                android:onClick="@{() -> viewModel.onClickStartMethod()}"
+                app:iconPadding="@dimen/padding_dp_default"
+                app:iconGravity="textStart"
+                app:icon="@drawable/ic_start_24"
+                app:layout_constraintTop_toBottomOf="@id/user_input_deadlift"
+                app:layout_constraintStart_toStartOf="@id/vertical_guideline"
+                app:layout_constraintEnd_toEndOf="@id/card_end_guideline"
+                app:layout_constraintBottom_toBottomOf="@id/bottom_guideline" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/vertical_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.35" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/card_start_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/margin_dp_default" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/start_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/guideline_margin_dp_extreme_large" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/end_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/guideline_margin_dp_extreme_large" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/card_end_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/margin_dp_default" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/top_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="@dimen/guideline_margin_dp_extreme_large" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/bottom_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_end="@dimen/guideline_margin_dp_extreme_large" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</layout>
+

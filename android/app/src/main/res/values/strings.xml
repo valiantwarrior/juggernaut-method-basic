@@ -5,11 +5,46 @@
     <string name="app_bar_title_overall">Overall</string>
     <string name="app_bar_title_statistic">Statistic</string>
 
+    <string name="onboarding_header_title">Juggernaut\nMethod\nBasic</string>
+    <string name="onboarding_header_sub_title">Become Unstoppable</string>
+    <string name="onboarding_header_start_button_text">START</string>
+    <string name="onboarding_form_page_next_button_text">Next</string>
+    <string name="onboarding_form_page_back_button_text">Back</string>
+    <string name="onboarding_form_page_description_text">Please enter your %1$s record.\n(Click button to enter your weights record)</string>
+    <string name="onboarding_form_page_plus_reps_content_description_text">This is plus reps button.</string>
+    <string name="onboarding_form_page_minus_reps_content_description_text">This is minus reps button.</string>
+    <string name="onboarding_title_image_content_description">This is title image.</string>
+    <string name="onboarding_lift_category_icon_content_description">This is life category icon.</string>
+    <string name="onboarding_confirmation_title_text">Check !!</string>
+    <string name="onboarding_confirmation_description_text">Please check the records you entered.</string>
+    <string name="onboarding_weight_input_button_25">+ 25kg</string>
+    <string name="onboarding_weight_input_button_20">+ 20kg</string>
+    <string name="onboarding_weight_input_button_15">+ 15kg</string>
+    <string name="onboarding_weight_input_button_10">+ 10kg</string>
+    <string name="onboarding_weight_input_button_5">+ 5kg</string>
+
+    <string name="onboarding_weight_input_button_2.5">+ 2.5kg</string>
+    <string name="onboarding_weight_input_button_2">+ 2kg</string>
+    <string name="onboarding_weight_input_button_1.5">+ 1.5kg</string>
+    <string name="onboarding_weight_input_button_1">+ 1kg</string>
+    <string name="onboarding_weight_input_button_0.5">+ 0.5kg</string>
+
+    <string name="onboarding_weight_input_button_pop">POP</string>
+    <string name="onboarding_weight_input_button_dismiss">DONE</string>
+
+    <string name="onboarding_weight_input_snackbar_message_barbell_full">Full! Cannot load more plates.\nConsider realigning your plates.</string>
+    <string name="onboarding_weight_input_snackbar_message_barbell_empty">It\'s empty.</string>
+    <string name="onboarding_weight_input_snackbar_action_label">OK</string>
+
+    <string name="onboarding_weight_input_weights_text_format">%1$s %2$s</string> <!-- Usage : 120 kg or 120 lbs -->
+    <string name="onboarding_confirm_base_record_text_format">Your record : %1$d%3$s x %2$d</string> <!-- Usage : 120kg x 5 -->
+    <string name="onboarding_confirm_start_method_button_text">Start</string>
+
     <string name="bottom_nav_menu_item_home_title">Home</string>
     <string name="bottom_nav_menu_item_statistic_title">Statistic</string>
     <string name="bottom_nav_menu_item_overall_title">All</string>
     <string name="accomplishment_extended_fab_navigate_back">back</string>
-    <string name="home_snackbar_text">You\'ve done.\nClick start button to begin new cycle.</string>
+    <string name="home_snackbar_message">You\'ve done.\nClick start button to begin new cycle.</string>
     <string name="home_snackbar_action_label">START</string>
     <string name="home_dialog_title">Previous records are stored on this device.</string>
     <string name="home_dialog_message">You can start a new cycle based on a saved record or a new one.\n\nWhat\'s it gonna be?</string>

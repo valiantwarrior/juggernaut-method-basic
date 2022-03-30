@@ -10,8 +10,8 @@
 
         <!-- Customize -->
         <item name="android:statusBarColor">?attr/colorSurface</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/open_sans_semibold</item>
+        <item name="fontFamily">@font/open_sans_semibold</item>
     </style>
 
     <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
@@ -23,6 +23,30 @@
         <item name="colorPrimary">?attr/colorSurface</item>
         <item name="colorPrimaryVariant">?attr/colorSurface</item>
         <item name="colorOnPrimary">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="TextAppearance.App.Headline1" parent="TextAppearance.MaterialComponents.Headline3">
+        <item name="android:textSize" tools:ignore="SpUsage">48dp</item>
+    </style>
+
+    <style name="TextAppearance.App.Headline2" parent="TextAppearance.MaterialComponents.Headline3">
+        <item name="android:textSize" tools:ignore="SpUsage">34dp</item>
+    </style>
+
+    <style name="TextAppearance.App.Headline3" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textSize" tools:ignore="SpUsage">24dp</item>
+    </style>
+
+    <style name="TextAppearance.App.Title" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textSize" tools:ignore="SpUsage">20dp</item>
+    </style>
+
+    <style name="TextAppearance.App.SubTitle" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textSize" tools:ignore="SpUsage">16dp</item>
+    </style>
+
+    <style name="TextAppearance.App.Content" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize" tools:ignore="SpUsage">16dp</item>
     </style>
 
 </resources>

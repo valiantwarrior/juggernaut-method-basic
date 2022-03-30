@@ -4,9 +4,7 @@
     <color name="color_primary_variant">#2C2F42</color>
     <color name="color_primary_dark">#03051c</color>
     <color name="color_on_secondary">@color/white</color>
-
-    <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
+    <color name="color_surface_variant">#F8F8FA</color>
 
     <!-- group 1 -->
     <color name="color_primary_light">#2C2F42</color>
@@ -14,11 +12,21 @@
     <color name="color_secondary">#FEBB53</color>
 
 
-    <color name="separator_color">#D1CECE</color>
+    <color name="separator_color">@color/gray</color>
 
     <color name="lift_category_bp_identity_color">#FF898A</color>
     <color name="lift_category_sq_identity_color">#62CE9D</color>
     <color name="lift_category_ohp_identity_color">#5482FF</color>
     <color name="lift_category_dl_identity_color">#A167E6</color>
+
+    <color name="plate_25_color">#652A2C</color>
+    <color name="plate_20_color">#2D4A73</color>
+    <color name="plate_15_color">#C6AF47</color>
+    <color name="plate_10_color">#385A42</color>
+    <color name="plate_5_color">@color/gray</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray">#D1CECE</color>
 
 </resources>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/onboarding_navigation"
+    app:startDestination="@id/header_dest">
+
+    <fragment
+        android:id="@+id/header_dest"
+        android:name="kr.valor.juggernaut.ui.onboarding.header.HeaderFragment"
+        android:label="fragment_onboarding_header"
+        tools:layout="@layout/fragment_onboarding_header" >
+        <action
+            android:id="@+id/action_header_dest_to_form_dest"
+            app:destination="@id/form_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/form_dest"
+        android:name="kr.valor.juggernaut.ui.onboarding.form.FormFragment"
+        android:label="fragment_onboarding_form"
+        tools:layout="@layout/fragment_onboarding_form" >
+        <action
+            android:id="@+id/action_form_dest_to_formWeightInputBottomSheetDialog"
+            app:destination="@id/input_dest" />
+        <action
+            android:id="@+id/action_form_dest_to_header_dest"
+            app:destination="@id/header_dest"
+            app:popUpTo="@id/header_dest"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_form_dest_to_confirmation_dest"
+            app:destination="@id/confirmation_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/confirmation_dest"
+        android:name="kr.valor.juggernaut.ui.onboarding.confirmation.ConfirmationFragment"
+        android:label="fragment_onboarding_confirmation"
+        tools:layout="@layout/fragment_onboarding_confirmation" >
+        <action
+            android:id="@+id/action_confirmation_dest_to_form_dest"
+            app:destination="@id/form_dest" />
+    </fragment>
+    <dialog
+        android:id="@+id/input_dest"
+        android:name="kr.valor.juggernaut.ui.onboarding.form.page.input.InputBottomSheetDialog"
+        android:label="dialog_onboarding_weight_input"
+        tools:layout="@layout/dialog_onboarding_weight_input" >
+        <argument
+            android:name="pagePosition"
+            app:argType="kr.valor.juggernaut.ui.onboarding.form.FormPagePosition" />
+    </dialog>
+</navigation>

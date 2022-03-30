@@ -20,8 +20,8 @@ import kr.valor.juggernaut.ui.statistic.StatisticUiState
 
 @BindingAdapter("statisticUserTrainingMaxItems")
 fun RecyclerView.bindStatisticUserTrainingMaxItems(uiState: StatisticUiState) {
-    bindUiState(uiState) { uiState ->
-        val trainingMaxes = uiState.trainingMaxes
+    bindUiState(uiState) { result ->
+        val trainingMaxes = result.trainingMaxes
 
         (adapter as TrainingMaxAdapter).submitList(trainingMaxes)
     }

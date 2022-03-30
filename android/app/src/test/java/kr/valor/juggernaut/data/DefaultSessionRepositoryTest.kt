@@ -20,107 +20,107 @@ import org.junit.Before
 import org.junit.Test
 
 
-class DefaultSessionRepositoryTest {
-
-    private lateinit var repository: SessionRepository
-    private lateinit var mockUserProgression: UserProgression
-    private lateinit var mockTrainingMaxes: List<TrainingMax>
-
-    @Before
-    fun `init`() {
-        repository = TestServiceLocator.sessionRepository
-        initMock()
-    }
-
-    @After
-    fun `nuke session`() = runBlocking {
-        repository.clear()
-    }
-
-    @Test
-    fun `synchronizeSessions() works as expected`() = runTest {
-        val initialSessions = repository.findSessionsByUserProgression(mockUserProgression).single()
-        assertThat(initialSessions.size, `is`(0))
-
-        repository.synchronizeSessions(mockUserProgression, mockTrainingMaxes)
-        var synchronizedSessions = repository.findSessionsByUserProgression(mockUserProgression).single()
-        assertThat(synchronizedSessions.size, `is`(LiftCategory.TOTAL_LIFT_CATEGORY_COUNT))
-        synchronizedSessions.forEach { session ->
-            assertThat(session, instanceOf(Session::class.java))
-            val (methodCycle, phase, microCycle) = session.progression
-            with(mockUserProgression) {
-                assertThat(methodCycle, `is`(this.methodCycle))
-                assertThat(phase, `is`(this.phase))
-                assertThat(microCycle, `is`(this.microCycle))
-            }
-        }
-
-        synchronizedSessions = repository.getAllSessions().single()
-        assertThat(synchronizedSessions.size, `is`(LiftCategory.TOTAL_LIFT_CATEGORY_COUNT))
-
-        LiftCategory.values().forEach { liftCategory ->
-            var session = synchronizedSessions.find { it.category == liftCategory }!!
-            val trainingMax = mockTrainingMaxes.find { it.liftCategory == liftCategory }!!
-            assertThat(session.tmWeights, `is`(trainingMax.trainingMaxWeights))
-            assertThat(session.category, `is`(trainingMax.liftCategory))
-        }
-
-        mockUserProgression = mockUserProgression.copy(microCycle = MicroCycle.INTENSIFICATION)
-        repository.synchronizeSessions(mockUserProgression, mockTrainingMaxes)
-        synchronizedSessions = repository.findSessionsByUserProgression(mockUserProgression).single()
-        assertThat(synchronizedSessions.size, `is`(LiftCategory.TOTAL_LIFT_CATEGORY_COUNT))
-        synchronizedSessions.forEach { session ->
-            val (methodCycle, phase, microCycle) = session.progression
-            with(mockUserProgression) {
-                assertThat(methodCycle, `is`(this.methodCycle))
-                assertThat(phase, `is`(this.phase))
-                assertThat(microCycle, `is`(this.microCycle))
-            }
-        }
-
-        synchronizedSessions = repository.getAllSessions().single()
-        assertThat(synchronizedSessions.size, `is`(LiftCategory.TOTAL_LIFT_CATEGORY_COUNT * 2))
-    }
-
-    private fun initMock() {
-        mockUserProgression = UserProgression(
-            MethodCycle(1), Phase.REP10, MicroCycle.ACCUMULATION
-        )
-
-        mockTrainingMaxes = listOf(
-            TrainingMax(
-                id = 0L,
-                methodCycle = mockUserProgression.methodCycle,
-                phase = mockUserProgression.phase,
-                liftCategory = LiftCategory.BENCHPRESS,
-                trainingMaxWeights = 60,
-                lastUpdatedAt = System.currentTimeMillis()
-            ),
-            TrainingMax(
-                id = 1L,
-                methodCycle = mockUserProgression.methodCycle,
-                phase = mockUserProgression.phase,
-                liftCategory = LiftCategory.SQUAT,
-                trainingMaxWeights = 100,
-                lastUpdatedAt = System.currentTimeMillis()
-            ),
-            TrainingMax(
-                id = 2L,
-                methodCycle = mockUserProgression.methodCycle,
-                phase = mockUserProgression.phase,
-                liftCategory = LiftCategory.OVERHEADPRESS,
-                trainingMaxWeights = 40,
-                lastUpdatedAt = System.currentTimeMillis()
-            ),
-            TrainingMax(
-                id = 3L,
-                methodCycle = mockUserProgression.methodCycle,
-                phase = mockUserProgression.phase,
-                liftCategory = LiftCategory.DEADLIFT,
-                trainingMaxWeights = 140,
-                lastUpdatedAt = System.currentTimeMillis()
-            )
-        )
-    }
-
-}
+//class DefaultSessionRepositoryTest {
+//
+//    private lateinit var repository: SessionRepository
+//    private lateinit var mockUserProgression: UserProgression
+//    private lateinit var mockTrainingMaxes: List<TrainingMax>
+//
+//    @Before
+//    fun `init`() {
+//        repository = TestServiceLocator.sessionRepository
+//        initMock()
+//    }
+//
+//    @After
+//    fun `nuke session`() = runBlocking {
+//        repository.clear()
+//    }
+//
+//    @Test
+//    fun `synchronizeSessions() works as expected`() = runTest {
+//        val initialSessions = repository.findSessionsByUserProgression(mockUserProgression).single()
+//        assertThat(initialSessions.size, `is`(0))
+//
+//        repository.synchronizeSessions(mockUserProgression, mockTrainingMaxes)
+//        var synchronizedSessions = repository.findSessionsByUserProgression(mockUserProgression).single()
+//        assertThat(synchronizedSessions.size, `is`(LiftCategory.TOTAL_LIFT_CATEGORY_COUNT))
+//        synchronizedSessions.forEach { session ->
+//            assertThat(session, instanceOf(Session::class.java))
+//            val (methodCycle, phase, microCycle) = session.progression
+//            with(mockUserProgression) {
+//                assertThat(methodCycle, `is`(this.methodCycle))
+//                assertThat(phase, `is`(this.phase))
+//                assertThat(microCycle, `is`(this.microCycle))
+//            }
+//        }
+//
+//        synchronizedSessions = repository.getAllSessions().single()
+//        assertThat(synchronizedSessions.size, `is`(LiftCategory.TOTAL_LIFT_CATEGORY_COUNT))
+//
+//        LiftCategory.values().forEach { liftCategory ->
+//            var session = synchronizedSessions.find { it.category == liftCategory }!!
+//            val trainingMax = mockTrainingMaxes.find { it.liftCategory == liftCategory }!!
+//            assertThat(session.tmWeights, `is`(trainingMax.trainingMaxWeights))
+//            assertThat(session.category, `is`(trainingMax.liftCategory))
+//        }
+//
+//        mockUserProgression = mockUserProgression.copy(microCycle = MicroCycle.INTENSIFICATION)
+//        repository.synchronizeSessions(mockUserProgression, mockTrainingMaxes)
+//        synchronizedSessions = repository.findSessionsByUserProgression(mockUserProgression).single()
+//        assertThat(synchronizedSessions.size, `is`(LiftCategory.TOTAL_LIFT_CATEGORY_COUNT))
+//        synchronizedSessions.forEach { session ->
+//            val (methodCycle, phase, microCycle) = session.progression
+//            with(mockUserProgression) {
+//                assertThat(methodCycle, `is`(this.methodCycle))
+//                assertThat(phase, `is`(this.phase))
+//                assertThat(microCycle, `is`(this.microCycle))
+//            }
+//        }
+//
+//        synchronizedSessions = repository.getAllSessions().single()
+//        assertThat(synchronizedSessions.size, `is`(LiftCategory.TOTAL_LIFT_CATEGORY_COUNT * 2))
+//    }
+//
+//    private fun initMock() {
+//        mockUserProgression = UserProgression(
+//            MethodCycle(1), Phase.REP10, MicroCycle.ACCUMULATION
+//        )
+//
+//        mockTrainingMaxes = listOf(
+//            TrainingMax(
+//                id = 0L,
+//                methodCycle = mockUserProgression.methodCycle,
+//                phase = mockUserProgression.phase,
+//                liftCategory = LiftCategory.BENCHPRESS,
+//                trainingMaxWeights = 60,
+//                lastUpdatedAt = System.currentTimeMillis()
+//            ),
+//            TrainingMax(
+//                id = 1L,
+//                methodCycle = mockUserProgression.methodCycle,
+//                phase = mockUserProgression.phase,
+//                liftCategory = LiftCategory.SQUAT,
+//                trainingMaxWeights = 100,
+//                lastUpdatedAt = System.currentTimeMillis()
+//            ),
+//            TrainingMax(
+//                id = 2L,
+//                methodCycle = mockUserProgression.methodCycle,
+//                phase = mockUserProgression.phase,
+//                liftCategory = LiftCategory.OVERHEADPRESS,
+//                trainingMaxWeights = 40,
+//                lastUpdatedAt = System.currentTimeMillis()
+//            ),
+//            TrainingMax(
+//                id = 3L,
+//                methodCycle = mockUserProgression.methodCycle,
+//                phase = mockUserProgression.phase,
+//                liftCategory = LiftCategory.DEADLIFT,
+//                trainingMaxWeights = 140,
+//                lastUpdatedAt = System.currentTimeMillis()
+//            )
+//        )
+//    }
+//
+//}

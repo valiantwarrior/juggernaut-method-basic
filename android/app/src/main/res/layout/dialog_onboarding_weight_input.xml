@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="kotlinx.coroutines.flow.StateFlow" />
+
+        <variable
+            name="viewModel"
+            type="kr.valor.juggernaut.ui.onboarding.form.page.input.InputViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ui.onboarding.form.page.input.InputBottomSheetDialog">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/plate_container_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:attachPlates="@{viewModel.plateStack}"
+            app:layout_constraintStart_toStartOf="@id/plates_container_start_guideline"
+            app:layout_constraintTop_toTopOf="@id/plates_container_top_guideline"
+            app:layout_constraintBottom_toBottomOf="@id/plates_container_bottom_guideline"
+            app:layout_constraintEnd_toEndOf="@id/plates_container_end_guideline" />
+
+        <TextView
+            android:id="@+id/total_weights_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.App.Headline1"
+            app:platesWeights="@{viewModel.plateStack}"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@id/plates_container_end_guideline"
+            app:layout_constraintTop_toTopOf="@id/plates_container_top_guideline"
+            app:layout_constraintBottom_toBottomOf="@id/plates_container_bottom_guideline"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            tools:text="120 kg" />
+            
+
+        <Button
+            android:id="@+id/plate_25_button"
+            style="@style/Widget.App.PlateButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_dp_default"
+            android:onClick="@{() -> viewModel.pushPlate(25.0)}"
+            android:text="@string/onboarding_weight_input_button_25"
+            app:icon="@drawable/ic_onboarding_plates_48"
+            app:iconGravity="textTop"
+            app:iconTint="@color/plate_25_color"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/plate_20_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/plates_container_bottom_guideline" />
+
+        <Button
+            android:id="@+id/plate_20_button"
+            style="@style/Widget.App.PlateButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:onClick="@{() -> viewModel.pushPlate(20.0)}"
+            android:text="@string/onboarding_weight_input_button_20"
+            app:icon="@drawable/ic_onboarding_plates_48"
+            app:iconGravity="textTop"
+            app:iconTint="@color/plate_20_color"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/plate_15_button"
+            app:layout_constraintStart_toEndOf="@id/plate_25_button"
+            app:layout_constraintTop_toTopOf="@id/plate_25_button" />
+
+        <Button
+            android:id="@+id/plate_15_button"
+            style="@style/Widget.App.PlateButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:onClick="@{() -> viewModel.pushPlate(15.0)}"
+            android:text="@string/onboarding_weight_input_button_15"
+            app:icon="@drawable/ic_onboarding_plates_48"
+            app:iconGravity="textTop"
+            app:iconTint="@color/plate_15_color"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/plate_10_button"
+            app:layout_constraintStart_toEndOf="@id/plate_20_button"
+            app:layout_constraintTop_toTopOf="@id/plate_25_button" />
+
+        <Button
+            android:id="@+id/plate_10_button"
+            style="@style/Widget.App.PlateButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:onClick="@{() -> viewModel.pushPlate(10.0)}"
+            android:text="@string/onboarding_weight_input_button_10"
+            app:icon="@drawable/ic_onboarding_plates_48"
+            app:iconGravity="textTop"
+            app:iconTint="@color/plate_10_color"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/plate_15_button"
+            app:layout_constraintTop_toTopOf="@id/plate_25_button" />
+
+        <Button
+            android:id="@+id/plate_5_button"
+            style="@style/Widget.App.PlateButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:onClick="@{() -> viewModel.pushPlate(5.0)}"
+            android:text="@string/onboarding_weight_input_button_5"
+            app:icon="@drawable/ic_onboarding_plates_24"
+            app:iconGravity="textTop"
+            app:iconTint="@color/plate_5_color"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/plate_small_25_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/plate_25_button" />
+
+        <Button
+            android:id="@+id/plate_small_25_button"
+            style="@style/Widget.App.PlateButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:onClick="@{() -> viewModel.pushPlate(2.5)}"
+            android:text="@string/onboarding_weight_input_button_2.5"
+            app:icon="@drawable/ic_onboarding_plates_24"
+            app:iconGravity="textTop"
+            app:iconTint="@color/plate_25_color"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/plate_small_20_button"
+            app:layout_constraintStart_toEndOf="@id/plate_5_button"
+            app:layout_constraintTop_toTopOf="@id/plate_5_button" />
+
+        <Button
+            android:id="@+id/plate_small_20_button"
+            style="@style/Widget.App.PlateButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:onClick="@{() -> viewModel.pushPlate(2.0)}"
+            android:text="@string/onboarding_weight_input_button_2"
+            app:icon="@drawable/ic_onboarding_plates_24"
+            app:iconGravity="textTop"
+            app:iconTint="@color/plate_20_color"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/plate_small_15_button"
+            app:layout_constraintStart_toEndOf="@id/plate_small_25_button"
+            app:layout_constraintTop_toTopOf="@id/plate_5_button" />
+
+        <Button
+            android:id="@+id/plate_small_15_button"
+            style="@style/Widget.App.PlateButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:onClick="@{() -> viewModel.pushPlate(1.5)}"
+            android:text="@string/onboarding_weight_input_button_1.5"
+            app:icon="@drawable/ic_onboarding_plates_24"
+            app:iconGravity="textTop"
+            app:iconTint="@color/plate_15_color"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/plate_small_20_button"
+            app:layout_constraintTop_toTopOf="@id/plate_5_button" />
+
+
+        <Button
+            android:id="@+id/plate_small_10_button"
+            style="@style/Widget.App.PlateButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:onClick="@{() -> viewModel.pushPlate(1.0)}"
+            android:text="@string/onboarding_weight_input_button_1"
+            app:icon="@drawable/ic_onboarding_plates_24"
+            app:iconGravity="textTop"
+            app:iconTint="@color/plate_10_color"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/plate_0_5_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/plate_5_button" />
+
+        <Button
+            android:id="@+id/plate_0_5_button"
+            style="@style/Widget.App.PlateButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:onClick="@{() -> viewModel.pushPlate(0.5)}"
+            android:text="@string/onboarding_weight_input_button_0.5"
+            app:icon="@drawable/ic_onboarding_plates_24"
+            app:iconGravity="textTop"
+            app:iconTint="@color/plate_5_color"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/pop_plates_button"
+            app:layout_constraintStart_toEndOf="@id/plate_small_10_button"
+            app:layout_constraintTop_toTopOf="@id/plate_small_10_button" />
+
+        <Button
+            android:id="@+id/pop_plates_button"
+            style="@style/Widget.App.PlateButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:onClick="@{() -> viewModel.popPlate()}"
+            android:text="@string/onboarding_weight_input_button_pop"
+            app:icon="@drawable/ic_onboarding_pop_plate_24"
+            app:iconGravity="textTop"
+            app:iconTint="?attr/colorPrimaryVariant"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/dismiss_button"
+            app:layout_constraintStart_toEndOf="@id/plate_0_5_button"
+            app:layout_constraintTop_toTopOf="@id/plate_small_10_button" />
+
+        <Button
+            android:id="@+id/dismiss_button"
+            style="@style/Widget.App.PlateButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="@string/onboarding_weight_input_button_dismiss"
+            app:icon="@drawable/ic_onboarding_submit_24"
+            app:iconGravity="textTop"
+            app:iconTint="?attr/colorPrimaryVariant"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/pop_plates_button"
+            app:layout_constraintTop_toTopOf="@id/plate_small_10_button" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/plates_container_start_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/margin_dp_default" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/plates_container_end_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.4" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/plates_container_top_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/margin_dp_default" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/plates_container_bottom_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="116dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/end_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/margin_dp_default" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
