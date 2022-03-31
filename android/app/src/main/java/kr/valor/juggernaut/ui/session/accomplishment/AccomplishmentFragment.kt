@@ -18,7 +18,7 @@ import kr.valor.juggernaut.databinding.FragmentAccomplishmentBinding
 /**
  * [NONE] is defaultValue. When token is [NONE], back destination is same as [FROM_HOME]
  *
- * @see [main_navigation.xml]
+ * @see [main_navigation]
  */
 enum class AccomplishmentDestinationToken {
     FROM_HOME, FROM_OVERALL, NONE
@@ -57,7 +57,7 @@ class AccomplishmentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.initAdapter()
-        binding.initExtendedFab()
+        binding.initExtendedFabClickListenerAndScrollingBehavior()
     }
 
     override fun onDetach() {
@@ -69,7 +69,7 @@ class AccomplishmentFragment : Fragment() {
         sessionAccomplishmentList.adapter = AccomplishmentAdapter()
     }
 
-    private fun FragmentAccomplishmentBinding.initExtendedFab() {
+    private fun FragmentAccomplishmentBinding.initExtendedFabClickListenerAndScrollingBehavior() {
         backExtendedFab.setOnClickListener {
             root.visibility = View.GONE
             findNavController().navigate(getNavDirections())
@@ -96,4 +96,5 @@ class AccomplishmentFragment : Fragment() {
             AccomplishmentDestinationToken.FROM_OVERALL -> AccomplishmentFragmentDirections.actionAccomplishmentDestToOverallDest()
             else -> AccomplishmentFragmentDirections.actionAccomplishmentDestToHomeDest()
         }
+
 }
