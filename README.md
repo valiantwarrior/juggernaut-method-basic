@@ -1,4 +1,4 @@
-# Juggernaut Basic Method - Android
+# Juggernaut Method Basic - Android
 
 ### About
 
