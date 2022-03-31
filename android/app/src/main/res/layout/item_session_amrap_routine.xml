@@ -42,7 +42,7 @@
                 android:text="@string/session_routine_item_amrap_routine_title_text"
                 android:textAppearance="@style/TextAppearance.App.Title"
                 app:drawableStartCompat="@drawable/ic_amrap_24"
-                app:drawableTint="@android:color/holo_red_dark"
+                app:drawableTint="@color/amrap_icon_color"
                 app:layout_constraintBottom_toBottomOf="@id/horizontal_separator"
                 app:layout_constraintEnd_toEndOf="@id/horizontal_separator"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -69,8 +69,9 @@
                 android:layout_height="wrap_content"
                 android:text="@{String.valueOf(amrapRoutineItem.repetitions)}"
                 android:textAppearance="@style/TextAppearance.App.Title"
+                android:drawablePadding="@dimen/padding_dp_small"
                 app:drawableStartCompat="@drawable/ic_amrap_24"
-                app:drawableTint="@android:color/holo_red_dark"
+                app:drawableTint="@color/amrap_icon_color"
                 app:layout_constraintBottom_toBottomOf="@id/horizontal_separator"
                 app:layout_constraintEnd_toEndOf="@id/horizontal_separator"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -89,7 +90,7 @@
                 app:layout_constraintEnd_toEndOf="@id/horizontal_separator"
                 app:layout_constraintStart_toEndOf="@id/minus_reps_button"
                 app:layout_constraintTop_toTopOf="@id/horizontal_separator"
-                app:tint="?attr/colorPrimary" />
+                app:tint="?attr/colorOnSurface" />
 
             <ImageButton
                 android:id="@+id/minus_reps_button"
@@ -105,7 +106,7 @@
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="@id/horizontal_separator"
                 app:layout_constraintTop_toTopOf="@id/horizontal_separator"
-                app:tint="?attr/colorPrimary" />
+                app:tint="?attr/colorOnSurface" />
 
 
             <View

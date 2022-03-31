@@ -55,7 +55,7 @@
                 android:drawablePadding="@dimen/padding_dp_small"
                 app:statisticUserTrainingMaxWeights="@{trainingMax}"
                 app:drawableStartCompat="@drawable/ic_amrap_24"
-                app:drawableTint="@android:color/holo_red_dark"
+                app:drawableTint="@color/amrap_icon_color"
                 app:layout_constraintVertical_bias="1.0"
                 app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintEnd_toEndOf="@id/horizontal_separator"

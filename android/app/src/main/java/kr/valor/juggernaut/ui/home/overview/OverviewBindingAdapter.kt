@@ -1,17 +1,19 @@
 package kr.valor.juggernaut.ui.home.overview
 
+import android.content.res.Resources
+import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
-import kr.valor.juggernaut.R
+import com.google.android.material.R as Material
+import kr.valor.juggernaut.R as R
 import kr.valor.juggernaut.common.LiftCategory.Companion.TOTAL_LIFT_CATEGORY_COUNT
 import kr.valor.juggernaut.databinding.FragmentOverviewBinding
 import kr.valor.juggernaut.databinding.LayoutUserProgressionCardBinding
@@ -79,7 +81,6 @@ fun TextView.bindAmrapIntensityInfo(session: Session?) {
     }
 }
 
-// TODO("Considering renameing "action")
 @BindingAdapter("overviewSessionSummaryAction")
 fun TextView.bindStatus(session: Session?) {
     session ?: return
@@ -174,14 +175,18 @@ private fun FragmentOverviewBinding.getOverviewMileStoneContentAndTitleTextPair(
 }
 
 private fun LayoutUserProgressionCardBinding.applyPrimaryDarkColorTheme() {
-    val cardBackgroundColor = ResourcesCompat.getColor(root.resources, R.color.color_primary, null)
-    val contentTextColor = ResourcesCompat.getColor(root.resources, R.color.color_on_primary_variant, null)
-    val titleTextColor = ResourcesCompat.getColor(root.resources, R.color.white, null)
-    (this.root as MaterialCardView).setCardBackgroundColor(cardBackgroundColor)
+    val (@ColorInt textColor, @ColorInt cardBackgroundColor) = with(root.context.theme) {
+        resolveMaterialColorAttribute(Material.attr.colorOnPrimary) to
+                resolveMaterialColorAttribute(Material.attr.colorPrimary)
+    }
 
-    progressionContentText.setTextColor(contentTextColor)
-    progressionTitleText.setTextColor(titleTextColor)
+    (this.root as MaterialCardView).setCardBackgroundColor(cardBackgroundColor)
+    progressionContentText.setTextColor(textColor)
+    progressionTitleText.setTextColor(textColor)
 }
+
+@ColorInt private fun Resources.Theme.resolveMaterialColorAttribute(resId: Int): Int =
+    TypedValue().also { resolveAttribute(resId, it, true) }.data
 
 private inline fun bindUiResult(uiResult: UiResult, block: (UiResult.Success) -> Unit) {
     if (uiResult !is UiResult.Success) {
@@ -190,11 +195,3 @@ private inline fun bindUiResult(uiResult: UiResult, block: (UiResult.Success) ->
         block(uiResult)
     }
 }
-
-@ColorInt
-private fun View.getColors(flag: Boolean) =
-    if (flag) {
-        ResourcesCompat.getColor(resources, R.color.color_primary, null)
-    } else {
-        ResourcesCompat.getColor(resources, R.color.color_on_primary_variant, null)
-    }

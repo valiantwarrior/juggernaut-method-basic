@@ -21,9 +21,7 @@
             android:id="@+id/action_home_dest_to_accomplishmentFragment"
             app:destination="@id/accomplishment_dest"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:exitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/preview_dest"
@@ -80,9 +78,7 @@
             android:id="@+id/action_overall_dest_to_accomplishment_dest"
             app:destination="@id/accomplishment_dest"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:exitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/accomplishment_dest"
@@ -94,19 +90,16 @@
         <action
             android:id="@+id/action_accomplishment_dest_to_home_dest"
             app:destination="@id/home_dest"
-            app:popUpTo="@id/home_dest"
-            app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popUpTo="@id/home_dest"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_accomplishment_dest_to_overall_dest"
             app:destination="@id/overall_dest"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:popUpTo="@id/overall_dest"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/overall_dest" />
         <argument
             android:name="backDestination"
             app:argType="kr.valor.juggernaut.ui.session.accomplishment.AccomplishmentDestinationToken"

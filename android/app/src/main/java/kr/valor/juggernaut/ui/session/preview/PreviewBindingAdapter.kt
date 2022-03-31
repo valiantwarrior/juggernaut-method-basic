@@ -71,10 +71,10 @@ fun TextView.bindPreviewRoutineItemTitle(routineItem: RoutineItem?) {
 
     @StringRes val stringFormatId = when(routineItem) {
         is AmrapRoutineItem -> {
-            @ColorInt val iconColor = resources.getColor(android.R.color.holo_red_dark, null)
+            @ColorInt val iconColor = resources.getColor(R.color.amrap_icon_color, null)
             setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_amrap_24, 0, 0, 0)
+            compoundDrawablePadding = resources.getDimensionPixelSize(R.dimen.padding_dp_small)
             TextViewCompat.setCompoundDrawableTintList(this, ColorStateList.valueOf(iconColor))
-            compoundDrawablePadding = resources.getDimensionPixelOffset(R.dimen.padding_dp_small)
             text = resources.getString(R.string.session_routine_item_amrap_routine_title_text)
             return
         }

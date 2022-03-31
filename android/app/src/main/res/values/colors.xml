@@ -11,6 +11,7 @@
 
     <color name="color_secondary">#FEBB53</color>
 
+    <color name="amrap_icon_color">@android:color/holo_red_dark</color>
 
     <color name="separator_color">@color/gray</color>
 
