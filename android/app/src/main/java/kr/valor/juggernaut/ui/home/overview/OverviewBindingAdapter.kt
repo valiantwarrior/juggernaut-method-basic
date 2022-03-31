@@ -35,10 +35,8 @@ fun RecyclerView.bindSessions(uiResult: UiResult) {
 fun ImageView.bindLiftCategoryIcon(session: Session?) {
     session ?: return
 
-    @ColorInt val iconColorTint = getColors(!session.isCompleted)
     @DrawableRes val iconResId = getLiftCategoryIcon(session.category)
 
-    setColorFilter(iconColorTint)
     setImageResource(iconResId)
 }
 
@@ -46,9 +44,6 @@ fun ImageView.bindLiftCategoryIcon(session: Session?) {
 fun TextView.bindLiftCategoryName(session: Session?) {
     session ?: return
 
-    @ColorInt val textColor = getColors(!session.isCompleted)
-
-    setTextColor(textColor)
     text = session.category.name
 }
 
@@ -57,12 +52,10 @@ fun TextView.bindAmrapInfo(session: Session?) {
     session ?: return
 
     session.amrapRoutine?.let { amrapRoutine ->
-        @ColorInt val textColor = getColors(!session.isCompleted)
         @StringRes val stringFormatId = R.string.overview_session_brief_amrap_info_text_format
         val amrapWeights = amrapRoutine.weights
         val amrapBaseRepetitions = amrapRoutine.baseIntensity.repetitions
 
-        setTextColor(textColor)
         text = resources.getString(stringFormatId, amrapWeights, "kg", amrapBaseRepetitions)
         visibility = View.VISIBLE
     } ?: run {
@@ -75,12 +68,10 @@ fun TextView.bindAmrapIntensityInfo(session: Session?) {
     session ?: return
 
     session.amrapRoutine?.let { amrapRoutine ->
-        @ColorInt val textColor = getColors(!session.isCompleted)
         @StringRes val stringFormatId = R.string.overview_session_brief_amrap_intensity_info_text_format
         val amrapIntensityPercentage = amrapRoutine.baseIntensity.approximationIntensityPercentageValue.toString()
         val amrapBaseRepetitions = amrapRoutine.baseIntensity.repetitions
 
-        setTextColor(textColor)
         text = resources.getString(stringFormatId, amrapIntensityPercentage ,amrapBaseRepetitions)
         visibility = View.VISIBLE
     } ?: run {
@@ -93,23 +84,13 @@ fun TextView.bindAmrapIntensityInfo(session: Session?) {
 fun TextView.bindStatus(session: Session?) {
     session ?: return
 
-    @ColorInt val textColor = getColors(!session.isCompleted)
     @StringRes val actionStringId = when(session.isCompleted) {
         true -> R.string.overview_session_action_done
         else -> R.string.overview_session_action_start
     }
 
-    setTextColor(textColor)
     text = resources.getString(actionStringId)
 }
-
-@BindingAdapter("overviewSessionSummaryCardViewBackgroundColor")
-fun MaterialCardView.bindBackgroundColor(session: Session?) {
-    session ?: return
-
-    @ColorInt val cardBackgroundColor = getColors(session.isCompleted)
-
-    setCardBackgroundColor(cardBackgroundColor) }
 
 @BindingAdapter("currentUserProgression")
 fun MaterialCardView.bindUserProgression(uiResult: UiResult) {

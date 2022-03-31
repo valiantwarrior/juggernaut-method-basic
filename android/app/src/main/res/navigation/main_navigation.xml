@@ -106,7 +106,9 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/overall_dest"
+            app:popUpToInclusive="true" />
         <argument
             android:name="backDestination"
             app:argType="kr.valor.juggernaut.ui.session.accomplishment.AccomplishmentDestinationToken"

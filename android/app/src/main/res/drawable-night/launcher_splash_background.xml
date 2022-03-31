@@ -5,7 +5,7 @@
         android:drawable="@color/color_surface_variant" />
 
     <item
-        android:drawable="@drawable/ic_launcher"
+        android:drawable="@drawable/ic_launcher_night"
         android:gravity="center" />
 
 </layer-list>

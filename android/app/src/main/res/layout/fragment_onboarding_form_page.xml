@@ -12,8 +12,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/color_surface_variant">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/life_category_icon"
@@ -141,7 +140,6 @@
             android:id="@+id/next_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="?attr/colorPrimaryVariant"
             android:text="@string/onboarding_form_page_next_button_text"
             app:icon="@drawable/ic_start_24"
             app:iconGravity="textStart"

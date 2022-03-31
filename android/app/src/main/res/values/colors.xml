@@ -6,9 +6,9 @@
     <color name="color_on_secondary">@color/white</color>
     <color name="color_surface_variant">#F8F8FA</color>
 
-    <!-- group 1 -->
     <color name="color_primary_light">#2C2F42</color>
     <color name="color_on_primary_variant">#F8F8FA</color>
+
     <color name="color_secondary">#FEBB53</color>
 
 
