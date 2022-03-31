@@ -105,4 +105,9 @@
             app:argType="kr.valor.juggernaut.ui.session.accomplishment.AccomplishmentDestinationToken"
             android:defaultValue="NONE" />
     </fragment>
+    <fragment
+        android:id="@+id/settings_dest"
+        android:name="kr.valor.juggernaut.ui.settings.SettingsFragment"
+        android:label="@string/app_bar_title_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

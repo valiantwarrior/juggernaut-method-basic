@@ -37,7 +37,7 @@ class OverallFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val toolbar = binding.toolbar
         val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.home_dest, R.id.statistic_dest, R.id.overall_dest)
+            setOf(R.id.home_dest, R.id.statistic_dest, R.id.overall_dest, R.id.settings_dest)
         )
         NavigationUI.setupWithNavController(toolbar, findNavController(), appBarConfiguration)
 

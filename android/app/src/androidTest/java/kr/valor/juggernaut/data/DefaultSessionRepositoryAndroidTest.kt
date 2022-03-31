@@ -12,6 +12,7 @@ import kr.valor.juggernaut.common.MicroCycle
 import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.domain.progression.model.UserProgression
 import kr.valor.juggernaut.domain.session.repository.SessionRepository
+import kr.valor.juggernaut.domain.trainingmax.model.CorrespondingBaseRecord
 import kr.valor.juggernaut.domain.trainingmax.model.TrainingMax
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -44,7 +45,8 @@ class DefaultSessionRepositoryAndroidTest {
         phase = userProgression.phase,
         liftCategory = LiftCategory.BENCHPRESS,
         trainingMaxWeights = 60,
-        lastUpdatedAt = System.currentTimeMillis()
+        lastUpdatedAt = System.currentTimeMillis(),
+        correspondingBaseRecord = CorrespondingBaseRecord(60.0, 10)
     )
     private val trainingMaxes = listOf(
         trainingMax,

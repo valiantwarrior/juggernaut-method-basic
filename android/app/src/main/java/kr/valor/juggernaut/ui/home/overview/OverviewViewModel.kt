@@ -1,13 +1,11 @@
 package kr.valor.juggernaut.ui.home.overview
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kr.valor.juggernaut.domain.common.HaltMethodStateContract
 import kr.valor.juggernaut.domain.progression.model.ProgressionState
 import kr.valor.juggernaut.domain.progression.model.UserProgression
 import kr.valor.juggernaut.domain.progression.usecase.usecase.LoadProgressionStateUseCase
@@ -17,7 +15,6 @@ import kr.valor.juggernaut.domain.session.usecase.usecase.LoadSessionsUseCase
 import javax.inject.Inject
 
 sealed class OverviewUiEvent {
-    object HaltMethod: OverviewUiEvent()
     data class NavigatePreview(val sessionId: Long): OverviewUiEvent()
     data class NavigateAccomplishment(val sessionId: Long): OverviewUiEvent()
 }
@@ -26,8 +23,7 @@ sealed class OverviewUiEvent {
 class OverviewViewModel @Inject constructor(
     loadProgressionStateUseCase: LoadProgressionStateUseCase,
     loadSessionsUseCase: LoadSessionsUseCase,
-    private val synchronizeSessionsContract: SynchronizeSessionsContract,
-    private val haltMethodStateContract: HaltMethodStateContract
+    private val synchronizeSessionsContract: SynchronizeSessionsContract
 ) : ViewModel() {
 
     private val _eventChannel: Channel<OverviewUiEvent> = Channel()
@@ -57,7 +53,6 @@ class OverviewViewModel @Inject constructor(
         viewModelScope.launch {
             synchronizeSessionsContract()
         }
-        Log.d("Overview", "${uiState.value}")
     }
 
     fun onClickSessionItem(sessionId: Long) {
@@ -78,13 +73,6 @@ class OverviewViewModel @Inject constructor(
             } else {
                 _eventChannel.send(OverviewUiEvent.NavigatePreview(sessionId))
             }
-        }
-    }
-
-    fun onClickHalt() {
-        viewModelScope.launch {
-            haltMethodStateContract()
-            _eventChannel.send(OverviewUiEvent.HaltMethod)
         }
     }
 }

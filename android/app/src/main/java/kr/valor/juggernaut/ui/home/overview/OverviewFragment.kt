@@ -37,22 +37,12 @@ class OverviewFragment : NavigationFragment() {
         binding.apply {
             initEventObserver()
             initRecyclerViewAdapter()
-            // Test purpose
-            phaseLayout.root.setOnClickListener { overviewViewModel.onClickHalt() }
         }
     }
 
     private fun FragmentOverviewBinding.initEventObserver() {
         observeFlowEvent(overviewViewModel.uiEventFlow) { event ->
             when(event) {
-                is OverviewUiEvent.HaltMethod -> {
-                    (requireParentFragment().requireView()).visibility = View.GONE
-                    val activity = requireActivity() as MainActivity
-                    activity.startActivity(
-                        Intent(activity, OnboardingActivity::class.java)
-                    )
-                    activity.finish()
-                }
                 is OverviewUiEvent.NavigatePreview -> {
                     navigate(HomeFragmentDirections.actionHomeDestToPreviewDest(event.sessionId))
                 }

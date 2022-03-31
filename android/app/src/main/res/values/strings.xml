@@ -4,6 +4,7 @@
     <string name="app_bar_title_home">@string/app_name</string>
     <string name="app_bar_title_overall">Overall</string>
     <string name="app_bar_title_statistic">Statistic</string>
+    <string name="app_bar_title_settings">Settings</string>
 
     <string name="onboarding_header_title">Juggernaut\nMethod\nBasic</string>
     <string name="onboarding_header_sub_title">Become Unstoppable</string>
@@ -67,6 +68,12 @@
     <string name="overview_total_progress_detailed_title_text">In detail</string>
     <string name="overview_session_icon_content_description">This is liftcategory icon.</string>
 
+    <string name="settings_halt_method_button_text">Halt current method</string>
+    <string name="settings_halt_method_dialog_title_text">Are you sure?</string>
+    <string name="settings_halt_method_dialog_message_text">All progress in this method will be lost permanently in device.</string>
+    <string name="settings_halt_method_dialog_positive_button_text">halt</string>
+    <string name="settings_halt_method_dialog_negative_button_text">cancel</string>
+
     <string name="session_phase_and_microcycle_text_format">%1$s - %2$s</string> <!-- Usage : REP10 - ACCUMULATION -->
     <string name="session_amrap_intensity_info_text_format">%1$d%2$s(%3$s%%) x %4$d+</string> <!-- Usage : 120kg(60%) x 5+ -->
     <string name="session_amrap_actual_info_text_format">AMRAP RECORD : %1$d%2$s x %3$d</string> <!-- Usage : 120kg x 8 -->
@@ -104,5 +111,6 @@
     <string name="overall_empty_session_icon_content_description">Nothing to show</string>
 
     <string name="statistic_user_training_max_tm_weights_text_format">%1$d%2$s</string> <!-- Usage : 120 kg or 120 lbs -->
-    <string name="statistic_user_training_max_base_record_text_format">%1$s %3$s x %2$d</string> <!-- Usage : 120 kg x 5 or 120 lbs x 5 -->
+    <string name="statistic_user_training_max_base_record_text_format">%1$s %3$s x %2$d</string>
+    <string name="bottom_nav_menu_item_settings_title">Settings</string> <!-- Usage : 120 kg x 5 or 120 lbs x 5 -->
 </resources>

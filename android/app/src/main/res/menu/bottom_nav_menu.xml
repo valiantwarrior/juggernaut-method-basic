@@ -15,4 +15,9 @@
         android:enabled="true"
         android:icon="@drawable/ic_bottom_nav_icon_statistic_24"
         android:title="@string/bottom_nav_menu_item_statistic_title" />
+    <item
+        android:id="@+id/settings_dest"
+        android:enabled="true"
+        android:icon="@drawable/ic_bottom_nav_icon_settings_24"
+        android:title="@string/bottom_nav_menu_item_settings_title" />
 </menu>
