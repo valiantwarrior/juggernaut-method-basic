@@ -9,6 +9,11 @@
         <item name="android:textSize">0sp</item>
     </style>
 
+    <style name="TextAppearance.App.Label" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textColor">?attr/colorSurface</item>
+        <item name="android:textSize" tools:ignore="SpUsage">24dp</item>
+    </style>
+
     <style name="Widget.App.PlateButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
