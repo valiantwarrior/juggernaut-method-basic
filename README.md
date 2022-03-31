@@ -55,6 +55,6 @@ https://github.com/valiantwarrior/juggernaut-method-base/blob/a09f6e7d50c90c7ed5
 - Kotlin (Coroutines API, Flow API)
 - Android AAC (LifeCycle, LiveData, etc.) 
 - Android MVVM with DataBinding
-- Android Jetpack (Navigation, Room, ViewModel, etc.)
+- Android Jetpack (Navigation, Room, ViewModel, DataStore etc.)
 - Material UI (Material 2)
 - Hilt
