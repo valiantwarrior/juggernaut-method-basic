@@ -131,6 +131,7 @@
             android:layout_height="wrap_content"
             android:text="@string/onboarding_form_page_back_button_text"
             android:textAllCaps="false"
+            app:onboardingFormPagePreviousButtonVisibility="@{viewModel.pagePosition}"
             app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
             app:layout_constraintEnd_toEndOf="@id/vertical_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline" />

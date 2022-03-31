@@ -1,5 +1,6 @@
 package kr.valor.juggernaut.ui.onboarding.form.page
 
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -20,6 +21,14 @@ fun ImageView.setBackgroundImage(pagePosition: FormPagePosition) {
     }
 
     setImageResource(imageResId)
+}
+
+@BindingAdapter("onboardingFormPagePreviousButtonVisibility")
+fun Button.setVisibility(formPagePosition: FormPagePosition) {
+    visibility = when(formPagePosition) {
+        BENCHPRESS -> View.GONE
+        else -> View.VISIBLE
+    }
 }
 
 // TODO("Considering lbs unit later")

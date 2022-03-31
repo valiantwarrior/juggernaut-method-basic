@@ -25,11 +25,6 @@
             android:id="@+id/action_form_dest_to_formWeightInputBottomSheetDialog"
             app:destination="@id/input_dest" />
         <action
-            android:id="@+id/action_form_dest_to_header_dest"
-            app:destination="@id/header_dest"
-            app:popUpTo="@id/header_dest"
-            app:popUpToInclusive="true" />
-        <action
             android:id="@+id/action_form_dest_to_confirmation_dest"
             app:destination="@id/confirmation_dest"
             app:enterAnim="@anim/slide_in_right"
@@ -44,7 +39,9 @@
         tools:layout="@layout/fragment_onboarding_confirmation" >
         <action
             android:id="@+id/action_confirmation_dest_to_form_dest"
-            app:destination="@id/form_dest" />
+            app:destination="@id/form_dest"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
     </fragment>
     <dialog
         android:id="@+id/input_dest"

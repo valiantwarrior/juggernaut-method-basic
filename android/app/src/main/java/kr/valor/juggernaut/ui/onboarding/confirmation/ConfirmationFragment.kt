@@ -1,11 +1,13 @@
 package kr.valor.juggernaut.ui.onboarding.confirmation
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,6 +23,18 @@ class ConfirmationFragment : Fragment() {
     private val confirmationViewModel: ConfirmationViewModel by viewModels()
 
     private lateinit var binding: FragmentOnboardingConfirmationBinding
+
+    private lateinit var systemBackButtonCallback: OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        systemBackButtonCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(ConfirmationFragmentDirections.actionConfirmationDestToFormDest())
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, systemBackButtonCallback)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentOnboardingConfirmationBinding.inflate(inflater, container, false)
@@ -45,6 +59,11 @@ class ConfirmationFragment : Fragment() {
                 startActivity(intent)
             }
         }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        systemBackButtonCallback.remove()
     }
 
 }

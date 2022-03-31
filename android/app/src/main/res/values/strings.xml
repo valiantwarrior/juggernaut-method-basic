@@ -13,6 +13,10 @@
     <string name="onboarding_form_page_description_text">Please enter your %1$s record.\n(Click button to enter your weights record)</string>
     <string name="onboarding_form_page_plus_reps_content_description_text">This is plus reps button.</string>
     <string name="onboarding_form_page_minus_reps_content_description_text">This is minus reps button.</string>
+    <string name="onboarding_form_page_quit_dialog_title_text">Are you sure you want to quit?</string>
+    <string name="onboarding_form_page_quit_dialog_message_text">All progress in this session will be lost.</string>
+    <string name="onboarding_form_page_quit_dialog_positive_action_text">quit</string>
+    <string name="onboarding_form_page_quit_dialog_negative_action_text">cancel</string>
     <string name="onboarding_title_image_content_description">This is title image.</string>
     <string name="onboarding_lift_category_icon_content_description">This is life category icon.</string>
     <string name="onboarding_confirmation_title_text">Check !!</string>
