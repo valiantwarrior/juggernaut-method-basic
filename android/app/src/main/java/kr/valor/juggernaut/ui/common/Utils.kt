@@ -1,9 +1,12 @@
 package kr.valor.juggernaut.ui.common
 
 import androidx.annotation.DrawableRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import kr.valor.juggernaut.R
 import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.common.LiftCategory.*
+import kr.valor.juggernaut.domain.settings.model.Theme
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -25,3 +28,13 @@ fun Long.toLocalDateTime(): LocalDateTime =
 
 fun LocalDateTime.toFormattedString(): String =
     format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+
+
+fun updateTheme(theme: Theme) = AppCompatDelegate.setDefaultNightMode(
+    when(theme) {
+        Theme.DARK -> AppCompatDelegate.MODE_NIGHT_YES
+        Theme.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
+        Theme.SYSTEM -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        Theme.BATTERY_SAVER -> AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
+    }
+)

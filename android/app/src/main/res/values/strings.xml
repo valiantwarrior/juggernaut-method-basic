@@ -73,6 +73,12 @@
     <string name="settings_halt_method_dialog_message_text">All progress in this method will be lost permanently in device.</string>
     <string name="settings_halt_method_dialog_positive_button_text">halt</string>
     <string name="settings_halt_method_dialog_negative_button_text">cancel</string>
+    <string name="settings_select_theme_title">Choose theme</string>
+    <string name="settings_select_theme_system">System default</string>
+    <string name="settings_select_theme_light">Light</string>
+    <string name="settings_select_theme_dark">Dark</string>
+    <string name="settings_select_theme_battery_saver">Battery Saver</string>
+
 
     <string name="session_phase_and_microcycle_text_format">%1$s - %2$s</string> <!-- Usage : REP10 - ACCUMULATION -->
     <string name="session_amrap_intensity_info_text_format">%1$d%2$s(%3$s%%) x %4$d+</string> <!-- Usage : 120kg(60%) x 5+ -->

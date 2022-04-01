@@ -3,11 +3,10 @@ package kr.valor.juggernaut.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
+import kr.valor.juggernaut.ui.common.updateTheme
 import kr.valor.juggernaut.ui.onboarding.OnboardingActivity
 
 @AndroidEntryPoint
@@ -18,25 +17,26 @@ class LauncherActivity : AppCompatActivity() {
 
         val viewModel: LauncherViewModel by viewModels()
 
-        observeFlowEvent(viewModel.navigateEvent) { action ->
+        observeFlowEvent(viewModel.launchAction) { action ->
             when(action) {
-                is LaunchNavigationAction.Loading -> { /* do nothing */}
-                is LaunchNavigationAction.NavigateMain -> startActivity(MainActivity::class.java)
-                is LaunchNavigationAction.NavigateOnboarding -> startActivity(OnboardingActivity::class.java)
+                is LaunchAction.Main -> {
+                    updateTheme(action.theme)
+                    startActivity(
+                        Intent(this@LauncherActivity, MainActivity::class.java)
+                            .apply { addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION) }
+                    )
+                }
+                is LaunchAction.Onboarding -> {
+                    updateTheme(action.theme)
+                    startActivity(
+                        Intent(this@LauncherActivity, OnboardingActivity::class.java)
+                            .apply { addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION) }
+                    )
+                }
+                else -> {}
             }
+            finish()
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        viewModelStore.clear()
-        overridePendingTransition(0, 0)
-    }
-
-    private fun startActivity(activityClass: Class<*>) {
-        val intent = Intent(this, activityClass)
-        startActivity(intent)
-        finish()
     }
 
 }

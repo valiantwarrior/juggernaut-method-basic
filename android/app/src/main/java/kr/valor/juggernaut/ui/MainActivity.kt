@@ -3,6 +3,7 @@ package kr.valor.juggernaut.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -11,9 +12,12 @@ import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.juggernaut.R
 import kr.valor.juggernaut.databinding.ActivityMainBinding
+import kr.valor.juggernaut.ui.common.updateTheme
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    private val mainViewModel: MainActivityViewModel by viewModels()
 
     private lateinit var binding: ActivityMainBinding
 
@@ -22,6 +26,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         binding.setupBottomNavigationMenu()
         setContentView(binding.root)
+
+        observeFlowEvent(mainViewModel.theme) { theme ->
+            updateTheme(theme)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -26,18 +26,33 @@
 
         <Button
             style="@style/Widget.App.Button.TextButton.SharpButton"
+            android:id="@+id/settings_select_theme_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start|center_vertical"
+            android:padding="@dimen/padding_dp_default"
+            android:text="@string/settings_select_theme_title"
+            android:textAllCaps="false"
+            android:textColor="?attr/colorOnSurface"
+            android:onClick="@{() -> viewModel.onClickChooseTheme()}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/content_top_guideline" />
+
+        <Button
+            style="@style/Widget.App.Button.TextButton.SharpButton"
             android:id="@+id/settings_stop_method_button"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/settings_halt_method_button_text"
             android:textColor="?attr/colorError"
+            android:gravity="start"
+            android:padding="@dimen/padding_dp_default"
             app:icon="@drawable/ic_halt_method_24"
             app:iconTint="?attr/colorError"
-            app:iconGravity="textStart"
-            app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintEnd_toEndOf="@id/end_guideline"
-            app:layout_constraintTop_toTopOf="@id/content_top_guideline"
-            app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/settings_select_theme_button"/>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/content_top_guideline"

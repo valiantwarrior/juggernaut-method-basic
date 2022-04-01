@@ -2,10 +2,12 @@ package kr.valor.juggernaut.ui.settings
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -14,6 +16,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.juggernaut.R
 import kr.valor.juggernaut.databinding.FragmentSettingsBinding
+import kr.valor.juggernaut.domain.settings.model.Theme
 import kr.valor.juggernaut.ui.LauncherActivity
 import kr.valor.juggernaut.ui.MainActivity
 import kr.valor.juggernaut.ui.observeFlowEvent
@@ -62,13 +65,17 @@ class SettingsFragment : Fragment() {
     }
 
     private fun initEventObserver() {
-        observeFlowEvent(settingsViewModel.haltEventFlow) { event ->
+        observeFlowEvent(settingsViewModel.uiEventFlow) { event ->
             when(event) {
-                SettingsHaltEvent.Finish -> {
+                SettingsUiAction.HaltMethod -> {
                     val activity = requireActivity() as MainActivity
                     val intent = Intent(activity, LauncherActivity::class.java)
                     activity.startActivity(intent)
                     activity.finish()
+                }
+                SettingsUiAction.SelectTheme -> {
+                    ThemeSettingDialogFragment.newInstance()
+                        .show(parentFragmentManager, null)
                 }
             }
         }
