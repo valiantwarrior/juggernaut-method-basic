@@ -24,7 +24,7 @@
             app:layout_constraintStart_toStartOf="@id/plates_container_start_guideline"
             app:layout_constraintTop_toTopOf="@id/plates_container_top_guideline"
             app:layout_constraintBottom_toBottomOf="@id/plates_container_bottom_guideline"
-            app:layout_constraintEnd_toEndOf="@id/plates_container_end_guideline" />
+            app:layout_constraintEnd_toStartOf="@id/total_weights_text" />
 
         <TextView
             android:id="@+id/total_weights_text"
@@ -33,7 +33,7 @@
             android:textAppearance="@style/TextAppearance.App.Headline1"
             app:platesWeights="@{viewModel.plateStack}"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@id/plates_container_end_guideline"
+            app:layout_constraintStart_toEndOf="@id/plate_container_view"
             app:layout_constraintTop_toTopOf="@id/plates_container_top_guideline"
             app:layout_constraintBottom_toBottomOf="@id/plates_container_bottom_guideline"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
@@ -227,13 +227,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="@dimen/margin_dp_default" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/plates_container_end_guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.4" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/plates_container_top_guideline"
