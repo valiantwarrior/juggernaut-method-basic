@@ -57,6 +57,7 @@ class ConfirmationFragment : Fragment() {
             if (event is ConfirmationUiEvent.Finish) {
                 val intent = Intent(requireContext(), MainActivity::class.java)
                 startActivity(intent)
+                requireActivity().finish()
             }
         }
     }
