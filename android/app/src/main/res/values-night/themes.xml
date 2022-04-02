@@ -21,6 +21,7 @@
 
         <!-- Customize -->
         <item name="android:statusBarColor">?attr/colorSurface</item>
+        <item name="android:navigationBarColor">@color/color_surface_variant</item>
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
         <item name="android:fontFamily">@font/open_sans_semibold</item>
         <item name="fontFamily">@font/open_sans_semibold</item>
