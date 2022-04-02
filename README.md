@@ -1,5 +1,7 @@
 # Juggernaut Method Basic - Android
 
+**develop 브랜치에서 리팩토링, 버그수정, UI 개선 중.**
+
 ### About
 
 [Juggernaut Basic Method Base Template SpreadSheet](https://liftvault.com/programs/strength/juggernaut-method-base-template-spreadsheet/) 의 Android 버전입니다.
