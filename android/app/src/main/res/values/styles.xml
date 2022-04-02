@@ -14,6 +14,11 @@
         <item name="android:textSize" tools:ignore="SpUsage">24dp</item>
     </style>
 
+    <style name="TextAppearance.App.Content.SubContent" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
+        <item name="android:textColor">@color/text_color_normal</item>
+    </style>
+
     <style name="Widget.App.PlateButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>

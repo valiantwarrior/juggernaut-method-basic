@@ -49,6 +49,17 @@ fun TextView.bindAmrapRoutineBaseInformation(amrapRoutineItem: AmrapRoutineItem?
     text = resources.getString(amrapRoutineTextFormat, routineWeights, routineRepetitions, routineIntensityPercentageString, "kg")
 }
 
+@BindingAdapter("amrapRoutineBaseRepetitionIndicator")
+fun TextView.bindAmrapRoutineBaseInformationPercentage(amrapRoutineItem: AmrapRoutineItem?) {
+    amrapRoutineItem ?: return
+
+    val amrapRoutine = amrapRoutineItem.routine
+    @StringRes val amrapRoutineTextFormat =
+        R.string.session_routine_item_amrap_routine_rep_indicator_text_format
+
+    text = resources.getString(amrapRoutineTextFormat, amrapRoutine.baseIntensity.repetitions)
+}
+
 @BindingAdapter("recordAppBarPhaseText")
 fun TextView.bindRecordAppBarPhaseText(uiState: RecordUiState) {
     bindUiStateSession(uiState) { session ->

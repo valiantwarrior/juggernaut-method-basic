@@ -40,6 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_dp_small"
+                android:textAppearance="@style/TextAppearance.App.Content.SubContent"
                 app:layout_constraintStart_toStartOf="@id/progression_content_text"
                 app:layout_constraintEnd_toEndOf="@id/progression_content_text"
                 app:layout_constraintTop_toBottomOf="@id/progression_content_text"

@@ -11,7 +11,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_session_routine_height"
+        android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/recyclerview_item_margin_horizontal_default"
         android:layout_marginHorizontal="@dimen/recyclerview_item_margin_vertical_default">
 
@@ -38,6 +38,7 @@
                 android:id="@+id/routine_title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_dp_default"
                 android:textAppearance="@style/TextAppearance.App.Title"
                 app:previewRoutineItemTitle="@{routineItem}"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -51,6 +52,7 @@
                 android:id="@+id/routine_content_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_dp_default"
                 android:textAppearance="@style/TextAppearance.App.SubTitle"
                 app:previewRoutineItemContent="@{routineItem}"
                 app:layout_constraintHorizontal_bias="0.0"

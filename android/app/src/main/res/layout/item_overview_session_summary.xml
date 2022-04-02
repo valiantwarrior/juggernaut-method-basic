@@ -74,6 +74,7 @@
                 android:id="@+id/session_amrap_intensity_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.App.Content.SubContent"
                 android:visibility="gone"
                 app:overviewSessionSummaryAmrapIntensityInfo="@{session}"
                 app:layout_constraintStart_toStartOf="@id/session_amrap_info_text"
