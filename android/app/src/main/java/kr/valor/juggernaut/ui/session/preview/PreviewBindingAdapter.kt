@@ -59,7 +59,7 @@ fun TextView.bindPreviewRoutineItemOrdinal(routineItem: RoutineItem?) {
     @ColorInt val backgroundColorRes = when(routineItem) {
         is AmrapRoutineItem -> resources.getColor(android.R.color.holo_red_light, null)
         else -> resources.getColor(android.R.color.holo_blue_light, null)
-    } // TODO("Considering theming")
+    }
 
     setBackgroundColor(backgroundColorRes)
     text = routineItem.routineOrdinal.plus(1).toString()
