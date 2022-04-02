@@ -99,7 +99,8 @@
             app:destination="@id/overall_dest"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:popUpTo="@id/overall_dest" />
+            app:popUpTo="@id/overall_dest"
+            app:popUpToInclusive="true" />
         <argument
             android:name="backDestination"
             app:argType="kr.valor.juggernaut.ui.session.accomplishment.AccomplishmentDestinationToken"
