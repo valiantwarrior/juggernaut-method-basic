@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kr.valor.juggernaut.domain.progression.model.ProgressionState
@@ -18,20 +19,26 @@ class LauncherViewModel @Inject constructor(
     loadThemeUseCase: LoadThemeUseCase
 ): ViewModel() {
 
-    val launchAction = loadProgressionStateUseCase().map { progressionState ->
-        Log.d("TAG", "MAP")
-        val theme = loadThemeUseCase().first()
-        when(progressionState) {
-            is ProgressionState.None -> LaunchAction.Onboarding(theme)
-            else -> LaunchAction.Main(theme)
+    val launchAction: Flow<LaunchAction>
+
+    init {
+        val launchActionState = Channel<LaunchAction>()
+
+        viewModelScope.launch {
+            val currentTheme = loadThemeUseCase().first()
+            val launchAction = when(loadProgressionStateUseCase().first()) {
+                is ProgressionState.None -> LaunchAction.Onboarding(currentTheme)
+                else -> LaunchAction.Main(currentTheme)
+            }
+
+            launchActionState.send(launchAction)
         }
+        launchAction = launchActionState.receiveAsFlow()
     }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, LaunchAction.Loading)
 
 }
 
 sealed class LaunchAction {
-    object Loading: LaunchAction()
-    data class Main(val theme: Theme): LaunchAction()
-    data class Onboarding(val theme: Theme): LaunchAction()
+    data class Main(val currentTheme: Theme): LaunchAction()
+    data class Onboarding(val currentTheme: Theme): LaunchAction()
 }

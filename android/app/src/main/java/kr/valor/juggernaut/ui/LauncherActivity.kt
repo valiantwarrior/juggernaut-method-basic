@@ -3,9 +3,9 @@ package kr.valor.juggernaut.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import kr.valor.juggernaut.domain.settings.model.Theme
 import kr.valor.juggernaut.ui.common.updateTheme
 import kr.valor.juggernaut.ui.onboarding.OnboardingActivity
 
@@ -20,23 +20,19 @@ class LauncherActivity : AppCompatActivity() {
         observeFlowEvent(viewModel.launchAction) { action ->
             when(action) {
                 is LaunchAction.Main -> {
-                    updateTheme(action.theme)
-                    startActivity(
-                        Intent(this@LauncherActivity, MainActivity::class.java)
-                            .apply { addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION) }
-                    )
+                    updateThemeAndStartActivity(action.currentTheme, MainActivity::class.java)
                 }
                 is LaunchAction.Onboarding -> {
-                    updateTheme(action.theme)
-                    startActivity(
-                        Intent(this@LauncherActivity, OnboardingActivity::class.java)
-                            .apply { addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION) }
-                    )
+                    updateThemeAndStartActivity(action.currentTheme, OnboardingActivity::class.java)
                 }
-                else -> {}
             }
-            finish()
         }
+    }
+
+    private fun updateThemeAndStartActivity(theme: Theme, activityClass: Class<*>) {
+        updateTheme(theme)
+        startActivity(Intent(this, activityClass))
+        finish()
     }
 
 }
