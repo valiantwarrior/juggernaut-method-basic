@@ -117,6 +117,6 @@
     <string name="overall_empty_session_icon_content_description">Nothing to show</string>
 
     <string name="statistic_user_training_max_tm_weights_text_format">%1$d%2$s</string> <!-- Usage : 120 kg or 120 lbs -->
-    <string name="statistic_user_training_max_base_record_text_format">%1$s %3$s x %2$d</string>
+    <string name="statistic_user_training_max_base_record_text_format">Base record : %1$s %3$s x %2$d</string>
     <string name="bottom_nav_menu_item_settings_title">Settings</string> <!-- Usage : 120 kg x 5 or 120 lbs x 5 -->
 </resources>

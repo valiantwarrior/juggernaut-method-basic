@@ -38,14 +38,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_dp_small"
                 android:textAppearance="@style/TextAppearance.App.SubTitle"
-                android:text="@{trainingMax.liftCategory.name()}"
+                android:text="@{trainingMax.liftCategory.abbreviatedName}"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintVertical_bias="1.0"
                 app:layout_constraintStart_toEndOf="@id/lift_category_icon"
                 app:layout_constraintEnd_toEndOf="@id/horizontal_separator"
                 app:layout_constraintBottom_toBottomOf="@id/lift_category_icon"
                 app:layout_constraintTop_toTopOf="@id/lift_category_icon"
-                tools:text="OVERHEADPRESS" />
+                tools:text="OHP" />
 
             <TextView
                 android:id="@+id/training_max_weights"
