@@ -1,6 +1,6 @@
 # Juggernaut Method Basic - Android
 
-develop 브랜치에서 리팩토링, 버그수정, UI 개선 중.
+**develop 브랜치에서 리팩토링, 버그수정, UI 개선 중.**
 
 ### About
 
