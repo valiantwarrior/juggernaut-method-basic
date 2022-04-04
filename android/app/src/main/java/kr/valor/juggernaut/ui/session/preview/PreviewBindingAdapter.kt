@@ -23,7 +23,7 @@ fun RecyclerView.bindPreviewState(uiState: PreviewUiState) {
         is PreviewUiState.Loading -> return
         is PreviewUiState.Result -> {
             val session = uiState.session
-            val sessionRoutineItems = when(session.progression.isAmrapSession) {
+            val sessionRoutineItems = when(session.sessionProgression.isAmrapSession) {
                 false -> {
                     session.getSessionRoutineItems(footerButtonText = previewFooterButtonText, isDeloadRoutine = true)
                 }
@@ -110,14 +110,14 @@ fun TextView.bindPreviewRoutineItemContent(routineItem: RoutineItem?) {
 @BindingAdapter("previewAppBarPhaseText")
 fun TextView.bindPreviewAppBarPhaseText(uiState: PreviewUiState) {
     bindUiStateSession(uiState) { session ->
-        text = session.progression.phase.name
+        text = session.sessionProgression.phase.name
     }
 }
 
 @BindingAdapter("previewAppBarMicrocycleText")
 fun TextView.bindPreviewAppBarMicrocycleText(uiState: PreviewUiState) {
     bindUiStateSession(uiState) { session ->
-        text = session.progression.microCycle.name
+        text = session.sessionProgression.microCycle.name
     }
 }
 
@@ -143,7 +143,7 @@ fun MaterialToolbar.bindPreviewAppBarToolbarTitleText(uiState: PreviewUiState) {
         return
     }
 
-    val userProgression = with(uiState.session.progression) {
+    val userProgression = with(uiState.session.sessionProgression) {
         UserProgression(methodCycle, phase, microCycle)
     }
     val currentWeek = userProgression.currentMethodMilestone

@@ -20,7 +20,7 @@ fun RecyclerView.bindAccomplishmentState(uiState: AccomplishmentUiState) {
     bindUiState(uiState) { result ->
         val session = result.session
 
-        val sessionRoutineItems = when (session.progression.isAmrapSession) {
+        val sessionRoutineItems = when (session.sessionProgression.isAmrapSession) {
             false -> {
                 session.getSessionRoutineItems(
                     addFooterItem = false,
@@ -51,14 +51,14 @@ fun RecyclerView.bindAccomplishmentState(uiState: AccomplishmentUiState) {
 @BindingAdapter("accomplishmentAppBarPhaseText")
 fun TextView.bindAccomplishmentAppBarPhaseText(uiState: AccomplishmentUiState) {
     bindUiState(uiState) { result ->
-        text = result.session.progression.phase.name
+        text = result.session.sessionProgression.phase.name
     }
 }
 
 @BindingAdapter("accomplishmentAppBarMicrocycleText")
 fun TextView.bindAccomplishmentAppBarMicrocycleText(uiState: AccomplishmentUiState) {
     bindUiState(uiState) { result ->
-        text = result.session.progression.microCycle.name
+        text = result.session.sessionProgression.microCycle.name
     }
 }
 
@@ -92,7 +92,7 @@ fun MaterialToolbar.bindAccomplishmentAppBarTitle(uiState: AccomplishmentUiState
     bindUiState(uiState) { result ->
         val session = result.session
         val sessionOrdinal = session.sessionOrdinal!!
-        val sessionWeekOrdinal = session.progression.weekOrdinal
+        val sessionWeekOrdinal = session.sessionProgression.weekOrdinal
         @StringRes val titleFormatId = R.string.session_routine_collapsing_toolbar_title_text_format
 
         title = resources.getString(titleFormatId, sessionWeekOrdinal, sessionOrdinal, session.category.abbreviatedName)

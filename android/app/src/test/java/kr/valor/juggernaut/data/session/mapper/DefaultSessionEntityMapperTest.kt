@@ -7,6 +7,7 @@ import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.data.session.entity.SessionEntity
 import kr.valor.juggernaut.data.session.mapper.delegate.routine.RoutineProviderDelegate
 import kr.valor.juggernaut.domain.session.model.Session
+import kr.valor.juggernaut.domain.session.model.SessionProgression
 import kr.valor.juggernaut.domain.session.model.SessionRecord
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -15,7 +16,7 @@ import org.junit.Test
 
 class DefaultSessionEntityMapperTest {
     private lateinit var mapper: SessionMapper
-    private lateinit var routineProvider: RoutineProviderDelegate<Session.Progression>
+    private lateinit var routineProvider: RoutineProviderDelegate<SessionProgression>
     private lateinit var baseEntity: SessionEntity
 
     @Before
@@ -109,9 +110,9 @@ class DefaultSessionEntityMapperTest {
 
     private fun `base entity model comparing`(model: Session, entity: SessionEntity) {
         assertThat(model.sessionId, `is`(entity.id))
-        assertThat(model.progression.methodCycle.value, `is`(entity.methodCycleValue))
-        assertThat(model.progression.phase, `is`(Phase.valueOf(entity.phaseName)))
-        assertThat(model.progression.microCycle, `is`(MicroCycle.valueOf(entity.microCycleName)))
+        assertThat(model.sessionProgression.methodCycle.value, `is`(entity.methodCycleValue))
+        assertThat(model.sessionProgression.phase, `is`(Phase.valueOf(entity.phaseName)))
+        assertThat(model.sessionProgression.microCycle, `is`(MicroCycle.valueOf(entity.microCycleName)))
         assertThat(model.category, `is`(LiftCategory.valueOf(entity.liftCategoryName)))
     }
 

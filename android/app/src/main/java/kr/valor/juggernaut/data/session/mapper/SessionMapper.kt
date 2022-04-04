@@ -6,12 +6,8 @@ import kr.valor.juggernaut.data.session.mapper.delegate.routine.RoutineProviderD
 import kr.valor.juggernaut.data.session.entity.SessionEntity
 import kr.valor.juggernaut.domain.session.model.*
 import kr.valor.juggernaut.ui.common.toLocalDateTime
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
-import kr.valor.juggernaut.domain.session.model.Session.Progression as Progression
+import kr.valor.juggernaut.domain.session.model.SessionProgression as Progression
 
 interface SessionMapper: EntityMapper<SessionEntity, Session> {
 
@@ -37,7 +33,7 @@ class DefaultSessionEntityMapper @Inject constructor(
                 sessionId = id,
                 category = category,
                 tmWeights = baseWeights,
-                progression = progression,
+                sessionProgression = progression,
                 isCompleted = entity.completeDateMillis != null,
                 completedLocalDateTime = completeDateMillis?.toLocalDateTime(),
                 sessionOrdinal = sessionOrdinal,
@@ -50,9 +46,9 @@ class DefaultSessionEntityMapper @Inject constructor(
         with(model) {
             SessionEntity(
                 id = sessionId,
-                methodCycleValue = progression.methodCycle.value,
-                phaseName = progression.phase.name,
-                microCycleName = progression.microCycle.name,
+                methodCycleValue = sessionProgression.methodCycle.value,
+                phaseName = sessionProgression.phase.name,
+                microCycleName = sessionProgression.microCycle.name,
                 liftCategoryName = category.name,
                 baseWeights = tmWeights,
                 amrapRepetitions = params?.repetitionsRecord,

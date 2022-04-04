@@ -20,7 +20,7 @@ class InitNextPhaseTrainingMaxUseCase @Inject constructor(
             baseRepetitions = sessionRecord.repetitionsRecord!!
         )
 
-        val currentProgression = session.progression
+        val currentProgression = session.sessionProgression
         val nextMethodCycleWithNextPhasePair= if (currentProgression.phase == Phase.FINAL) {
             currentProgression.methodCycle + 1 to Phase.INITIAL
         } else {

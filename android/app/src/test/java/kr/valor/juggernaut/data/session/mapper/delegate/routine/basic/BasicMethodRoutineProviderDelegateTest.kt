@@ -9,7 +9,7 @@ import kr.valor.juggernaut.data.session.mapper.delegate.routine.RoutineProviderD
 import kr.valor.juggernaut.domain.session.model.*
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
-import kr.valor.juggernaut.domain.session.model.Session.Progression as Progression
+import kr.valor.juggernaut.domain.session.model.SessionProgression as Progression
 import org.junit.Before
 import org.junit.Test
 

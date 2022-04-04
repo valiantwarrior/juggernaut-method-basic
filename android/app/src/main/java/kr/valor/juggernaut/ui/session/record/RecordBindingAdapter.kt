@@ -6,13 +6,10 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.appbar.MaterialToolbar
 import kr.valor.juggernaut.R
-import kr.valor.juggernaut.domain.progression.model.UserProgression
 import kr.valor.juggernaut.domain.session.model.Session
 import kr.valor.juggernaut.ui.common.getLiftCategoryIcon
 import kr.valor.juggernaut.ui.session.*
-import kr.valor.juggernaut.ui.session.preview.PreviewUiState
 
 @BindingAdapter("recordRoutineItems", "recordRepetitions")
 fun RecyclerView.bindRecordState(uiState: RecordUiState, repetitions: Int?) {
@@ -63,14 +60,14 @@ fun TextView.bindAmrapRoutineBaseInformationPercentage(amrapRoutineItem: AmrapRo
 @BindingAdapter("recordAppBarPhaseText")
 fun TextView.bindRecordAppBarPhaseText(uiState: RecordUiState) {
     bindUiStateSession(uiState) { session ->
-        text = session.progression.phase.name
+        text = session.sessionProgression.phase.name
     }
 }
 
 @BindingAdapter("recordAppBarMicrocycleText")
 fun TextView.bindRecordAppBarMicrocycleText(uiState: RecordUiState) {
     bindUiStateSession(uiState) { session ->
-        text = session.progression.microCycle.name
+        text = session.sessionProgression.microCycle.name
     }
 }
 

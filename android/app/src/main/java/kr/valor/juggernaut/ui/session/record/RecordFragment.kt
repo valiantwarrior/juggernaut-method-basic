@@ -10,9 +10,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.SimpleItemAnimator
 import dagger.hilt.android.AndroidEntryPoint
-import kr.valor.juggernaut.R
 import kr.valor.juggernaut.databinding.FragmentRecordBinding
-import kr.valor.juggernaut.domain.session.model.Session.Progression.Companion.DELOAD_SESSION_INDICATOR
+import kr.valor.juggernaut.domain.session.model.SessionProgression.Companion.DELOAD_SESSION_INDICATOR
 import kr.valor.juggernaut.ui.NavigationFragment
 import kr.valor.juggernaut.ui.observeFlowEvent
 

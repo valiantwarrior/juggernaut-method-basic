@@ -40,7 +40,7 @@ class DetailViewModel @Inject constructor(
         return@combine DetailUiState.Result(
             userProgression = userProgression,
             sessions = sessions.filter { session ->
-                session.isCompleted && session.progression == userProgression.toSessionProgression()
+                session.isCompleted && session.sessionProgression == userProgression.toSessionProgression()
             }.sortedWith(compareBy { it.category.ordinal })
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L), DetailUiState.Loading)

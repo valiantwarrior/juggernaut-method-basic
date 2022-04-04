@@ -97,9 +97,9 @@ class DefaultSessionRepositoryAndroidTest {
                 LiftCategory.OVERHEADPRESS -> assertThat(session.tmWeights, `is`(50))
                 LiftCategory.SQUAT -> assertThat(session.tmWeights, `is`(100))
             }
-            assertThat(session.progression.methodCycle, `is`(userProgression.methodCycle))
-            assertThat(session.progression.phase, `is`(userProgression.phase))
-            assertThat(session.progression.microCycle, `is`(userProgression.microCycle))
+            assertThat(session.sessionProgression.methodCycle, `is`(userProgression.methodCycle))
+            assertThat(session.sessionProgression.phase, `is`(userProgression.phase))
+            assertThat(session.sessionProgression.microCycle, `is`(userProgression.microCycle))
             assertThat(session.warmupRoutines, `is`(notNullValue()))
             assertThat(session.amrapRoutine, `is`(notNullValue()))
             assertThat(session.deloadRoutines, `is`(nullValue()))

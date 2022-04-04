@@ -26,7 +26,7 @@ fun TextView.bindPhaseAndMicrocycle(session: Session?) {
     session ?: return
 
     @StringRes val stringFormatId = R.string.session_phase_and_microcycle_text_format
-    val (phaseName, microcycleName) = with(session.progression) {
+    val (phaseName, microcycleName) = with(session.sessionProgression) {
         phase.name to microCycle.name
     }
 

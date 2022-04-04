@@ -51,7 +51,7 @@ class PreviewViewModel @Inject constructor(
 
             val completedSessionsCount = loadSessionsUseCase().map { sessions ->
                 sessions.filter { session ->
-                    session.progression == userProgression.toSessionProgression() && session.isCompleted
+                    session.sessionProgression == userProgression.toSessionProgression() && session.isCompleted
                 }.size
             }.first()
 
@@ -71,7 +71,7 @@ class PreviewViewModel @Inject constructor(
         viewModelScope.launch {
             val session = (uiState.value as PreviewUiState.Result).session
             val sessionId = session.sessionId
-            val baseAmrapRepetitions = session.progression.baseAmrapRepetitions
+            val baseAmrapRepetitions = session.sessionProgression.baseAmrapRepetitions
             val sessionOrdinal =  (uiState.value as PreviewUiState.Result).totalCompletedSessionsCount + 1
             _eventChannel.send(PreviewUiEvent.StartSession(sessionId, baseAmrapRepetitions, sessionOrdinal))
         }

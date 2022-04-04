@@ -44,7 +44,7 @@ class OverviewViewModel @Inject constructor(
         return@combine UiResult.Success(
             userProgression = userProgression,
             sessions = sessions.filter { session ->
-                session.progression == userProgression.toSessionProgression()
+                session.sessionProgression == userProgression.toSessionProgression()
             }.sortedWith(compareBy<Session> { it.isCompleted }.thenBy { it.category.ordinal })
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L), UiResult.Loading)

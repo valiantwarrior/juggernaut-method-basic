@@ -12,9 +12,9 @@ import javax.inject.Inject
 class BasicMethodRoutineProviderDelegate @Inject constructor(
     @InMemorySource private val routineIntensitySource: RoutineIntensitySource<MicroCycle, Phase>,
     @KgWeightUnit private val transformer: WeightUnitTransformer // run time injection (maybe)
-): RoutineProviderDelegate<Progression> {
+): RoutineProviderDelegate<SessionProgression> {
 
-    override fun provideSessionRoutine(progression: Progression, tmWeights: Int, actualRepetitions: Int?): List<Routine> {
+    override fun provideSessionRoutine(progression: SessionProgression, tmWeights: Int, actualRepetitions: Int?): List<Routine> {
         val (_, phase, microCycle) = progression
         val routineIntensities = routineIntensitySource.provideRoutineIntensityMap(microCycle)[phase]!!
 

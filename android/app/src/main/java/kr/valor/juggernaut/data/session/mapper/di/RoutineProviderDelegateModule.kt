@@ -6,13 +6,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kr.valor.juggernaut.data.session.mapper.delegate.routine.BasicMethodRoutineProviderDelegate
 import kr.valor.juggernaut.data.session.mapper.delegate.routine.RoutineProviderDelegate
-import kr.valor.juggernaut.domain.session.model.Progression
+import kr.valor.juggernaut.domain.session.model.SessionProgression
 
 @InstallIn(SingletonComponent::class)
 @Module
 abstract class RoutineProviderDelegateModule {
 
     @Binds
-    abstract fun bindRoutineProviderDelegate(impl: BasicMethodRoutineProviderDelegate): RoutineProviderDelegate<Progression>
+    abstract fun bindRoutineProviderDelegate(impl: BasicMethodRoutineProviderDelegate): RoutineProviderDelegate<SessionProgression>
 
 }

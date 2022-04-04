@@ -21,7 +21,7 @@ import kr.valor.juggernaut.data.trainingmax.mapper.TrainingMaxMapper
 import kr.valor.juggernaut.domain.session.repository.SessionRepository
 import kr.valor.juggernaut.domain.progression.repository.ProgressionStateRepository
 import kr.valor.juggernaut.domain.trainingmax.repository.TrainingMaxRepository
-import kr.valor.juggernaut.domain.session.model.Session.Progression as Progression
+import kr.valor.juggernaut.domain.session.model.SessionProgression as Progression
 
 object TestServiceLocator {
 

@@ -7,7 +7,6 @@ import kr.valor.juggernaut.common.Phase.*
 import kr.valor.juggernaut.domain.session.model.RoutineIntensity
 import javax.inject.Inject
 import javax.inject.Singleton
-import kr.valor.juggernaut.domain.session.model.Session.Progression as Progression
 
 private typealias InMemoryRoutineIntensityItem = Pair<Int, Double>
 

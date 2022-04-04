@@ -17,7 +17,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
-class DefaultProgressionStateRepositoryTest {
+class DefaultSessionProgressionStateRepositoryTest {
     private lateinit var repository: ProgressionStateRepository
 
     @Before

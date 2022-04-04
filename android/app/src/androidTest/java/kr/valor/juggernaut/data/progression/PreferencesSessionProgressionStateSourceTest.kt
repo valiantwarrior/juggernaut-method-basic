@@ -25,7 +25,7 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-class PreferencesProgressionStateSourceTest {
+class PreferencesSessionProgressionStateSourceTest {
 
     @get:Rule
     var rule = HiltAndroidRule(this)

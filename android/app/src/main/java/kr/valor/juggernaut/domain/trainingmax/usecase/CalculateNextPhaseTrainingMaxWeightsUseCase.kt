@@ -13,7 +13,7 @@ class CalculateNextPhaseTrainingMaxWeightsUseCase @Inject constructor(
 
     operator fun invoke(session: Session, sessionRecord: SessionRecord): Int {
         val prRepetitions = sessionRecord.repetitionsRecord!!
-        val baseRepetitions = session.progression.baseAmrapRepetitions
+        val baseRepetitions = session.sessionProgression.baseAmrapRepetitions
         val baseTmWeights = session.tmWeights
         val baseIncrement = session.category.baseIncrement * KG_FACTOR
 
