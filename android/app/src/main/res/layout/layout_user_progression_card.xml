@@ -4,18 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="kr.valor.juggernaut.ui.home.overview.UiResult" />
+        <import type="kr.valor.juggernaut.ui.home.overview.OverviewUiState" />
         <import type="kotlinx.coroutines.flow.StateFlow" />
         <variable
-            name="uiResult"
-            type="kotlinx.coroutines.flow.StateFlow&lt;UiResult>" />
+            name="uiState"
+            type="kotlinx.coroutines.flow.StateFlow&lt;OverviewUiState>" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:currentUserProgression="@{uiResult}"
+        app:currentUserProgression="@{uiState}"
         tools:showIn="@layout/fragment_home">
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,21 +1,20 @@
 package kr.valor.juggernaut.ui.home.overview
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kr.valor.juggernaut.databinding.FragmentOverviewBinding
-import kr.valor.juggernaut.ui.MainActivity
 import kr.valor.juggernaut.ui.NavigationFragment
 import kr.valor.juggernaut.ui.home.HomeFragmentDirections
 import kr.valor.juggernaut.ui.home.NavigationClickListener
 import kr.valor.juggernaut.ui.home.sessionsummary.SessionSummaryAdapter
 import kr.valor.juggernaut.ui.observeFlowEvent
-import kr.valor.juggernaut.ui.onboarding.OnboardingActivity
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class OverviewFragment : NavigationFragment() {
 

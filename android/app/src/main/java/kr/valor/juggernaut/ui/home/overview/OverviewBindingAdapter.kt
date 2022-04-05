@@ -12,48 +12,48 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
-import com.google.android.material.R as Material
-import kr.valor.juggernaut.R as R
+import kr.valor.juggernaut.R
 import kr.valor.juggernaut.common.LiftCategory.Companion.TOTAL_LIFT_CATEGORY_COUNT
 import kr.valor.juggernaut.databinding.FragmentOverviewBinding
 import kr.valor.juggernaut.databinding.LayoutUserProgressionCardBinding
 import kr.valor.juggernaut.domain.progression.model.UserProgression.Companion.OVERALL_METHOD_MILESTONE
 import kr.valor.juggernaut.domain.progression.model.UserProgression.Companion.SESSION_COUNT_PER_PHASE
-import kr.valor.juggernaut.domain.session.model.Session
+import kr.valor.juggernaut.domain.session.model.SessionSummary
 import kr.valor.juggernaut.ui.common.getLiftCategoryIcon
 import kr.valor.juggernaut.ui.home.sessionsummary.SessionSummaryAdapter
+import com.google.android.material.R as Material
 
 @BindingAdapter("sessionSummaries")
-fun RecyclerView.bindSessions(uiResult: UiResult) {
-    bindUiResult(uiResult) { uiModel ->
-        val sessions = uiModel.sessions
+fun RecyclerView.bindSessions(uiState: OverviewUiState) {
+    bindUiState(uiState) { result ->
+        val sessionSummaries = result.sessionSummaries
         val adapter = adapter as SessionSummaryAdapter
 
-        adapter.submitList(sessions)
+        adapter.submitList(sessionSummaries)
     }
 }
 
 @BindingAdapter("overviewSessionSummaryLiftCategoryIcon")
-fun ImageView.bindLiftCategoryIcon(session: Session?) {
-    session ?: return
+fun ImageView.bindLiftCategoryIcon(sessionSummary: SessionSummary?) {
+    sessionSummary ?: return
 
-    @DrawableRes val iconResId = getLiftCategoryIcon(session.category)
+    @DrawableRes val iconResId = getLiftCategoryIcon(sessionSummary.category)
 
     setImageResource(iconResId)
 }
 
 @BindingAdapter("overviewSessionSummaryLiftCategoryName")
-fun TextView.bindLiftCategoryName(session: Session?) {
-    session ?: return
+fun TextView.bindLiftCategoryName(sessionSummary: SessionSummary?) {
+    sessionSummary ?: return
 
-    text = session.category.name
+    text = sessionSummary.category.name
 }
 
 @BindingAdapter("overviewSessionSummaryAmrapInfo")
-fun TextView.bindAmrapInfo(session: Session?) {
-    session ?: return
+fun TextView.bindAmrapInfo(sessionSummary: SessionSummary?) {
+    sessionSummary ?: return
 
-    session.amrapRoutine?.let { amrapRoutine ->
+    sessionSummary.amrapRoutine?.let { amrapRoutine ->
         @StringRes val stringFormatId = R.string.overview_session_brief_amrap_info_text_format
         val amrapWeights = amrapRoutine.weights
         val amrapBaseRepetitions = amrapRoutine.baseIntensity.repetitions
@@ -66,10 +66,10 @@ fun TextView.bindAmrapInfo(session: Session?) {
 }
 
 @BindingAdapter("overviewSessionSummaryAmrapIntensityInfo")
-fun TextView.bindAmrapIntensityInfo(session: Session?) {
-    session ?: return
+fun TextView.bindAmrapIntensityInfo(sessionSummary: SessionSummary?) {
+    sessionSummary ?: return
 
-    session.amrapRoutine?.let { amrapRoutine ->
+    sessionSummary.amrapRoutine?.let { amrapRoutine ->
         @StringRes val stringFormatId = R.string.overview_session_brief_amrap_intensity_info_text_format
         val amrapIntensityPercentage = amrapRoutine.baseIntensity.approximationIntensityPercentageValue.toString()
         val amrapBaseRepetitions = amrapRoutine.baseIntensity.repetitions
@@ -82,20 +82,19 @@ fun TextView.bindAmrapIntensityInfo(session: Session?) {
 }
 
 @BindingAdapter("overviewSessionSummaryAction")
-fun TextView.bindStatus(session: Session?) {
-    session ?: return
+fun TextView.bindStatus(sessionSummary: SessionSummary?) {
+    sessionSummary ?: return
 
-    @StringRes val actionStringId = when(session.isCompleted) {
-        true -> R.string.overview_session_action_done
-        else -> R.string.overview_session_action_start
-    }
+    @StringRes val actionStringId = sessionSummary.completedLocalDateTime?.let {
+        R.string.overview_session_action_done
+    } ?: R.string.overview_session_action_start
 
     text = resources.getString(actionStringId)
 }
 
 @BindingAdapter("currentUserProgression")
-fun MaterialCardView.bindUserProgression(uiResult: UiResult) {
-    bindUiResult(uiResult) { uiModel ->
+fun MaterialCardView.bindUserProgression(uiState: OverviewUiState) {
+    bindUiState(uiState) { result ->
         val binding =
             DataBindingUtil.findBinding<LayoutUserProgressionCardBinding>(this) ?: return
         val containerBinding =
@@ -106,25 +105,25 @@ fun MaterialCardView.bindUserProgression(uiResult: UiResult) {
             when(binding) {
                 phaseLayout -> {
                     binding.applyPrimaryDarkColorTheme()
-                    val phase = uiModel.userProgression.phase
+                    val phase = result.userProgression.phase
                     val phaseTitleText =
                         res.getString(R.string.overview_user_progression_phase_title_text_format, phase.ordinal + 1)
 
-                    phaseTitleText to uiModel.userProgression.phase.name
+                    phaseTitleText to result.userProgression.phase.name
                 }
                 microcycleLayout -> {
-                    val microCycle = uiModel.userProgression.microCycle
+                    val microCycle = result.userProgression.microCycle
                     val microCycleTitleText =
                         res.getString(R.string.overview_user_progression_microcycle_title_text_format, microCycle.ordinal + 1)
 
-                    microCycleTitleText to uiModel.userProgression.microCycle.name
+                    microCycleTitleText to result.userProgression.microCycle.name
                 }
                 weeklyAchievementLayout -> {
                     binding.applyPrimaryDarkColorTheme()
 
                     getOverviewMileStoneContentAndTitleTextPair(
                         R.string.overview_weekly_progress_title_text,
-                        uiModel.sessions.filter { it.isCompleted }.size,
+                        result.sessionSummaries.filter { it.isCompletedSession }.size,
                         TOTAL_LIFT_CATEGORY_COUNT
                     )
                 }
@@ -133,7 +132,7 @@ fun MaterialCardView.bindUserProgression(uiResult: UiResult) {
 
                     getOverviewMileStoneContentAndTitleTextPair(
                         R.string.overview_total_progress_title_text,
-                        uiModel.userProgression.currentMethodMilestone,
+                        result.userProgression.currentMethodMilestone,
                         OVERALL_METHOD_MILESTONE
                     )
                 }
@@ -142,9 +141,9 @@ fun MaterialCardView.bindUserProgression(uiResult: UiResult) {
 
                     val overallMethodMilestoneDetailed = OVERALL_METHOD_MILESTONE * TOTAL_LIFT_CATEGORY_COUNT
                     val methodMilestoneDetailed =
-                        (uiModel.userProgression.phase.ordinal * SESSION_COUNT_PER_PHASE) +
-                                (uiModel.userProgression.microCycle.ordinal * TOTAL_LIFT_CATEGORY_COUNT) +
-                                (uiModel.sessions.filter { it.isCompleted }.size)
+                        (result.userProgression.phase.ordinal * SESSION_COUNT_PER_PHASE) +
+                                (result.userProgression.microCycle.ordinal * TOTAL_LIFT_CATEGORY_COUNT) +
+                                result.sessionSummaries.filter { it.isCompletedSession }.size
 
                     getOverviewMileStoneContentAndTitleTextPair(
                         R.string.overview_total_progress_detailed_title_text,
@@ -188,10 +187,10 @@ private fun LayoutUserProgressionCardBinding.applyPrimaryDarkColorTheme() {
 @ColorInt private fun Resources.Theme.resolveMaterialColorAttribute(resId: Int): Int =
     TypedValue().also { resolveAttribute(resId, it, true) }.data
 
-private inline fun bindUiResult(uiResult: UiResult, block: (UiResult.Success) -> Unit) {
-    if (uiResult !is UiResult.Success) {
+private inline fun bindUiState(uiState: OverviewUiState, block: (OverviewUiState.Result) -> Unit) {
+    if (uiState !is OverviewUiState.Result) {
         return
     } else {
-        block(uiResult)
+        block(uiState)
     }
 }

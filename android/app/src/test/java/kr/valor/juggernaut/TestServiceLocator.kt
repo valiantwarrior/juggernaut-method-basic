@@ -20,6 +20,7 @@ import kr.valor.juggernaut.data.trainingmax.mapper.DefaultTrainingMaxMapper
 import kr.valor.juggernaut.data.trainingmax.mapper.TrainingMaxMapper
 import kr.valor.juggernaut.domain.session.repository.SessionRepository
 import kr.valor.juggernaut.domain.progression.repository.ProgressionStateRepository
+import kr.valor.juggernaut.domain.session.model.Routine
 import kr.valor.juggernaut.domain.trainingmax.repository.TrainingMaxRepository
 import kr.valor.juggernaut.domain.session.model.SessionProgression as Progression
 
@@ -51,7 +52,7 @@ object TestServiceLocator {
     fun provideRoutineIntensitySource(): RoutineIntensitySource<MicroCycle, Phase> =
         InMemoryRoutineIntensitySource()
 
-    fun provideRoutineProviderDelegate(): RoutineProviderDelegate<Progression> =
+    fun provideRoutineProviderDelegate(): RoutineProviderDelegate<Progression, List<Routine>> =
         BasicMethodRoutineProviderDelegate(
             provideRoutineIntensitySource(), provideWeightUnitTransformer()
         )

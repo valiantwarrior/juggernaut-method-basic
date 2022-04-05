@@ -3,12 +3,12 @@ package kr.valor.juggernaut.ui.home.sessionsummary
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import kr.valor.juggernaut.domain.session.model.Session
+import kr.valor.juggernaut.domain.session.model.SessionSummary
 import kr.valor.juggernaut.ui.home.NavigationClickListener
 
 class SessionSummaryAdapter(
     private val navigateClickListener: NavigationClickListener
-): ListAdapter<Session, SessionSummaryViewHolder>(DIFF_CALLBACK) {
+): ListAdapter<SessionSummary, SessionSummaryViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SessionSummaryViewHolder =
         SessionSummaryViewHolder.create(parent, navigateClickListener)
@@ -18,12 +18,12 @@ class SessionSummaryAdapter(
     }
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Session>() {
-            override fun areItemsTheSame(oldItem: Session, newItem: Session): Boolean {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<SessionSummary>() {
+            override fun areItemsTheSame(oldItem: SessionSummary, newItem: SessionSummary): Boolean {
                 return oldItem.sessionId == newItem.sessionId
             }
 
-            override fun areContentsTheSame(oldItem: Session, newItem: Session): Boolean {
+            override fun areContentsTheSame(oldItem: SessionSummary, newItem: SessionSummary): Boolean {
                 return oldItem == newItem
             }
         }

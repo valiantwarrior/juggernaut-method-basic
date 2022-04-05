@@ -6,6 +6,7 @@ import kr.valor.juggernaut.common.MicroCycle
 import kr.valor.juggernaut.common.Phase
 import kr.valor.juggernaut.data.session.entity.SessionEntity
 import kr.valor.juggernaut.data.session.mapper.delegate.routine.RoutineProviderDelegate
+import kr.valor.juggernaut.domain.session.model.Routine
 import kr.valor.juggernaut.domain.session.model.Session
 import kr.valor.juggernaut.domain.session.model.SessionProgression
 import kr.valor.juggernaut.domain.session.model.SessionRecord
@@ -16,7 +17,7 @@ import org.junit.Test
 
 class DefaultSessionEntityMapperTest {
     private lateinit var mapper: SessionMapper
-    private lateinit var routineProvider: RoutineProviderDelegate<SessionProgression>
+    private lateinit var routineProvider: RoutineProviderDelegate<SessionProgression, List<Routine>>
     private lateinit var baseEntity: SessionEntity
 
     @Before

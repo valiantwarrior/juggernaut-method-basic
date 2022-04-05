@@ -5,6 +5,7 @@ import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.domain.session.model.Session
 import kr.valor.juggernaut.domain.progression.model.UserProgression
 import kr.valor.juggernaut.domain.session.model.SessionRecord
+import kr.valor.juggernaut.domain.session.model.SessionSummary
 import kr.valor.juggernaut.domain.trainingmax.model.TrainingMax
 
 interface SessionRepository {
@@ -12,6 +13,8 @@ interface SessionRepository {
     fun getAllSessions(): Flow<List<Session>>
 
     fun findSessionsByUserProgression(userProgression: UserProgression): Flow<List<Session>>
+
+    fun findSessionSummariesByUserProgression(userProgression: UserProgression): Flow<List<SessionSummary>>
 
     suspend fun findSessionByIdOneShot(sessionId: Long): Session
 

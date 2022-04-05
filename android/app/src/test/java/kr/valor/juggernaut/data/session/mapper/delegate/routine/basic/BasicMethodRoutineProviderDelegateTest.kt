@@ -16,7 +16,7 @@ import org.junit.Test
 
 class BasicMethodRoutineProviderDelegateTest {
 
-    private lateinit var target: RoutineProviderDelegate<Progression>
+    private lateinit var target: RoutineProviderDelegate<Progression, List<Routine>>
 
     private lateinit var routineIntensitySource: RoutineIntensitySource<MicroCycle, Phase>
 

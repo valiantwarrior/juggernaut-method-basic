@@ -5,11 +5,13 @@ import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.data.session.entity.SessionEntity
 import kr.valor.juggernaut.data.session.mapper.SessionMapper
+import kr.valor.juggernaut.data.session.mapper.SessionSummaryMapper
 import kr.valor.juggernaut.data.session.source.SessionDataSource
 import kr.valor.juggernaut.domain.session.model.Session
 import kr.valor.juggernaut.domain.session.model.SessionRecord
 import kr.valor.juggernaut.domain.session.repository.SessionRepository
 import kr.valor.juggernaut.domain.progression.model.UserProgression
+import kr.valor.juggernaut.domain.session.model.SessionSummary
 import kr.valor.juggernaut.domain.trainingmax.model.TrainingMax
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -17,6 +19,7 @@ import javax.inject.Singleton
 @Singleton
 class DefaultSessionRepository @Inject constructor(
     private val sessionMapper: SessionMapper,
+    private val sessionSummaryMapper: SessionSummaryMapper,
     private val sessionDataSource: SessionDataSource
 ): SessionRepository {
 
@@ -33,6 +36,17 @@ class DefaultSessionRepository @Inject constructor(
             methodCycleValue, phaseName, microCycleName
         ).map { entities ->
             entities.map { it.toDomainModel() }
+        }
+    }
+
+    override fun findSessionSummariesByUserProgression(userProgression: UserProgression): Flow<List<SessionSummary>> {
+        val (methodCycleValue, phaseName, microCycleName) =
+            userProgression.serializedValue
+
+        return sessionDataSource.findSessionEntitiesByUserProgression(
+            methodCycleValue, phaseName, microCycleName
+        ).map { entities ->
+            entities.map { it.toSummarizedDomainModel() }
         }
     }
 
@@ -85,6 +99,9 @@ class DefaultSessionRepository @Inject constructor(
 
     private fun SessionEntity.toDomainModel(): Session =
         sessionMapper.mapEntity(this)
+
+    private fun SessionEntity.toSummarizedDomainModel(): SessionSummary =
+        sessionSummaryMapper.mapEntity(this)
 
     // considering RoomDatabase.withTransaction
     private suspend fun initWeeklySession(userProgression: UserProgression, trainingMaxes: List<TrainingMax>) {

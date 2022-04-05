@@ -4,8 +4,10 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kr.valor.juggernaut.data.session.mapper.delegate.routine.AmrapRoutineProviderDelegate
 import kr.valor.juggernaut.data.session.mapper.delegate.routine.BasicMethodRoutineProviderDelegate
 import kr.valor.juggernaut.data.session.mapper.delegate.routine.RoutineProviderDelegate
+import kr.valor.juggernaut.domain.session.model.Routine
 import kr.valor.juggernaut.domain.session.model.SessionProgression
 
 @InstallIn(SingletonComponent::class)
@@ -13,6 +15,13 @@ import kr.valor.juggernaut.domain.session.model.SessionProgression
 abstract class RoutineProviderDelegateModule {
 
     @Binds
-    abstract fun bindRoutineProviderDelegate(impl: BasicMethodRoutineProviderDelegate): RoutineProviderDelegate<SessionProgression>
+    abstract fun bindMethodRoutineProviderDelegate(
+        impl: BasicMethodRoutineProviderDelegate
+    ): RoutineProviderDelegate<SessionProgression, List<Routine>>
+
+    @Binds
+    abstract fun bindAmrapRoutineProviderDelegate(
+        impl: AmrapRoutineProviderDelegate
+    ): RoutineProviderDelegate<SessionProgression, Routine>
 
 }
