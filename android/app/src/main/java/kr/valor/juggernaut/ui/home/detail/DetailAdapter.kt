@@ -28,7 +28,7 @@ class DetailAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(val item = getItem(position)) {
             is DetailViewHolderItem.HeaderItem -> (holder as DetailHeaderViewHolder).bind(item.userProgression)
-            is DetailViewHolderItem.ContentItem -> (holder as ItemUserSessionRecordViewHolder).bind(item.session)
+            is DetailViewHolderItem.ContentItem -> (holder as ItemUserSessionRecordViewHolder).bind(item.sessionSummary)
         }
     }
 

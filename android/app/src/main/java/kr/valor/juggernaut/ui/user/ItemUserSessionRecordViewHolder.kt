@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.valor.juggernaut.R
 import kr.valor.juggernaut.databinding.ItemSessionAchievementInfoBinding
 import kr.valor.juggernaut.domain.session.model.Session
+import kr.valor.juggernaut.domain.session.model.SessionSummary
 import kr.valor.juggernaut.ui.ViewHolderDataBindingFactory
 import kr.valor.juggernaut.ui.home.NavigationClickListener
 
@@ -12,9 +13,9 @@ open class ItemUserSessionRecordViewHolder(
     private val binding: ItemSessionAchievementInfoBinding
 ): RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: Session) {
+    fun bind(item: SessionSummary) {
         with(binding) {
-            session = item
+            sessionSummary = item
             executePendingBindings()
         }
     }

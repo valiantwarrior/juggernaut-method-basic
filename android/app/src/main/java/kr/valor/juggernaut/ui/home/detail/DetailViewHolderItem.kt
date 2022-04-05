@@ -2,6 +2,7 @@ package kr.valor.juggernaut.ui.home.detail
 
 import kr.valor.juggernaut.domain.progression.model.UserProgression
 import kr.valor.juggernaut.domain.session.model.Session
+import kr.valor.juggernaut.domain.session.model.SessionSummary
 
 sealed class DetailViewHolderItem {
 
@@ -12,9 +13,9 @@ sealed class DetailViewHolderItem {
             get() = Long.MIN_VALUE
     }
 
-    data class ContentItem(val session: Session): DetailViewHolderItem() {
+    data class ContentItem(val sessionSummary: SessionSummary): DetailViewHolderItem() {
         override val itemId: Long
-            get() = session.sessionId
+            get() = sessionSummary.sessionId
     }
 
 }

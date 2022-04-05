@@ -16,18 +16,6 @@ import kr.valor.juggernaut.ui.NAV_ARGS_SESSION_ID_KEY
 import java.lang.IllegalStateException
 import javax.inject.Inject
 
-/**
- * TODO("Implementation change")
- *
- * Considering pass [Session] rather than passing sessionId
- *
- * (Dirty [Routine] objects are created.
- *
- * @see [DefaultSessionEntityMapper]
- *
- * @see [BasicMethodRoutineProviderDelegate]
- */
-
 @HiltViewModel
 class PreviewViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,

@@ -10,14 +10,15 @@ import kr.valor.juggernaut.ui.home.detail.DetailViewHolderItem
 
 @BindingAdapter("overallSessions")
 fun RecyclerView.bindSessions(uiState: OverallUiState) {
-    bindUiState(uiState) { sessions ->
-        if (sessions.isEmpty()) {
+    bindUiState(uiState) { result ->
+        val sessionSummaries = result.sessionSummaries
+        if (sessionSummaries.isEmpty()) {
             visibility = View.GONE
         } else {
             visibility = View.VISIBLE
 
-            val detailViewHolderContentItems = sessions.map { session ->
-                DetailViewHolderItem.ContentItem(session = session)
+            val detailViewHolderContentItems = sessionSummaries.map { sessionSummary ->
+                DetailViewHolderItem.ContentItem(sessionSummary = sessionSummary)
             }
 
             (adapter as DetailAdapter).submitList(detailViewHolderContentItems)
@@ -27,8 +28,10 @@ fun RecyclerView.bindSessions(uiState: OverallUiState) {
 
 @BindingAdapter("emptySession")
 fun ConstraintLayout.bindEmptyState(uiState: OverallUiState) {
-    bindUiState(uiState) { sessions ->
-        visibility = if (sessions.isEmpty()) {
+    bindUiState(uiState) { result ->
+        val sessionSummaries = result.sessionSummaries
+
+        visibility = if (sessionSummaries.isEmpty()) {
             View.VISIBLE
         } else {
             View.GONE
@@ -36,9 +39,9 @@ fun ConstraintLayout.bindEmptyState(uiState: OverallUiState) {
     }
 }
 
-private fun bindUiState(uiState: OverallUiState, block: (List<Session>) -> Unit) {
+private fun bindUiState(uiState: OverallUiState, block: (OverallUiState.Result) -> Unit) {
     if (uiState !is OverallUiState.Result) {
         return
     }
-    block(uiState.sessions)
+    block(uiState)
 }

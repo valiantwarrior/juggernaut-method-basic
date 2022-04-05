@@ -8,25 +8,25 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.databinding.BindingAdapter
 import kr.valor.juggernaut.R
-import kr.valor.juggernaut.domain.session.model.Session
+import kr.valor.juggernaut.domain.session.model.SessionSummary
 import kr.valor.juggernaut.ui.common.getLiftCategoryIcon
 import kr.valor.juggernaut.ui.common.toFormattedString
 
 @BindingAdapter("userSessionRecordLiftCategoryIcon")
-fun ImageView.bindLiftCategoryIcon(session: Session?) {
-    session ?: return
+fun ImageView.bindLiftCategoryIcon(sessionSummary: SessionSummary?) {
+    sessionSummary ?: return
 
-    @DrawableRes val iconResId = getLiftCategoryIcon(session.category)
+    @DrawableRes val iconResId = getLiftCategoryIcon(sessionSummary.category)
 
     setImageResource(iconResId)
 }
 
 @BindingAdapter("userSessionRecordPhaseAndMicroCycle")
-fun TextView.bindPhaseAndMicrocycle(session: Session?) {
-    session ?: return
+fun TextView.bindPhaseAndMicrocycle(sessionSummary: SessionSummary?) {
+    sessionSummary ?: return
 
     @StringRes val stringFormatId = R.string.session_phase_and_microcycle_text_format
-    val (phaseName, microcycleName) = with(session.sessionProgression) {
+    val (phaseName, microcycleName) = with(sessionSummary.sessionProgression) {
         phase.name to microCycle.name
     }
 
@@ -34,28 +34,28 @@ fun TextView.bindPhaseAndMicrocycle(session: Session?) {
 }
 
 @BindingAdapter("userSessionRecordDateTime")
-fun TextView.bindDateTime(session: Session?) {
-    session ?: return
+fun TextView.bindDateTime(sessionSummary: SessionSummary?) {
+    sessionSummary ?: return
 
-    val completedDateTime = session.completedLocalDateTime!!
+    val completedDateTime = sessionSummary.completedLocalDateTime!!
 
     text = completedDateTime.toFormattedString()
 }
 
 @BindingAdapter("userSessionAmrapRecordVisibility")
-fun ViewGroup.bindVisibility(session: Session?) {
-    session ?: return
+fun ViewGroup.bindVisibility(sessionSummary: SessionSummary?) {
+    sessionSummary ?: return
 
-    val isVisible = session.amrapRoutine != null
+    val isVisible = sessionSummary.amrapRoutine != null
 
     visibility = if (isVisible) View.VISIBLE else View.GONE
 }
 
 // TODO("Considering lbs unit later")
 @BindingAdapter("userSessionAmrapRecordActual")
-fun TextView.bindActualAmrapRecord(session: Session?) {
-    session ?: return
-    val amrapSession = session.amrapRoutine ?: return
+fun TextView.bindActualAmrapRecord(sessionSummary: SessionSummary?) {
+    sessionSummary ?: return
+    val amrapSession = sessionSummary.amrapRoutine ?: return
 
     @StringRes val stringFormatId = R.string.session_amrap_actual_info_text_format
     val amrapWeights = amrapSession.weights
@@ -66,9 +66,9 @@ fun TextView.bindActualAmrapRecord(session: Session?) {
 
 // TODO("Considering lbs unit later")
 @BindingAdapter("userSessionAmrapRecordGoal")
-fun TextView.bindAmrapGoal(session: Session?) {
-    session ?: return
-    val amrapSession = session.amrapRoutine ?: return
+fun TextView.bindAmrapGoal(sessionSummary: SessionSummary?) {
+    sessionSummary ?: return
+    val amrapSession = sessionSummary.amrapRoutine ?: return
 
     @StringRes val stringFormatId = R.string.session_amrap_intensity_info_text_format
     val amrapWeights = amrapSession.weights

@@ -25,8 +25,8 @@ fun RecyclerView.bindSessions(uiState: DetailUiState) {
         val detailViewHolderHeaderItem =
             listOf(DetailViewHolderItem.HeaderItem(uiResult.userProgression))
         val detailViewHolderContentItems =
-            uiResult.sessions.map { session ->
-                DetailViewHolderItem.ContentItem(session = session)
+            uiResult.sessionSummaries.map { sessionSummary ->
+                DetailViewHolderItem.ContentItem(sessionSummary = sessionSummary)
             }
 
         (adapter as DetailAdapter).submitList(detailViewHolderHeaderItem + detailViewHolderContentItems)

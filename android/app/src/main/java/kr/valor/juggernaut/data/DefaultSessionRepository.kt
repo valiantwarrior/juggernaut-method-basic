@@ -28,6 +28,11 @@ class DefaultSessionRepository @Inject constructor(
             entities.map { it.toDomainModel() }
         }
 
+    override fun getAllSessionSummaries(): Flow<List<SessionSummary>> =
+        sessionDataSource.getAllSessionEntities().map { entities ->
+            entities.map { it.toSummarizedDomainModel() }
+        }
+
     override fun findSessionsByUserProgression(userProgression: UserProgression): Flow<List<Session>> {
         val (methodCycleValue, phaseName, microCycleName) =
             userProgression.serializedValue

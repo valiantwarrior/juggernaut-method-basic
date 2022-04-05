@@ -12,6 +12,8 @@ interface SessionRepository {
 
     fun getAllSessions(): Flow<List<Session>>
 
+    fun getAllSessionSummaries(): Flow<List<SessionSummary>>
+
     fun findSessionsByUserProgression(userProgression: UserProgression): Flow<List<Session>>
 
     fun findSessionSummariesByUserProgression(userProgression: UserProgression): Flow<List<SessionSummary>>

@@ -18,7 +18,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:paddingVertical="@dimen/recyclerview_container_padding_vertical_default"
-            app:detailedSessions="@{viewModel.detailUiModel}"
+            app:detailedSessions="@{viewModel.uiState}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
