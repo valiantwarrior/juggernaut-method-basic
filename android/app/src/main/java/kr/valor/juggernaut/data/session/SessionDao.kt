@@ -22,7 +22,13 @@ interface SessionDao: SessionDataSource {
     override suspend fun deleteSessionEntitiesByMethodCycle(methodCycle: Int)
 
     @Query("SELECT * FROM session_table WHERE id is :id")
-    override suspend fun findSessionEntityById(id: Long): SessionEntity
+    override fun findSessionEntityById(id: Long): Flow<SessionEntity>
+
+    @Query("SELECT * FROM session_table WHERE id is :id")
+    override suspend fun findSessionEntityByIdOneShot(id: Long): SessionEntity
+
+    @Query("SELECT COUNT(complete_date) FROM session_table WHERE method_cycle is :methodCycleValue AND phase_name is :phaseName AND micro_cycle_name is :microCycleName")
+    override suspend fun getCompletedSessionEntitiesCount(methodCycleValue: Int, phaseName: String, microCycleName: String): Int
 
     @Query("SELECT * FROM session_table WHERE method_cycle is :methodCycleValue AND phase_name is :phaseName AND micro_cycle_name is :microCycleName")
     override fun findSessionEntitiesByUserProgression(methodCycleValue: Int, phaseName: String, microCycleName: String): Flow<List<SessionEntity>>

@@ -1,6 +1,8 @@
 package kr.valor.juggernaut.ui.session.record
 
-import androidx.lifecycle.*
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
@@ -9,16 +11,17 @@ import kr.valor.juggernaut.domain.common.CompleteSessionContract
 import kr.valor.juggernaut.domain.session.model.Session
 import kr.valor.juggernaut.domain.session.model.SessionProgression.Companion.DELOAD_SESSION_INDICATOR
 import kr.valor.juggernaut.domain.session.model.SessionRecord
-import kr.valor.juggernaut.domain.session.usecase.usecase.FindSessionUseCase
+import kr.valor.juggernaut.domain.session.usecase.usecase.FindSessionByIdOneShotUseCase
 import kr.valor.juggernaut.ui.NAV_ARGS_BASE_AMRAP_REPETITIONS_KEY
 import kr.valor.juggernaut.ui.NAV_ARGS_SESSION_ID_KEY
 import kr.valor.juggernaut.ui.NAV_ARGS_SESSION_ORDINAL_KEY
+import kr.valor.juggernaut.ui.common.WhileViewSubscribed
 import javax.inject.Inject
 
 @HiltViewModel
 class RecordViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    findSessionUseCase: FindSessionUseCase,
+    findSessionByIdOneShotUseCase: FindSessionByIdOneShotUseCase,
     completeSessionContract: CompleteSessionContract
 ) : ViewModel() {
 
@@ -32,14 +35,17 @@ class RecordViewModel @Inject constructor(
 
     val accept: (RecordUiAction) -> Unit
 
-    val uiState: StateFlow<RecordUiState> = findSessionUseCase(sessionId = savedStateHandle[NAV_ARGS_SESSION_ID_KEY]!!)
-        .map { session ->
-            when(session.sessionProgression.isAmrapSession) {
-                true -> RecordUiState.AmrapSession(session)
-                false -> RecordUiState.DeloadSession(session)
-            }
+    val uiState = flow {
+        findSessionByIdOneShotUseCase(
+            sessionId = savedStateHandle[NAV_ARGS_SESSION_ID_KEY]!!
+        ).also { emit(it) }
+    } .map { session ->
+        return@map if (session.sessionProgression.isAmrapSession) {
+            RecordUiState.AmrapSession(session)
+        } else {
+            RecordUiState.DeloadSession(session)
         }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L), initialValue = RecordUiState.Loading)
+    }.stateIn(viewModelScope, WhileViewSubscribed, RecordUiState.Loading)
 
     private val _eventChannel = Channel<RecordEvent>()
     val eventFlow: Flow<RecordEvent>

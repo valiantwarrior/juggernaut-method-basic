@@ -8,10 +8,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kr.valor.juggernaut.databinding.FragmentPreviewBinding
 import kr.valor.juggernaut.ui.NavigationFragment
 import kr.valor.juggernaut.ui.observeFlowEvent
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class PreviewFragment : NavigationFragment() {
 

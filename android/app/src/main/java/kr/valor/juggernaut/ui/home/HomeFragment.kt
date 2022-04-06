@@ -13,12 +13,14 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kr.valor.juggernaut.R
 import kr.valor.juggernaut.databinding.FragmentHomeBinding
 import kr.valor.juggernaut.ui.MainActivity
 import kr.valor.juggernaut.ui.NavigationFragment
 import kr.valor.juggernaut.ui.onboarding.OnboardingActivity
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class HomeFragment : NavigationFragment() {
 

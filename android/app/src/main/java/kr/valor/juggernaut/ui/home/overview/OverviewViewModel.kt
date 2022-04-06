@@ -5,7 +5,10 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kr.valor.juggernaut.domain.progression.model.UserProgression
 import kr.valor.juggernaut.domain.session.model.SessionSummary
@@ -31,15 +34,11 @@ class OverviewViewModel @Inject constructor(
         get() = _eventChannel.receiveAsFlow()
 
     val uiState =
-        sessionSummaryState.map { (userProgression, sessionSummaries) ->
-            val sortedSessionSummaries = sessionSummaries.sortedWith(
-                compareBy<SessionSummary> { it.isCompletedSession }.thenBy { it.category.ordinal }
-            )
+        userProgressionWithSessionSummaries.map { (userProgression, sessionSummaries) ->
+            val sortedSessionSummaries = sessionSummaries
+                .sortedWith(compareBy<SessionSummary> { it.isCompletedSession }.thenBy { it.category.ordinal })
 
-            return@map OverviewUiState.Result(
-                userProgression = userProgression,
-                sessionSummaries = sortedSessionSummaries
-            )
+            return@map OverviewUiState.Result(userProgression, sortedSessionSummaries)
         }.stateIn(viewModelScope, WhileViewSubscribed, OverviewUiState.Loading)
 
     init {

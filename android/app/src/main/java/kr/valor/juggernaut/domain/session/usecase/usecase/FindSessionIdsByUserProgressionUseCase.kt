@@ -4,11 +4,11 @@ import kr.valor.juggernaut.domain.progression.model.UserProgression
 import kr.valor.juggernaut.domain.session.repository.SessionRepository
 import javax.inject.Inject
 
-class FindSessionsUseCase @Inject constructor(
+class FindSessionIdsByUserProgressionUseCase @Inject constructor(
     private val repository: SessionRepository
 ) {
 
     operator fun invoke(userProgression: UserProgression) =
-        repository.findSessionsByUserProgression(userProgression)
+        repository.findSessionIdsByUserProgression(userProgression)
 
 }

@@ -2,7 +2,6 @@ package kr.valor.juggernaut.data.session.source
 
 import kotlinx.coroutines.flow.Flow
 import kr.valor.juggernaut.data.session.entity.SessionEntity
-import kr.valor.juggernaut.domain.progression.model.UserProgression
 
 interface SessionDataSource {
 
@@ -14,7 +13,11 @@ interface SessionDataSource {
 
     suspend fun deleteSessionEntitiesByMethodCycle(methodCycle: Int)
 
-    suspend fun findSessionEntityById(id: Long): SessionEntity
+    fun findSessionEntityById(id: Long): Flow<SessionEntity>
+
+    suspend fun findSessionEntityByIdOneShot(id: Long): SessionEntity
+
+    suspend fun getCompletedSessionEntitiesCount(methodCycleValue: Int, phaseName: String, microCycleName: String): Int
 
     fun findSessionEntitiesByUserProgression(methodCycleValue: Int, phaseName: String, microCycleName: String): Flow<List<SessionEntity>>
 

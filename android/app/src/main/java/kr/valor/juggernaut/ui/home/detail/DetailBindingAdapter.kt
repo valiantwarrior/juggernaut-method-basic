@@ -22,14 +22,17 @@ import kr.valor.juggernaut.domain.progression.model.UserProgression
 @BindingAdapter("detailedSessions")
 fun RecyclerView.bindSessions(uiState: DetailUiState) {
     bindUiState(uiState) { uiResult ->
-        val detailViewHolderHeaderItem =
-            listOf(DetailViewHolderItem.HeaderItem(uiResult.userProgression))
-        val detailViewHolderContentItems =
-            uiResult.sessionSummaries.map { sessionSummary ->
-                DetailViewHolderItem.ContentItem(sessionSummary = sessionSummary)
-            }
+        val detailViewHolderItems = mutableListOf<DetailViewHolderItem>()
+            .apply {
+                add(DetailViewHolderItem.HeaderItem(uiResult.userProgression))
+                if (uiResult.sessionSummaries.isNotEmpty()) {
+                    uiResult.sessionSummaries.forEach {
+                        add(DetailViewHolderItem.ContentItem(it))
+                    }
+                }
+            }.toList()
 
-        (adapter as DetailAdapter).submitList(detailViewHolderHeaderItem + detailViewHolderContentItems)
+        (adapter as DetailAdapter).submitList(detailViewHolderItems)
     }
 }
 

@@ -20,11 +20,9 @@ class OverallViewModel @Inject constructor(
     val uiEventFlow: Flow<OverallUiEvent>
         get() = _eventChannel.receiveAsFlow()
 
-    val uiState: StateFlow<OverallUiState> = loadSessionSummariesUseCase().map { sessionSummaries ->
-        val completedSessionSummaries = sessionSummaries.filter { sessionSummary ->
-            sessionSummary.isCompletedSession
-        }
-        OverallUiState.Result(completedSessionSummaries)
+    // Considering pagination
+    val uiState: StateFlow<OverallUiState> = loadSessionSummariesUseCase().map {
+        OverallUiState.Result(it)
     }.stateIn(viewModelScope, WhileViewSubscribed, OverallUiState.Loading)
 
     fun onClickItem(sessionId: Long) {

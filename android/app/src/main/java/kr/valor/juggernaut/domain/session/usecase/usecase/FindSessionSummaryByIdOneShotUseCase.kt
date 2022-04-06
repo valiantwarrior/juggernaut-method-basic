@@ -3,10 +3,11 @@ package kr.valor.juggernaut.domain.session.usecase.usecase
 import kr.valor.juggernaut.domain.session.repository.SessionRepository
 import javax.inject.Inject
 
-class FindSessionUseCase @Inject constructor(
+class FindSessionSummaryByIdOneShotUseCase @Inject constructor(
     private val repository: SessionRepository
 ) {
 
-    operator fun invoke(sessionId: Long) = repository.findSessionById(sessionId)
+    suspend operator fun invoke(sessionId: Long) =
+        repository.findSessionSummaryByIdOneShot(sessionId)
 
 }

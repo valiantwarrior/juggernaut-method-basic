@@ -4,56 +4,45 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kr.valor.juggernaut.domain.progression.model.ProgressionState
-import kr.valor.juggernaut.domain.progression.usecase.usecase.LoadProgressionStateUseCase
+import kr.valor.juggernaut.domain.progression.model.UserProgression
 import kr.valor.juggernaut.domain.session.model.Session
-import kr.valor.juggernaut.domain.session.usecase.usecase.FindSessionUseCase
-import kr.valor.juggernaut.domain.session.usecase.usecase.LoadSessionsUseCase
+import kr.valor.juggernaut.domain.session.usecase.usecase.CountCompletedSessionsBasedOnUserProgressionUseCase
+import kr.valor.juggernaut.domain.session.usecase.usecase.FindSessionByIdOneShotUseCase
 import kr.valor.juggernaut.ui.NAV_ARGS_SESSION_ID_KEY
-import java.lang.IllegalStateException
+import kr.valor.juggernaut.ui.common.WhileViewSubscribed
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @HiltViewModel
 class PreviewViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    findSessionUseCase: FindSessionUseCase,
-    loadSessionsUseCase: LoadSessionsUseCase,
-    loadProgressionStateUseCase: LoadProgressionStateUseCase
+    findSessionByIdOneShotUseCase: FindSessionByIdOneShotUseCase,
+    countCompletedSessionsBasedOnUserProgressionUseCase: CountCompletedSessionsBasedOnUserProgressionUseCase
 ): ViewModel() {
 
     private val _eventChannel: Channel<PreviewUiEvent> = Channel()
     val uiEventFlow: Flow<PreviewUiEvent>
         get() = _eventChannel.receiveAsFlow()
 
-    val uiState: StateFlow<PreviewUiState>
-
-    init {
-        val totalCompletedSessionsCountFlow: Flow<Int> = flow {
-            val userProgression = when(val progressionState = loadProgressionStateUseCase().first()) {
-                is ProgressionState.OnGoing -> progressionState.currentUserProgression
-                else -> throw IllegalStateException()
-            }
-
-            val completedSessionsCount = loadSessionsUseCase().map { sessions ->
-                sessions.filter { session ->
-                    session.sessionProgression == userProgression.toSessionProgression() && session.isCompleted
-                }.size
-            }.first()
-
-            emit(completedSessionsCount)
+    val uiState = flow {
+        val session = findSessionByIdOneShotUseCase(
+            sessionId = savedStateHandle[NAV_ARGS_SESSION_ID_KEY]!!
+        )
+        emit(session)
+    }.map { session ->
+        val userProgression = with(session.sessionProgression) {
+            UserProgression(methodCycle, phase, microCycle)
         }
 
-        uiState = combine(
-            findSessionUseCase(sessionId = savedStateHandle[NAV_ARGS_SESSION_ID_KEY]!!),
-            totalCompletedSessionsCountFlow,
-            ::Pair
-        ).map { (session, totalCompletedSessionsCount) ->
-            return@map PreviewUiState.Result(session, totalCompletedSessionsCount)
-        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L), PreviewUiState.Loading)
-    }
+        return@map PreviewUiState.Result(
+            session = session,
+            totalCompletedSessionsCount = countCompletedSessionsBasedOnUserProgressionUseCase(userProgression)
+        )
+    }.stateIn(viewModelScope, WhileViewSubscribed, PreviewUiState.Loading)
 
     fun onClickStart() {
         viewModelScope.launch {

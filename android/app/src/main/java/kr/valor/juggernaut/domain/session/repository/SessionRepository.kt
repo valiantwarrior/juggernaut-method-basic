@@ -10,17 +10,15 @@ import kr.valor.juggernaut.domain.trainingmax.model.TrainingMax
 
 interface SessionRepository {
 
-    fun getAllSessions(): Flow<List<Session>>
-
     fun getAllSessionSummaries(): Flow<List<SessionSummary>>
 
-    fun findSessionsByUserProgression(userProgression: UserProgression): Flow<List<Session>>
+    fun findSessionIdsByUserProgression(userProgression: UserProgression): Flow<List<Long>>
 
-    fun findSessionSummariesByUserProgression(userProgression: UserProgression): Flow<List<SessionSummary>>
+    suspend fun findSessionSummaryByIdOneShot(sessionId: Long): SessionSummary
 
     suspend fun findSessionByIdOneShot(sessionId: Long): Session
 
-    fun findSessionById(sessionId: Long): Flow<Session>
+    suspend fun countCompletedSessionEntitiesBasedOnUserProgression(userProgression: UserProgression): Int
 
     suspend fun updateSession(session: Session, sessionRecord: SessionRecord)
 

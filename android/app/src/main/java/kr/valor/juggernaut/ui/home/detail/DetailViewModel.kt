@@ -21,7 +21,7 @@ sealed class DetailUiEvent {
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    sessionSummaryViewModelDelegate: SessionSummaryViewModelDelegate
+    sessionSummaryViewModelDelegate: SessionSummaryViewModelDelegate,
 ) : ViewModel(), SessionSummaryViewModelDelegate by sessionSummaryViewModelDelegate {
 
     private val _eventChannel: Channel<DetailUiEvent> = Channel()
@@ -29,34 +29,12 @@ class DetailViewModel @Inject constructor(
         get() = _eventChannel.receiveAsFlow()
 
     val uiState =
-        sessionSummaryState.map { (userProgression, sessionSummaries) ->
-            val completedSessionSummaries =
-                sessionSummaries.filter { it.isCompletedSession }
-                    .sortedWith(compareBy { it.category.ordinal })
+        userProgressionWithSessionSummaries.map { (userProgression, sessionSummaries) ->
+            val sortedSessionSummaries = sessionSummaries
+                .filter { it.isCompletedSession }.sortedBy { it.category.ordinal }
 
-            return@map DetailUiState.Result(
-                userProgression = userProgression,
-                sessionSummaries = completedSessionSummaries
-            )
+            return@map DetailUiState.Result(userProgression, sortedSessionSummaries)
         }.stateIn(viewModelScope, WhileViewSubscribed, DetailUiState.Loading)
-
-//    val detailUiModel = combine(
-//        loadSessionsUseCase(),
-//        loadProgressionStateUseCase()
-//    ) { sessions: List<Session>, progressionState: ProgressionState ->
-//        val userProgression = when(progressionState) {
-//            is ProgressionState.None -> return@combine DetailUiState.Error
-//            is ProgressionState.OnGoing -> progressionState.currentUserProgression
-//            is ProgressionState.Done -> progressionState.latestUserProgression
-//        }
-//
-//        return@combine DetailUiState.Result(
-//            userProgression = userProgression,
-//            sessions = sessions.filter { session ->
-//                session.isCompleted && session.sessionProgression == userProgression.toSessionProgression()
-//            }.sortedWith(compareBy { it.category.ordinal })
-//        )
-//    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L), DetailUiState.Loading)
 
     fun onClickItem(sessionId: Long) {
         viewModelScope.launch {

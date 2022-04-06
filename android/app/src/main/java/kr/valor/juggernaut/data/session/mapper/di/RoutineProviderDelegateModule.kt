@@ -12,6 +12,7 @@ import kr.valor.juggernaut.domain.session.model.SessionProgression
 
 @InstallIn(SingletonComponent::class)
 @Module
+@Suppress("UNUSED")
 abstract class RoutineProviderDelegateModule {
 
     @Binds
@@ -22,6 +23,6 @@ abstract class RoutineProviderDelegateModule {
     @Binds
     abstract fun bindAmrapRoutineProviderDelegate(
         impl: AmrapRoutineProviderDelegate
-    ): RoutineProviderDelegate<SessionProgression, Routine>
+    ): RoutineProviderDelegate<SessionProgression, Routine?>
 
 }

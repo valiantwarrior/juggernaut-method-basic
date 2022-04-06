@@ -1,17 +1,19 @@
 package kr.valor.juggernaut.data
 
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kr.valor.juggernaut.common.LiftCategory
 import kr.valor.juggernaut.common.MethodCycle
 import kr.valor.juggernaut.data.session.entity.SessionEntity
 import kr.valor.juggernaut.data.session.mapper.SessionMapper
 import kr.valor.juggernaut.data.session.mapper.SessionSummaryMapper
 import kr.valor.juggernaut.data.session.source.SessionDataSource
+import kr.valor.juggernaut.domain.progression.model.UserProgression
 import kr.valor.juggernaut.domain.session.model.Session
 import kr.valor.juggernaut.domain.session.model.SessionRecord
-import kr.valor.juggernaut.domain.session.repository.SessionRepository
-import kr.valor.juggernaut.domain.progression.model.UserProgression
 import kr.valor.juggernaut.domain.session.model.SessionSummary
+import kr.valor.juggernaut.domain.session.repository.SessionRepository
 import kr.valor.juggernaut.domain.trainingmax.model.TrainingMax
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -23,46 +25,36 @@ class DefaultSessionRepository @Inject constructor(
     private val sessionDataSource: SessionDataSource
 ): SessionRepository {
 
-    override fun getAllSessions(): Flow<List<Session>> =
-        sessionDataSource.getAllSessionEntities().map { entities ->
-            entities.map { it.toDomainModel() }
-        }
-
     override fun getAllSessionSummaries(): Flow<List<SessionSummary>> =
         sessionDataSource.getAllSessionEntities().map { entities ->
-            entities.map { it.toSummarizedDomainModel() }
+            entities
+                .filter { it.completeDateMillis != null }
+                .getOrEmptyList { it.toSummarizedDomainModel() }
         }
 
-    override fun findSessionsByUserProgression(userProgression: UserProgression): Flow<List<Session>> {
+    override fun findSessionIdsByUserProgression(userProgression: UserProgression): Flow<List<Long>> {
         val (methodCycleValue, phaseName, microCycleName) =
             userProgression.serializedValue
 
         return sessionDataSource.findSessionEntitiesByUserProgression(
             methodCycleValue, phaseName, microCycleName
         ).map { entities ->
-            entities.map { it.toDomainModel() }
+            entities.getOrEmptyList { it.id }
         }
     }
 
-    override fun findSessionSummariesByUserProgression(userProgression: UserProgression): Flow<List<SessionSummary>> {
-        val (methodCycleValue, phaseName, microCycleName) =
-            userProgression.serializedValue
-
-        return sessionDataSource.findSessionEntitiesByUserProgression(
-            methodCycleValue, phaseName, microCycleName
-        ).map { entities ->
-            entities.map { it.toSummarizedDomainModel() }
-        }
-    }
+    override suspend fun findSessionSummaryByIdOneShot(sessionId: Long): SessionSummary =
+        sessionDataSource.findSessionEntityByIdOneShot(sessionId).toSummarizedDomainModel()
 
     override suspend fun findSessionByIdOneShot(sessionId: Long): Session =
-        sessionDataSource.findSessionEntityById(sessionId).toDomainModel()
+        sessionDataSource.findSessionEntityByIdOneShot(sessionId).toDomainModel()
 
-    override fun findSessionById(sessionId: Long): Flow<Session> =
-        flow {
-            val session = sessionDataSource.findSessionEntityById(sessionId).toDomainModel()
-            emit(session)
-        }
+    override suspend fun countCompletedSessionEntitiesBasedOnUserProgression(userProgression: UserProgression): Int {
+        val (methodCycleValue, phaseName, microCycleName) =
+            userProgression.serializedValue
+
+        return sessionDataSource.getCompletedSessionEntitiesCount(methodCycleValue, phaseName, microCycleName)
+    }
 
     override suspend fun updateSession(session: Session, sessionRecord: SessionRecord) {
         val sessionEntity = session.toDatabaseModel(sessionRecord)
@@ -107,6 +99,9 @@ class DefaultSessionRepository @Inject constructor(
 
     private fun SessionEntity.toSummarizedDomainModel(): SessionSummary =
         sessionSummaryMapper.mapEntity(this)
+
+    private inline fun <T, R> List<T>.getOrEmptyList(transform: (T) -> R): List<R> =
+        if (isEmpty()) emptyList() else map { transform(it) }
 
     // considering RoomDatabase.withTransaction
     private suspend fun initWeeklySession(userProgression: UserProgression, trainingMaxes: List<TrainingMax>) {
