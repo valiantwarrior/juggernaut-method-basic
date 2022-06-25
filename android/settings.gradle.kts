@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Juggernaut Method Basic"
-include ':app'
+include(":app")
