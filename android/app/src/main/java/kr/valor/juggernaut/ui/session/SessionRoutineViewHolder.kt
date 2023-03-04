@@ -17,20 +17,16 @@ open class RoutineViewHolder(
 ): SessionRoutineViewHolder(binding) {
 
     open fun bind(item: RoutineItem) {
-        (binding as ItemSessionRoutineBinding)
-            .apply {
-                routineItem = item
-                executePendingBindings()
-            }
+        with(binding as ItemSessionRoutineBinding) {
+            routineItem = item
+            executePendingBindings()
+        }
     }
 
     companion object: ViewHolderDataBindingFactory() {
-        fun create(parent: ViewGroup): SessionRoutineViewHolder {
-            val binding =
-                provideDataBinding<ItemSessionRoutineBinding>(parent, R.layout.item_session_routine)
-
-            return RoutineViewHolder(binding)
-        }
+        fun create(parent: ViewGroup): SessionRoutineViewHolder = RoutineViewHolder(
+            provideDataBinding<ItemSessionRoutineBinding>(parent, R.layout.item_session_routine)
+        )
     }
 
 }
@@ -48,17 +44,10 @@ class FooterViewHolder private constructor(
     }
 
     companion object: ViewHolderDataBindingFactory() {
-        fun create(parent: ViewGroup, footerAction: () -> Unit): SessionRoutineViewHolder {
-            val binding =
-                provideDataBinding<ItemSessionFooterBinding>(parent, R.layout.item_session_footer)
-                    .apply {
-                        footerActionButton.setOnClickListener {
-                            footerAction()
-                        }
-                    }
-
-            return FooterViewHolder(binding)
-        }
+        fun create(parent: ViewGroup, footerAction: () -> Unit): SessionRoutineViewHolder =
+            provideDataBinding<ItemSessionFooterBinding>(parent, R.layout.item_session_footer)
+                .apply { footerActionButton.setOnClickListener { footerAction() } }
+                .let(::FooterViewHolder)
     }
 
 }
@@ -68,29 +57,24 @@ class AmrapRoutineViewHolder private constructor(
 ): RoutineViewHolder(binding) {
 
     override fun bind(item: RoutineItem) {
-        item as AmrapRoutineItem
         with(binding) {
-            amrapRoutineItem = item
+            amrapRoutineItem = item as AmrapRoutineItem
             executePendingBindings()
         }
     }
 
     companion object: ViewHolderDataBindingFactory() {
-        fun create(parent: ViewGroup, plusRepsAction: () -> Unit, minusRepsAction: () -> Unit): RoutineViewHolder {
-            val binding =
-                provideDataBinding<ItemSessionAmrapRoutineBinding>(parent, R.layout.item_session_amrap_routine)
-                    .apply {
-                        plusRepsButton.setOnClickListener {
-                            plusRepsAction()
-                        }
-
-                        minusRepsButton.setOnClickListener {
-                            minusRepsAction()
-                        }
+        fun create(parent: ViewGroup, plusRepsAction: () -> Unit, minusRepsAction: () -> Unit): RoutineViewHolder =
+            provideDataBinding<ItemSessionAmrapRoutineBinding>(parent, R.layout.item_session_amrap_routine)
+                .apply {
+                    plusRepsButton.setOnClickListener {
+                        plusRepsAction()
                     }
-
-            return AmrapRoutineViewHolder(binding)
-        }
+                    minusRepsButton.setOnClickListener {
+                        minusRepsAction()
+                    }
+                }
+                .let(::AmrapRoutineViewHolder)
     }
 
 }
@@ -100,17 +84,16 @@ class AmrapRoutineAchievementViewHolder private constructor(
 ): RoutineViewHolder(binding) {
 
     override fun bind(item: RoutineItem) {
-        item as AmrapRoutineItem
         with(binding) {
-            amrapRoutineItem = item
+            amrapRoutineItem = item as AmrapRoutineItem
             executePendingBindings()
         }
     }
 
     companion object: ViewHolderDataBindingFactory() {
         fun create(parent: ViewGroup): RoutineViewHolder {
-            val binding =
-                provideDataBinding<ItemSessionAmrapAchievementBinding>(parent, R.layout.item_session_amrap_achievement)
+            val binding: ItemSessionAmrapAchievementBinding =
+                provideDataBinding(parent, R.layout.item_session_amrap_achievement)
 
             return AmrapRoutineAchievementViewHolder(binding)
         }

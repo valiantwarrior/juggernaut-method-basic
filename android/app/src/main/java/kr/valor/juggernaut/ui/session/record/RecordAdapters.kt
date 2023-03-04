@@ -1,6 +1,7 @@
 package kr.valor.juggernaut.ui.session.record
 
 import android.view.ViewGroup
+import kr.valor.juggernaut.R
 import kr.valor.juggernaut.ui.session.*
 
 class DeloadRoutineAdapter(submitAction: () -> Unit): SessionRoutineAdapter(submitAction)
@@ -11,24 +12,17 @@ class AmrapRoutineAdapter(
     submitAction: () -> Unit
 ): SessionRoutineAdapter(submitAction) {
 
-    override fun getItemViewType(position: Int): Int {
-        return when(getItem(position)) {
-            is AmrapRoutineItem -> ITEM_VIEW_TYPE_AMRAP_ROUTINE
-            else -> super.getItemViewType(position)
-        }
+    override fun getItemViewType(position: Int): Int = when(getItem(position)) {
+        is AmrapRoutineItem -> R.layout.item_session_amrap_routine
+        else -> super.getItemViewType(position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SessionRoutineViewHolder {
         return when(viewType) {
-            ITEM_VIEW_TYPE_AMRAP_ROUTINE -> {
+            R.layout.item_session_amrap_routine ->
                 AmrapRoutineViewHolder.create(parent, plusRepsAction, minusRepsAction)
-            }
+
             else -> super.onCreateViewHolder(parent, viewType)
         }
     }
-
-    companion object {
-        private const val ITEM_VIEW_TYPE_AMRAP_ROUTINE = ITEM_VIEW_TYPE_ROUTINE + 1
-    }
-
 }

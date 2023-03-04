@@ -3,23 +3,24 @@ package kr.valor.juggernaut.ui.session
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import kr.valor.juggernaut.R
 
 open class SessionRoutineAdapter(
     private val footerAction: () -> Unit
-): ListAdapter<SessionRoutineItem, SessionRoutineViewHolder>(DIFF_CALLBACK) {
+): ListAdapter<SessionRoutineItem, SessionRoutineViewHolder>(this) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SessionRoutineViewHolder {
         return when(viewType) {
-            ITEM_VIEW_TYPE_ROUTINE -> RoutineViewHolder.create(parent)
-            ITEM_VIEW_TYPE_FOOTER -> FooterViewHolder.create(parent, footerAction)
+            R.layout.item_session_routine -> RoutineViewHolder.create(parent)
+            R.layout.item_session_footer -> FooterViewHolder.create(parent, footerAction)
             else -> throw IllegalArgumentException()
         }
     }
 
     override fun getItemViewType(position: Int): Int {
         return when(getItem(position)) {
-            is RoutineItem -> ITEM_VIEW_TYPE_ROUTINE
-            is FooterItem -> ITEM_VIEW_TYPE_FOOTER
+            is RoutineItem -> R.layout.item_session_routine
+            is FooterItem -> R.layout.item_session_footer
         }
     }
 
@@ -30,19 +31,12 @@ open class SessionRoutineAdapter(
         }
     }
 
-    companion object {
-        const val ITEM_VIEW_TYPE_ROUTINE = 0
-        const val ITEM_VIEW_TYPE_FOOTER = Int.MIN_VALUE
+    companion object : DiffUtil.ItemCallback<SessionRoutineItem>(){
+        override fun areItemsTheSame(oldItem: SessionRoutineItem, newItem: SessionRoutineItem) =
+            oldItem.itemId == newItem.itemId
 
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<SessionRoutineItem>() {
-            override fun areItemsTheSame(oldItem: SessionRoutineItem, newItem: SessionRoutineItem): Boolean {
-                return oldItem.itemId == newItem.itemId
-            }
-
-            override fun areContentsTheSame(oldItem: SessionRoutineItem, newItem: SessionRoutineItem): Boolean {
-                return oldItem == newItem
-            }
-        }
+        override fun areContentsTheSame(oldItem: SessionRoutineItem, newItem: SessionRoutineItem) =
+            oldItem == newItem
     }
 
 }
