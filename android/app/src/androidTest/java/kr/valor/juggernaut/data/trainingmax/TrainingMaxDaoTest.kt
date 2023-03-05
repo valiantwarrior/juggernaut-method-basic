@@ -49,7 +49,9 @@ class TrainingMaxDaoTest {
             phaseName = phaseName,
             liftCategoryName = liftCategoryName,
             trainingMaxWeights = 60,
-            lastUpdatedAt = lastUpdatedAt
+            lastUpdatedAt = lastUpdatedAt,
+            baseWeights = 180.0,
+            baseRepetitions = 10
         )
 
         val id = trainingMaxDao.insertTrainingMaxEntity(entity)

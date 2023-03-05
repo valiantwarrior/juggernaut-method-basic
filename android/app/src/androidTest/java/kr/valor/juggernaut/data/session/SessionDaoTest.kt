@@ -173,7 +173,7 @@ class SessionDaoTest {
         )
         val entityId = sessionDao.insertSessionEntity(entity)
 
-        var retrievedEntity = sessionDao.findSessionEntityById(entityId)
+        var retrievedEntity = sessionDao.findSessionEntityById(entityId).first()
 
         with(retrievedEntity) {
             assertThat(id, `is`(entityId))
@@ -186,7 +186,7 @@ class SessionDaoTest {
 
         sessionDao.deleteSessionEntity(retrievedEntity)
 
-        retrievedEntity = sessionDao.findSessionEntityById(entityId)
+        retrievedEntity = sessionDao.findSessionEntityById(entityId).first()
         assertThat(retrievedEntity, nullValue())
     }
 
