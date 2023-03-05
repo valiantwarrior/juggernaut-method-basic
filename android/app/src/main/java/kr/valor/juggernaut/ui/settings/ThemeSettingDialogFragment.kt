@@ -14,31 +14,28 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kr.valor.juggernaut.R
 import kr.valor.juggernaut.domain.settings.model.Theme
+import kr.valor.juggernaut.extensions.LateInitReadyOnlyProperty
 
 @AndroidEntryPoint
 class ThemeSettingDialogFragment : AppCompatDialogFragment() {
 
     private val viewModel: SettingsViewModel by viewModels()
 
-    private lateinit var listAdapter: ArrayAdapter<ThemeHolder>
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-
-        listAdapter = ArrayAdapter(
+    private val listAdapter by LateInitReadyOnlyProperty {
+        ArrayAdapter<ThemeHolder>(
             requireContext(),
             android.R.layout.simple_list_item_single_choice
         )
+    }
 
-        return MaterialAlertDialogBuilder(requireContext())
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.settings_select_theme_title)
             .setSingleChoiceItems(listAdapter, 0) { dialog, position ->
-                listAdapter.getItem(position)?.theme?.let {
-                    viewModel.onThemeSelected(it)
-                }
+                listAdapter.getItem(position)?.theme?.let(viewModel::onThemeSelected)
                 dialog.dismiss()
             }
             .create()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

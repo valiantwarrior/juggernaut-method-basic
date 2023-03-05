@@ -12,6 +12,7 @@ import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.juggernaut.R
 import kr.valor.juggernaut.databinding.ActivityMainBinding
+import kr.valor.juggernaut.extensions.LateInitReadyOnlyProperty
 import kr.valor.juggernaut.ui.common.updateTheme
 
 @AndroidEntryPoint
@@ -19,13 +20,14 @@ class MainActivity : AppCompatActivity() {
 
     private val mainViewModel: MainActivityViewModel by viewModels()
 
-    private lateinit var binding: ActivityMainBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        binding.setupBottomNavigationMenu()
-        setContentView(binding.root)
+
+        ActivityMainBinding
+            .inflate(layoutInflater)
+            .apply { setupBottomNavigationMenu() }
+            .root
+            .also(::setContentView)
 
         observeFlowEvent(mainViewModel.theme) { theme ->
             updateTheme(theme)

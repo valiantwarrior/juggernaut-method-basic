@@ -16,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kr.valor.juggernaut.R
 import kr.valor.juggernaut.databinding.FragmentHomeBinding
+import kr.valor.juggernaut.extensions.LateInitReadyOnlyProperty
 import kr.valor.juggernaut.ui.MainActivity
 import kr.valor.juggernaut.ui.NavigationFragment
 import kr.valor.juggernaut.ui.onboarding.OnboardingActivity
@@ -28,23 +29,39 @@ class HomeFragment : NavigationFragment() {
 
     private lateinit var binding: FragmentHomeBinding
 
-    private lateinit var snackbar: Snackbar
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
-
-        return binding.root
+    private val FragmentHomeBinding.snackbar by LateInitReadyOnlyProperty {
+        Snackbar
+            .make(root, R.string.home_snackbar_message, Snackbar.LENGTH_INDEFINITE)
+            .setAction(R.string.home_snackbar_action_label) {
+                showDialog()
+            }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val toolbar = binding.toolbar
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.home_dest, R.id.statistic_dest, R.id.overall_dest, R.id.settings_dest)
-        )
-        NavigationUI.setupWithNavController(toolbar, findNavController(), appBarConfiguration)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = FragmentHomeBinding.inflate(inflater, container, false)
+        .also(::binding::set)
+        .root
 
-        binding.initViewPagerWithTabLayout()
-        binding.initProgressionStateObserver()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        with(binding) {
+            NavigationUI.setupWithNavController(
+                toolbar,
+                findNavController(),
+                AppBarConfiguration(
+                    setOf(
+                        R.id.home_dest,
+                        R.id.statistic_dest,
+                        R.id.overall_dest,
+                        R.id.settings_dest
+                    )
+                )
+            )
+
+            initViewPagerWithTabLayout()
+            initProgressionStateObserver()
+        }
     }
 
     private fun FragmentHomeBinding.initViewPagerWithTabLayout() {
@@ -54,7 +71,7 @@ class HomeFragment : NavigationFragment() {
         viewPager.adapter = HomeViewPagerAdapter(this@HomeFragment)
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = when(position) {
+            tab.text = when (position) {
                 HOME_PAGE_INDEX -> "HOME"
                 DETAIL_PAGE_INDEX -> "DETAIL"
                 else -> null
@@ -65,31 +82,20 @@ class HomeFragment : NavigationFragment() {
     private fun FragmentHomeBinding.initProgressionStateObserver() {
         homeViewModel.uiState.observe(viewLifecycleOwner) { uiState ->
             if (uiState is HomeUiState.Done) {
-                showSnackBar()
+                snackbar.show()
             } else {
-                if (this@HomeFragment::snackbar.isInitialized) {
-                    snackbar.dismiss()
-                }
+                snackbar.dismiss()
             }
         }
-    }
-
-    private fun FragmentHomeBinding.showSnackBar() {
-        val snackbarText = resources.getString(R.string.home_snackbar_message)
-        val snackbarActionLabelText = resources.getString(R.string.home_snackbar_action_label)
-        snackbar = Snackbar.make(root, snackbarText, Snackbar.LENGTH_INDEFINITE)
-            .setAction(snackbarActionLabelText) {
-                showDialog()
-            }
-
-        snackbar.show()
     }
 
     private fun FragmentHomeBinding.showDialog() {
         val dialogTitleText = resources.getString(R.string.home_dialog_title)
         val dialogMessageText = resources.getString(R.string.home_dialog_message)
-        val dialogActionPositiveText = resources.getString(R.string.home_dialog_decision_using_previous_record_label)
-        val dialogActionNegativeText = resources.getString(R.string.home_dialog_decision_start_with_new_label)
+        val dialogActionPositiveText =
+            resources.getString(R.string.home_dialog_decision_using_previous_record_label)
+        val dialogActionNegativeText =
+            resources.getString(R.string.home_dialog_decision_start_with_new_label)
         val dialogActionNeutralText = resources.getString(R.string.home_dialog_decision_later)
 
         MaterialAlertDialogBuilder(root.context)
@@ -99,15 +105,15 @@ class HomeFragment : NavigationFragment() {
                 homeViewModel.onClickStartMethodWithPreviousRecord()
             }
             .setNegativeButton(dialogActionNegativeText) { _, _ ->
-                val activity = (requireActivity() as MainActivity)
-                val intent = Intent(
-                    activity, OnboardingActivity::class.java
-                )
-                activity.startActivity(intent)
-                activity.finish()
+                with(requireActivity() as MainActivity) {
+                    startActivity(
+                        Intent(this, OnboardingActivity::class.java)
+                    )
+                    finish()
+                }
             }
             .setOnDismissListener {
-                showSnackBar()
+                snackbar.show()
             }
             .setNeutralButton(dialogActionNeutralText) { _, _ -> }
             .show()
